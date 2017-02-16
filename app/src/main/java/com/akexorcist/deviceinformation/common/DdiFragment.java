@@ -37,12 +37,28 @@ public abstract class DdiFragment extends BaseDdiFragment {
         AnimationUtility.getInstance().fadeOut(layoutLoading);
     }
 
+    public void forceShowContent() {
+        isContentShowing = true;
+        isLayoutNull(layoutContent);
+        isLayoutNull(layoutLoading);
+        AnimationUtility.getInstance().fadeIn(layoutContent);
+        AnimationUtility.getInstance().fadeOut(layoutLoading);
+    }
+
     public void hideContent() {
         isContentShowing = false;
         isLayoutNull(layoutContent);
         isLayoutNull(layoutLoading);
         AnimationUtility.getInstance().fadeOut(layoutContent);
         AnimationUtility.getInstance().fadeIn(layoutLoading);
+    }
+
+    public void forceHideContent() {
+        isContentShowing = false;
+        isLayoutNull(layoutContent);
+        isLayoutNull(layoutLoading);
+        AnimationUtility.getInstance().fadeOut(layoutContent, 0);
+        AnimationUtility.getInstance().fadeIn(layoutLoading, 0);
     }
 
     private void isLayoutNull(ViewGroup layout) {
@@ -63,11 +79,9 @@ public abstract class DdiFragment extends BaseDdiFragment {
     public void restoreView() {
         if (layoutContent != null && layoutLoading != null) {
             if (isContentShowing) {
-                AnimationUtility.getInstance().fadeIn(layoutContent, 0);
-                AnimationUtility.getInstance().fadeOut(layoutLoading, 0);
+                forceShowContent();
             } else {
-                AnimationUtility.getInstance().fadeOut(layoutContent, 0);
-                AnimationUtility.getInstance().fadeIn(layoutLoading, 0);
+                forceHideContent();
             }
         }
     }
