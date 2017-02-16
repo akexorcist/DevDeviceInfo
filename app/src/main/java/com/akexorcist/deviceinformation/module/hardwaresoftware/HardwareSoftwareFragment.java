@@ -1,6 +1,8 @@
 package com.akexorcist.deviceinformation.module.hardwaresoftware;
 
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -21,12 +23,15 @@ import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.GpuInfo
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.MemoryInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.StorageInfo;
 import com.akexorcist.deviceinformation.common.DdiFragment;
+import com.akexorcist.deviceinformation.utility.RxGenerator;
 import com.akexorcist.deviceinformation.widget.InfoCardView;
 
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -35,6 +40,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class HardwareSoftwareFragment extends DdiFragment {
     private FrameLayout layoutLoading;
     private FrameLayout layoutContent;
+    private FrameLayout layoutOpenGlContainer;
     private SwipeRefreshLayout srlRefresh;
     private InfoCardView icvAndroidInfo;
     private InfoCardView icvBatteryInfo;
@@ -60,6 +66,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
     protected void bindView(View view) {
         layoutContent = (FrameLayout) view.findViewById(R.id.layout_hardware_software_content);
         layoutLoading = (FrameLayout) view.findViewById(R.id.layout_hardware_software_loading);
+        layoutOpenGlContainer = (FrameLayout) view.findViewById(R.id.layout_open_gl_container);
         srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_refresh);
         icvAndroidInfo = (InfoCardView) view.findViewById(R.id.icv_android_info);
         icvBatteryInfo = (InfoCardView) view.findViewById(R.id.icv_battery_info);
@@ -82,39 +89,10 @@ public class HardwareSoftwareFragment extends DdiFragment {
 
     }
 
-    private SwipeRefreshLayout.OnRefreshListener onContentRefresh() {
-        return () -> Observable.empty()
-                .delay(500, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(() -> {
-                    HardwareSoftwareFragment.this.initialize();
-                    srlRefresh.setRefreshing(false);
-                })
-                .subscribe();
-    }
-
     @Override
     protected void initialize() {
-        hideContent();
-        AndroidInfo androidInfo = AndroidInfoCollector.getInstance().collect(getContext());
-        BatteryInfo batteryInfo = BatteryInfoCollector.getInstance().collect(getContext());
-        BuildInfo buildInfo = BuildInfoCollector.getInstance().collect(getContext());
-        CpuInfo cpuInfo = CpuInfoCollector.getInstance().collect(getContext());
-        MemoryInfo memoryInfo = MemoryInfoCollector.getInstance().collect(getContext());
-        StorageInfo storageInfo = StorageInfoCollector.getInstance().collect(getContext());
-        GpuInfo gpuInfo = GpuInfoCollector.getInstance().collect(getContext());
-        icvAndroidInfo.setDataInfoList(androidInfo.getDataInfoList(), true);
-        icvBatteryInfo.setDataInfoList(batteryInfo.getDataInfoList(), true);
-        icvBuildInfo.setDataInfoList(buildInfo.getDataInfoList(), true);
-        icvCpuInfo.setDataInfoList(cpuInfo.getDataInfoList(), true);
-        icvMemoryInfo.setDataInfoList(memoryInfo.getDataInfoList(), true);
-        icvStorageInfo.setDataInfoList(storageInfo.getDataInfoList(), true);
-        Observable.empty()
-                .delay(2, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnCompleted(this::showContent)
-                .subscribe();
-//        icvGpuInfo.setDataInfoList(androidInfo.getDataInfoList(), true);
+        forceHideContent();
+        collectGpuInfo();
     }
 
     @Override
@@ -130,5 +108,61 @@ public class HardwareSoftwareFragment extends DdiFragment {
     @Override
     public void saveInstanceState(Bundle outState) {
 
+    }
+
+    private void collectGpuInfo() {
+        GLSurfaceView glSurfaceView = new GLSurfaceView(getContext());
+        glSurfaceView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.extra_extra_light_gray));
+        layoutOpenGlContainer.addView(glSurfaceView);
+        GpuInfoCollector.getInstance().collect(glSurfaceView, onGpuInfoCollected());
+    }
+
+    private SwipeRefreshLayout.OnRefreshListener onContentRefresh() {
+        return () ->
+                RxGenerator.getInstance().createDelayObservable(500, TimeUnit.MILLISECONDS)
+                        .doOnCompleted(refreshAllInfoAction())
+                        .subscribe();
+    }
+
+    private Action0 refreshAllInfoAction() {
+        return () -> {
+            hideContent();
+            collectGpuInfo();
+            srlRefresh.setRefreshing(false);
+        };
+    }
+
+    private GpuInfoCollector.OnInfoCollectCallback onGpuInfoCollected() {
+        return (gpuInfo) ->
+                Observable.just(gpuInfo)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(collectAllInfoAction());
+    }
+
+    private Action1<GpuInfo> collectAllInfoAction() {
+        return gpuInfo -> {
+            collectAllInfo(gpuInfo);
+            layoutOpenGlContainer.removeAllViews();
+        };
+    }
+
+    private void collectAllInfo(GpuInfo gpuInfo) {
+        AndroidInfo androidInfo = AndroidInfoCollector.getInstance().collect(getContext());
+        BatteryInfo batteryInfo = BatteryInfoCollector.getInstance().collect(getContext());
+        BuildInfo buildInfo = BuildInfoCollector.getInstance().collect(getContext());
+        CpuInfo cpuInfo = CpuInfoCollector.getInstance().collect(getContext());
+        MemoryInfo memoryInfo = MemoryInfoCollector.getInstance().collect(getContext());
+        StorageInfo storageInfo = StorageInfoCollector.getInstance().collect(getContext());
+        icvAndroidInfo.setDataInfoList(androidInfo.getDataInfoList(), true);
+        icvBatteryInfo.setDataInfoList(batteryInfo.getDataInfoList(), true);
+        icvBuildInfo.setDataInfoList(buildInfo.getDataInfoList(), true);
+        icvCpuInfo.setDataInfoList(cpuInfo.getDataInfoList(), true);
+        icvGpuInfo.setDataInfoList(gpuInfo.getDataInfoList(), true);
+        icvMemoryInfo.setDataInfoList(memoryInfo.getDataInfoList(), true);
+        icvStorageInfo.setDataInfoList(storageInfo.getDataInfoList(), true);
+
+        RxGenerator.getInstance().createDelayObservable(2, TimeUnit.SECONDS)
+                .doOnCompleted(this::showContent)
+                .subscribe();
     }
 }
