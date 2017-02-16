@@ -136,17 +136,15 @@ public class BuildInfoCollector extends BaseInfoCollector {
         return Build.RADIO;
     }
 
+    @SuppressLint("HardwareIds")
     private String getSerial() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            return Build.SERIAL;
-        }
-        return "Unknown";
+        return Build.SERIAL;
     }
 
     private String getAbis(String[] supportList) {
         String str = "";
-        for (int i = 0; i < supportList.length; i++) {
-            str += supportList[i] + " ";
+        for (String support : supportList) {
+            str += support + " ";
         }
         return str.trim();
     }

@@ -1,278 +1,254 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class BuildInfo extends BaseInfo {
-    @SerializedName("Board")
-    private String board;
-    @SerializedName("Bootloader")
-    private String bootloader;
-    @SerializedName("Brand")
-    private String brand;
-    @SerializedName("Characteristic")
-    private String characteristic;
-    @SerializedName("CPU ABI")
-    private String cpuAbi;
-    @SerializedName("CPU ABI 2")
-    private String cpuAbi2;
-    @SerializedName("Device")
-    private String device;
-    @SerializedName("Display")
-    private String display;
-    @SerializedName("Fingerprint")
-    private String fingerprint;
-    @SerializedName("Hardware")
-    private String hardware;
-    @SerializedName("Host")
-    private String host;
-    @SerializedName("ID")
-    private String id;
-    @SerializedName("Manufacturer")
-    private String manufacturer;
-    @SerializedName("Model")
-    private String model;
-    @SerializedName("Product")
-    private String product;
-    @SerializedName("Radio")
-    private String radio;
-    @SerializedName("Serial")
-    private String serial;
-    @SerializedName("Supported ABIS")
-    private String supportedAbis;
-    @SerializedName("Supported 32-bit ABIS")
-    private String supported32BitAbis;
-    @SerializedName("Supported 64-bit ABIS")
-    private String supported64BitAbis;
-    @SerializedName("Tags")
-    private String tags;
-    @SerializedName("Time")
-    private String time;
-    @SerializedName("Type")
-    private String type;
-    @SerializedName("User")
-    private String user;
+    private static final String BOARD = "Board";
+    private static final String BOOTLOADER = "Bootloader";
+    private static final String BRAND = "Brand";
+    private static final String CHARACTERISTIC = "Characteristic";
+    private static final String CPU_ABI = "CPU ABI";
+    private static final String CPU_ABI_2 = "CPU ABI 2";
+    private static final String DEVICE = "Device";
+    private static final String DISPLAY = "Display";
+    private static final String FINGERPRINT = "Fingerprint";
+    private static final String HARDWARE = "Hardware";
+    private static final String HOST = "Host";
+    private static final String ID = "ID";
+    private static final String MANUFACTURER = "Manufacturer";
+    private static final String MODEL = "Model";
+    private static final String PRODUCT = "Product";
+    private static final String RADIO = "Radio";
+    private static final String SERIAL = "Serial";
+    private static final String SUPPORTED_ABIS = "Supported ABIS";
+    private static final String SUPPORTED_32_BIT_ABIS = "Supported 32-bit ABIS";
+    private static final String SUPPORTED_64_BIT_ABIS = "Supported 64-bit ABIS";
+    private static final String TAGS = "Tags";
+    private static final String TIME = "Time";
+    private static final String TYPE = "Type";
+    private static final String USER = "User";
 
     public BuildInfo() {
+        super();
     }
 
     public String getBoard() {
-        return board;
+        return getValueByTitle(BOARD);
     }
 
     public BuildInfo setBoard(String board) {
-        this.board = board;
+        setDataInfo(BOARD, board);
         return this;
     }
 
     public String getBootloader() {
-        return bootloader;
+        return getValueByTitle(BOOTLOADER);
     }
 
     public BuildInfo setBootloader(String bootloader) {
-        this.bootloader = bootloader;
+        setDataInfo(BOOTLOADER, bootloader);
         return this;
     }
 
     public String getBrand() {
-        return brand;
+        return getValueByTitle(BRAND);
     }
 
     public BuildInfo setBrand(String brand) {
-        this.brand = brand;
+        setDataInfo(BRAND, brand);
         return this;
     }
 
     public String getCharacteristic() {
-        return characteristic;
+        return getValueByTitle(CHARACTERISTIC);
     }
 
     public BuildInfo setCharacteristic(String characteristic) {
-        this.characteristic = characteristic;
+        setDataInfo(CHARACTERISTIC, characteristic);
         return this;
     }
 
     public String getCpuAbi() {
-        return cpuAbi;
+        return getValueByTitle(CPU_ABI);
     }
 
     public BuildInfo setCpuAbi(String cpuAbi) {
-        this.cpuAbi = cpuAbi;
+        setDataInfo(CPU_ABI, cpuAbi);
         return this;
     }
 
     public String getCpuAbi2() {
-        return cpuAbi2;
+        return getValueByTitle(CPU_ABI_2);
     }
 
     public BuildInfo setCpuAbi2(String cpuAbi2) {
-        this.cpuAbi2 = cpuAbi2;
+        setDataInfo(CPU_ABI_2, cpuAbi2);
         return this;
     }
 
     public String getDevice() {
-        return device;
+        return getValueByTitle(DEVICE);
     }
 
     public BuildInfo setDevice(String device) {
-        this.device = device;
+        setDataInfo(DEVICE, device);
         return this;
     }
 
     public String getDisplay() {
-        return display;
+        return getValueByTitle(DISPLAY);
     }
 
     public BuildInfo setDisplay(String display) {
-        this.display = display;
+        setDataInfo(DISPLAY, display);
         return this;
     }
 
     public String getFingerprint() {
-        return fingerprint;
+        return getValueByTitle(FINGERPRINT);
     }
 
     public BuildInfo setFingerprint(String fingerprint) {
-        this.fingerprint = fingerprint;
+        setDataInfo(FINGERPRINT, fingerprint);
         return this;
     }
 
     public String getHardware() {
-        return hardware;
+        return getValueByTitle(HARDWARE);
     }
 
     public BuildInfo setHardware(String hardware) {
-        this.hardware = hardware;
+        setDataInfo(HARDWARE, hardware);
         return this;
     }
 
     public String getHost() {
-        return host;
+        return getValueByTitle(HOST);
     }
 
     public BuildInfo setHost(String host) {
-        this.host = host;
+        setDataInfo(HOST, host);
         return this;
     }
 
     public String getId() {
-        return id;
+        return getValueByTitle(ID);
     }
 
     public BuildInfo setId(String id) {
-        this.id = id;
+        setDataInfo(ID, id);
         return this;
     }
 
     public String getManufacturer() {
-        return manufacturer;
+        return getValueByTitle(MANUFACTURER);
     }
 
     public BuildInfo setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+        setDataInfo(MANUFACTURER, manufacturer);
         return this;
     }
 
     public String getModel() {
-        return model;
+        return getValueByTitle(MODEL);
     }
 
     public BuildInfo setModel(String model) {
-        this.model = model;
+        setDataInfo(MODEL, model);
         return this;
     }
 
     public String getProduct() {
-        return product;
+        return getValueByTitle(PRODUCT);
     }
 
     public BuildInfo setProduct(String product) {
-        this.product = product;
+        setDataInfo(PRODUCT, product);
         return this;
     }
 
     public String getRadio() {
-        return radio;
+        return getValueByTitle(RADIO);
     }
 
     public BuildInfo setRadio(String radio) {
-        this.radio = radio;
+        setDataInfo(RADIO, radio);
         return this;
     }
 
     public String getSerial() {
-        return serial;
+        return getValueByTitle(SERIAL);
     }
 
     public BuildInfo setSerial(String serial) {
-        this.serial = serial;
+        setDataInfo(SERIAL, serial);
         return this;
     }
 
     public String getSupportedAbis() {
-        return supportedAbis;
+        return getValueByTitle(SUPPORTED_ABIS);
     }
 
     public BuildInfo setSupportedAbis(String supportedAbis) {
-        this.supportedAbis = supportedAbis;
+        setDataInfo(SUPPORTED_ABIS, supportedAbis);
         return this;
     }
 
     public String getSupported32BitAbis() {
-        return supported32BitAbis;
+        return getValueByTitle(SUPPORTED_32_BIT_ABIS);
     }
 
     public BuildInfo setSupported32BitAbis(String supported32BitAbis) {
-        this.supported32BitAbis = supported32BitAbis;
+        setDataInfo(SUPPORTED_32_BIT_ABIS, supported32BitAbis);
         return this;
     }
 
     public String getSupported64BitAbis() {
-        return supported64BitAbis;
+        return getValueByTitle(SUPPORTED_64_BIT_ABIS);
     }
 
     public BuildInfo setSupported64BitAbis(String supported64BitAbis) {
-        this.supported64BitAbis = supported64BitAbis;
+        setDataInfo(SUPPORTED_64_BIT_ABIS, supported64BitAbis);
         return this;
     }
 
     public String getTags() {
-        return tags;
+        return getValueByTitle(TAGS);
     }
 
     public BuildInfo setTags(String tags) {
-        this.tags = tags;
+        setDataInfo(TAGS, tags);
         return this;
     }
 
     public String getTime() {
-        return time;
+        return getValueByTitle(TIME);
     }
 
     public BuildInfo setTime(String time) {
-        this.time = time;
+        setDataInfo(TIME, time);
         return this;
     }
 
     public String getType() {
-        return type;
+        return getValueByTitle(TYPE);
     }
 
     public BuildInfo setType(String type) {
-        this.type = type;
+        setDataInfo(TYPE, type);
         return this;
     }
 
     public String getUser() {
-        return user;
+        return getValueByTitle(USER);
     }
 
     public BuildInfo setUser(String user) {
-        this.user = user;
+        setDataInfo(USER, user);
         return this;
     }
 }
