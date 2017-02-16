@@ -1,36 +1,33 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class StorageInfo extends BaseInfo {
-    @SerializedName("Internal Storage")
-    private String internalStorage;
-    @SerializedName("SD Card Supported")
-    private String sdCardSupported;
+    private static final String INTERNAL_STORAGE = "Internal Storage";
+    private static final String SD_CARD_SUPPORTED = "SD Card Supported";
 
     public StorageInfo() {
     }
 
     public String getInternalStorage() {
-        return internalStorage;
+        return getValueByTitle(INTERNAL_STORAGE);
     }
 
     public StorageInfo setInternalStorage(String internalStorage) {
-        this.internalStorage = internalStorage;
+        setDataInfo(INTERNAL_STORAGE, internalStorage);
         return this;
     }
 
     public String getSdCardSupported() {
-        return sdCardSupported;
+        return getValueByTitle(SD_CARD_SUPPORTED);
     }
 
     public StorageInfo setSdCardSupported(String sdCardSupported) {
-        this.sdCardSupported = sdCardSupported;
+        setDataInfo(SD_CARD_SUPPORTED, sdCardSupported);
         return this;
     }
 }
