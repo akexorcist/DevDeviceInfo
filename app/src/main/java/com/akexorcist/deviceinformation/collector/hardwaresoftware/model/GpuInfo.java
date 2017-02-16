@@ -1,80 +1,73 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class GpuInfo extends BaseInfo {
-    @SerializedName("OpenGL Supported")
-    private String openGlSupported;
-    @SerializedName("Renderer")
-    private String renderer;
-    @SerializedName("Vendor")
-    private String vendor;
-    @SerializedName("Version")
-    private String version;
-    @SerializedName("Vulkan Supported")
-    private String vulkanSupported;
-    @SerializedName("Extension")
-    private String extension;
+    private static final String OPENGL_SUPPORTED = "OpenGL Supported";
+    private static final String RENDERER = "Renderer";
+    private static final String VENDOR = "Vendor";
+    private static final String VERSION = "Version";
+    private static final String VULKAN_SUPPORTED = "Vulkan Supported";
+    private static final String EXTENSION = "Extension";
 
     public GpuInfo() {
     }
 
     public String getOpenGlSupported() {
-        return openGlSupported;
+        return getValueByTitle(OPENGL_SUPPORTED);
     }
 
     public GpuInfo setOpenGlSupported(String openGlSupported) {
-        this.openGlSupported = openGlSupported;
+        setDataInfo(OPENGL_SUPPORTED, openGlSupported);
         return this;
     }
 
     public String getRenderer() {
-        return renderer;
+        return getValueByTitle(RENDERER);
     }
 
     public GpuInfo setRenderer(String renderer) {
-        this.renderer = renderer;
+        setDataInfo(RENDERER, renderer);
         return this;
     }
 
     public String getVendor() {
-        return vendor;
+        return getValueByTitle(VENDOR);
     }
 
     public GpuInfo setVendor(String vendor) {
-        this.vendor = vendor;
+        setDataInfo(VENDOR, vendor);
         return this;
     }
 
     public String getVersion() {
-        return version;
+        return getValueByTitle(VERSION);
     }
 
     public GpuInfo setVersion(String version) {
-        this.version = version;
+        setDataInfo(VERSION, version);
         return this;
     }
 
     public String getVulkanSupported() {
-        return vulkanSupported;
+        return getValueByTitle(VULKAN_SUPPORTED);
     }
 
     public GpuInfo setVulkanSupported(String vulkanSupported) {
-        this.vulkanSupported = vulkanSupported;
+        setDataInfo(VULKAN_SUPPORTED, vulkanSupported);
         return this;
     }
 
     public String getExtension() {
-        return extension;
+        return getValueByTitle(EXTENSION);
     }
 
     public GpuInfo setExtension(String extension) {
-        this.extension = extension;
+        setDataInfo(EXTENSION, extension);
         return this;
     }
 }
