@@ -1,68 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/layout_hardware_software_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_padding"
-            android:layout_marginTop="@dimen/margin_padding"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/margin_padding"
-            android:paddingLeft="@dimen/margin_padding"
-            android:paddingRight="@dimen/margin_padding"
-            android:paddingStart="@dimen/margin_padding">
+            android:layout_gravity="center"
+            app:indicatorColor="@color/accent"
+            app:indicatorName="BallPulseIndicator" />
+    </FrameLayout>
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_android_info"
+    <FrameLayout
+        android:id="@+id/layout_hardware_software_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_android_info" />
+                android:layout_height="match_parent">
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_battery_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_battery_info" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_padding"
+                    android:layout_marginTop="@dimen/margin_padding"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/margin_padding"
+                    android:paddingLeft="@dimen/margin_padding"
+                    android:paddingRight="@dimen/margin_padding"
+                    android:paddingStart="@dimen/margin_padding">
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_build_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_build_info" />
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_android_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_android_info" />
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_cpu_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_cpu_info" />
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_battery_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_battery_info" />
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_gpu_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_gpu_info" />
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_build_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_build_info" />
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_memory_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_memory_info" />
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_cpu_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_cpu_info" />
 
-            <com.akexorcist.deviceinformation.widget.InfoCardView
-                android:id="@+id/icv_storage_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icv_title="@string/hardware_and_software_storage_info" />
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_gpu_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_gpu_info" />
 
-        </LinearLayout>
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_memory_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_memory_info" />
 
-    </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_storage_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_storage_info" />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</FrameLayout>
