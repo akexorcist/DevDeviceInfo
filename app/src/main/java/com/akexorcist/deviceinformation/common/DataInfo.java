@@ -28,6 +28,9 @@ public class DataInfo implements Parcelable {
     }
 
     public String getValue() {
+        if (value == null || value.isEmpty()) {
+            return "Unknown";
+        }
         return value;
     }
 
