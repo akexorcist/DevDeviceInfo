@@ -1,10 +1,13 @@
 package com.akexorcist.deviceinformation.common;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Akexorcist on 2/16/2017 AD.
  */
 
-public class DataInfo {
+public class DataInfo implements Parcelable {
     private String title;
     private String value;
 
@@ -49,4 +52,32 @@ public class DataInfo {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         return result;
     }
+
+    protected DataInfo(Parcel in) {
+        title = in.readString();
+        value = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(value);
+    }
+
+    public static final Creator<DataInfo> CREATOR = new Creator<DataInfo>() {
+        @Override
+        public DataInfo createFromParcel(Parcel in) {
+            return new DataInfo(in);
+        }
+
+        @Override
+        public DataInfo[] newArray(int size) {
+            return new DataInfo[size];
+        }
+    };
 }
