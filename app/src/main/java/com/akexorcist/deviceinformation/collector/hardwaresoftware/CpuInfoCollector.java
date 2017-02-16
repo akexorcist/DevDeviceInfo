@@ -26,10 +26,8 @@ public class CpuInfoCollector extends BaseInfoCollector {
 
     @Override
     public CpuInfo collect(Context context) {
-//        return new CpuInfo()
-//                .setBatteryCapacity(getCapacity(context));
-        // TODO Fix this
-        return null;
+        String rawCpuInfo = getCpuInfo(context);
+        return createCpuInfoFromRaw(rawCpuInfo);
     }
 
     private String getCpuInfo(Context context) {
@@ -40,5 +38,32 @@ public class CpuInfoCollector extends BaseInfoCollector {
         } catch (Exception ignored) {
         }
         return "Unknown";
+    }
+
+    private CpuInfo createCpuInfoFromRaw(String raw) {
+        CpuInfo cpuInfo = new CpuInfo();
+        String[] infoList = raw.split("\n");
+        for (String info : infoList) {
+            String[] infoItem = info.split(":");
+            if (infoItem.length == 2) {
+                String title = infoItem[0].trim();
+                String value = infoItem[1].trim();
+                if (!isExcludeInfo(title)) {
+                    cpuInfo.setDataInfo(title, value);
+                }
+            }
+        }
+        return cpuInfo;
+    }
+
+    private boolean isExcludeInfo(String title) {
+        return title.startsWith("processor") ||
+                title.startsWith("Features") ||
+                title.startsWith("CPU implementer") ||
+                title.startsWith("CPU architecture") ||
+                title.startsWith("CPU variant") ||
+                title.startsWith("CPU part") ||
+                title.startsWith("CPU revision") ||
+                title.startsWith("BogoMIPS");
     }
 }
