@@ -18,7 +18,39 @@ public class AnimationUtility {
         return utility;
     }
 
-    public void collapse(final View view) {
+    public void fadeOut(View view) {
+        fadeOut(view, 300);
+    }
+
+    public void fadeOut(final View view, long duration) {
+        view.animate()
+                .alpha(0)
+                .setDuration(duration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(View.INVISIBLE);
+                    }
+                });
+    }
+
+    public void fadeIn(View view) {
+        fadeIn(view, 300);
+    }
+
+    public void fadeIn(final View view, long duration) {
+        view.animate()
+                .alpha(1)
+                .setDuration(duration)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        view.setVisibility(View.VISIBLE);
+                    }
+                });
+    }
+
+    public void collapse(View view) {
         collapse(view, 300);
     }
 
@@ -34,7 +66,7 @@ public class AnimationUtility {
                 });
     }
 
-    public void expand(final View view) {
+    public void expand(View view) {
         expand(view, 300);
     }
 
