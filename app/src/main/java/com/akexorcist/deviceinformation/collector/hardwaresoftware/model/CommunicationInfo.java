@@ -1,212 +1,204 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class CommunicationInfo extends BaseInfo {
-    @SerializedName("Bluetooth")
-    private String bluetooth;
-    @SerializedName("Bluetooth")
-    private String bluetoothLe;
-    @SerializedName("Cellular")
-    private String cellular;
-    @SerializedName("Daydream VR")
-    private String daydreamVr;
-    @SerializedName("Dual SIM")
-    private String dualSim;
-    @SerializedName("Ethernet")
-    private String ethernet;
-    @SerializedName("Fingerprint")
-    private String fingerprint;
-    @SerializedName("GPS")
-    private String gps;
-    @SerializedName("Microphone")
-    private String microphone;
-    @SerializedName("NFC")
-    private String nfc;
-    @SerializedName("NFC HCE")
-    private String nfcHce;
-    @SerializedName("Telephony")
-    private String telephony;
-    @SerializedName("USB OTG")
-    private String usbOtg;
-    @SerializedName("USB Accessory")
-    private String usbAccessory;
-    @SerializedName("Vibrate Motor")
-    private String vibrateMotor;
-    @SerializedName("WiFi")
-    private String wifi;
-    @SerializedName("WiFi Direct")
-    private String wifiDirect;
-    @SerializedName("WiMax")
-    private String wiMax;
+    private static final String BLUETOOTH = "Bluetooth";
+    private static final String BLUETOOTH_LOW_ENERGY = "Bluetooth Low Energy";
+    private static final String CELLULAR = "Cellular";
+    private static final String CARDBOARD_VR = "Cardboard VR";
+    private static final String DAYDREAM_VR = "Daydream VR";
+    private static final String DUAL_SIM = "Dual SIM";
+    private static final String ETHERNET = "Ethernet";
+    private static final String FINGERPRINT = "Fingerprint";
+    private static final String GPS = "GPS";
+    private static final String MICROPHONE = "Microphone";
+    private static final String NFC = "NFC";
+    private static final String NFC_HOST_CARD_EMULATION = "NFC Host Card Emulation";
+    private static final String TELEPHONY = "Telephony";
+    private static final String USB_OTG = "USB OTG";
+    private static final String USB_ACCESSORY = "USB Accessory";
+    private static final String VIBRATE_MOTOR = "Vibrate Motor";
+    private static final String WIFI = "WiFi";
+    private static final String WIFI_DIRECT = "WiFi Direct";
+    private static final String WIMAX = "WiMax";
 
     public CommunicationInfo() {
+        super();
     }
 
     public String getBluetooth() {
-        return bluetooth;
+        return getValueByTitle(BLUETOOTH);
     }
 
     public CommunicationInfo setBluetooth(String bluetooth) {
-        this.bluetooth = bluetooth;
+        setDataInfo(BLUETOOTH, bluetooth);
         return this;
     }
 
-    public String getBluetoothLe() {
-        return bluetoothLe;
+    public String getBluetoothLowEnergy() {
+        return getValueByTitle(BLUETOOTH_LOW_ENERGY);
     }
 
-    public CommunicationInfo setBluetoothLe(String bluetoothLe) {
-        this.bluetoothLe = bluetoothLe;
+    public CommunicationInfo setBluetoothLowEnergy(String bluetoothLowEnergy) {
+        setDataInfo(BLUETOOTH_LOW_ENERGY, bluetoothLowEnergy);
         return this;
     }
 
     public String getCellular() {
-        return cellular;
+        return getValueByTitle(CELLULAR);
     }
 
     public CommunicationInfo setCellular(String cellular) {
-        this.cellular = cellular;
+        setDataInfo(CELLULAR, cellular);
+        return this;
+    }
+
+    public String getCardboardVr() {
+        return getValueByTitle(CARDBOARD_VR);
+    }
+
+    public CommunicationInfo setCardboardVr(String cardboardVr) {
+        setDataInfo(CARDBOARD_VR, cardboardVr);
         return this;
     }
 
     public String getDaydreamVr() {
-        return daydreamVr;
+        return getValueByTitle(DAYDREAM_VR);
     }
 
     public CommunicationInfo setDaydreamVr(String daydreamVr) {
-        this.daydreamVr = daydreamVr;
+        setDataInfo(DAYDREAM_VR, daydreamVr);
         return this;
     }
 
     public String getDualSim() {
-        return dualSim;
+        return getValueByTitle(DUAL_SIM);
     }
 
     public CommunicationInfo setDualSim(String dualSim) {
-        this.dualSim = dualSim;
+        setDataInfo(DUAL_SIM, dualSim);
         return this;
     }
 
     public String getEthernet() {
-        return ethernet;
+        return getValueByTitle(ETHERNET);
     }
 
     public CommunicationInfo setEthernet(String ethernet) {
-        this.ethernet = ethernet;
+        setDataInfo(ETHERNET, ethernet);
         return this;
     }
 
     public String getFingerprint() {
-        return fingerprint;
+        return getValueByTitle(FINGERPRINT);
     }
 
     public CommunicationInfo setFingerprint(String fingerprint) {
-        this.fingerprint = fingerprint;
+        setDataInfo(FINGERPRINT, fingerprint);
         return this;
     }
 
     public String getGps() {
-        return gps;
+        return getValueByTitle(GPS);
     }
 
     public CommunicationInfo setGps(String gps) {
-        this.gps = gps;
+        setDataInfo(GPS, gps);
         return this;
     }
 
     public String getMicrophone() {
-        return microphone;
+        return getValueByTitle(MICROPHONE);
     }
 
     public CommunicationInfo setMicrophone(String microphone) {
-        this.microphone = microphone;
+        setDataInfo(MICROPHONE, microphone);
         return this;
     }
 
     public String getNfc() {
-        return nfc;
+        return getValueByTitle(NFC);
     }
 
     public CommunicationInfo setNfc(String nfc) {
-        this.nfc = nfc;
+        setDataInfo(NFC, nfc);
         return this;
     }
 
-    public String getNfcHce() {
-        return nfcHce;
+    public String getNfcHostCardEmulation() {
+        return getValueByTitle(NFC_HOST_CARD_EMULATION);
     }
 
-    public CommunicationInfo setNfcHce(String nfcHce) {
-        this.nfcHce = nfcHce;
+    public CommunicationInfo setNfcHostCardEmulation(String nfcHce) {
+        setDataInfo(NFC_HOST_CARD_EMULATION, nfcHce);
         return this;
     }
 
     public String getTelephony() {
-        return telephony;
+        return getValueByTitle(TELEPHONY);
     }
 
     public CommunicationInfo setTelephony(String telephony) {
-        this.telephony = telephony;
+        setDataInfo(TELEPHONY, telephony);
         return this;
     }
 
     public String getUsbOtg() {
-        return usbOtg;
+        return getValueByTitle(USB_OTG);
     }
 
     public CommunicationInfo setUsbOtg(String usbOtg) {
-        this.usbOtg = usbOtg;
+        setDataInfo(USB_OTG, usbOtg);
         return this;
     }
 
     public String getUsbAccessory() {
-        return usbAccessory;
+        return getValueByTitle(USB_ACCESSORY);
     }
 
     public CommunicationInfo setUsbAccessory(String usbAccessory) {
-        this.usbAccessory = usbAccessory;
+        setDataInfo(USB_ACCESSORY, usbAccessory);
         return this;
     }
 
     public String getVibrateMotor() {
-        return vibrateMotor;
+        return getValueByTitle(VIBRATE_MOTOR);
     }
 
     public CommunicationInfo setVibrateMotor(String vibrateMotor) {
-        this.vibrateMotor = vibrateMotor;
+        setDataInfo(VIBRATE_MOTOR, vibrateMotor);
         return this;
     }
 
     public String getWifi() {
-        return wifi;
+        return getValueByTitle(WIFI);
     }
 
     public CommunicationInfo setWifi(String wifi) {
-        this.wifi = wifi;
+        setDataInfo(WIFI, wifi);
         return this;
     }
 
     public String getWifiDirect() {
-        return wifiDirect;
+        return getValueByTitle(WIFI_DIRECT);
     }
 
     public CommunicationInfo setWifiDirect(String wifiDirect) {
-        this.wifiDirect = wifiDirect;
+        setDataInfo(WIFI_DIRECT, wifiDirect);
         return this;
     }
 
     public String getWiMax() {
-        return wiMax;
+        return getValueByTitle(WIMAX);
     }
 
     public CommunicationInfo setWiMax(String wiMax) {
-        this.wiMax = wiMax;
+        setDataInfo(WIMAX, wiMax);
         return this;
     }
 }
