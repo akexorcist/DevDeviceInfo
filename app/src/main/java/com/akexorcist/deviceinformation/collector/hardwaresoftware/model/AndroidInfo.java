@@ -1,80 +1,75 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class AndroidInfo extends BaseInfo {
-    @SerializedName("API Version")
-    private String apiVersion;
-    @SerializedName("System Type")
-    private String systemType;
-    @SerializedName("Version Code")
-    private String versionCode;
-    @SerializedName("Android Version")
-    private String androidVersion;
-    @SerializedName("Codename")
-    private String codename;
-    @SerializedName("Incremental")
-    private String incremental;
+    private static final String API_VERSION = "API Version";
+    private static final String SYSTEM_TYPE = "System Type";
+    private static final String VERSION_CODE = "Version Code";
+    private static final String ANDROID_VERSION = "Android Version";
+    private static final String CODENAME = "Codename";
+    private static final String INCREMENTAL = "Incremental";
 
     public AndroidInfo() {
+        super();
     }
 
     public String getApiVersion() {
-        return apiVersion;
+        return getValueByTitle(API_VERSION);
     }
 
     public AndroidInfo setApiVersion(String apiVersion) {
-        this.apiVersion = apiVersion;
+        setDataInfo(API_VERSION, apiVersion);
         return this;
     }
 
+    //
     public String getSystemType() {
-        return systemType;
+        return getValueByTitle(SYSTEM_TYPE);
     }
 
     public AndroidInfo setSystemType(String systemType) {
-        this.systemType = systemType;
+        setDataInfo(SYSTEM_TYPE, systemType);
         return this;
     }
 
     public String getVersionCode() {
-        return versionCode;
+        return getValueByTitle(VERSION_CODE);
     }
 
     public AndroidInfo setVersionCode(String versionCode) {
-        this.versionCode = versionCode;
+        setDataInfo(VERSION_CODE, versionCode);
         return this;
     }
 
     public String getAndroidVersion() {
-        return androidVersion;
+        return getValueByTitle(ANDROID_VERSION);
     }
 
     public AndroidInfo setAndroidVersion(String androidVersion) {
-        this.androidVersion = androidVersion;
+        setDataInfo(ANDROID_VERSION, androidVersion);
         return this;
     }
 
     public String getCodename() {
-        return codename;
+        return getValueByTitle(CODENAME);
     }
 
     public AndroidInfo setCodename(String codename) {
-        this.codename = codename;
+        setDataInfo(CODENAME, codename);
         return this;
     }
 
     public String getIncremental() {
-        return incremental;
+        return getValueByTitle(INCREMENTAL);
     }
 
     public AndroidInfo setIncremental(String incremental) {
-        this.incremental = incremental;
+        setDataInfo(INCREMENTAL, incremental);
         return this;
     }
 }
