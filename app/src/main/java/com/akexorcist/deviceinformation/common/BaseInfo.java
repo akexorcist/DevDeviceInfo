@@ -50,6 +50,15 @@ public class BaseInfo {
         return null;
     }
 
+    public String getValueByTitle(String title) {
+        for (DataInfo dataInfo : dataInfoList) {
+            if (dataInfo.getTitle().equals(title)) {
+                return dataInfo.getValue();
+            }
+        }
+        return null;
+    }
+
     public boolean contains(String title) {
         for (DataInfo dataInfo : dataInfoList) {
             if (dataInfo.getTitle().equals(title)) {
