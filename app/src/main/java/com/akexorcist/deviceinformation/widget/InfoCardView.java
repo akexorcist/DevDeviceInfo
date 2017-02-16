@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseCustomView;
 import com.akexorcist.deviceinformation.common.DataInfo;
+import com.akexorcist.deviceinformation.helper.DataInfoComparator;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -88,7 +90,7 @@ public class InfoCardView extends BaseCustomView {
         this.title = ss.title;
         this.dataInfoList = ss.dataInfoList;
         setTitle(title);
-        setDataInfoList(dataInfoList);
+        setDataInfoList(dataInfoList, false);
     }
 
     @Override
@@ -107,6 +109,13 @@ public class InfoCardView extends BaseCustomView {
     }
 
     public void setDataInfoList(List<DataInfo> dataInfoList) {
+        setDataInfoList(dataInfoList, false);
+    }
+
+    public void setDataInfoList(List<DataInfo> dataInfoList, boolean orderByAscending) {
+        if (orderByAscending) {
+            Collections.sort(dataInfoList, new DataInfoComparator());
+        }
         this.dataInfoList = dataInfoList;
         updateDataInfoList();
     }
