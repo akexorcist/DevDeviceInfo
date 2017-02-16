@@ -20,11 +20,15 @@
 
             <TextView
                 android:id="@+id/tv_info_title"
-                style="@style/TextView.Black.Large"
+                style="@style/TextView.Accent.ExtraLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Akexorcist"
-                android:textSize="@dimen/text_size_large" />
+                android:layout_marginEnd="@dimen/margin_padding"
+                android:layout_marginLeft="@dimen/margin_padding"
+                android:layout_marginRight="@dimen/margin_padding"
+                android:layout_marginStart="@dimen/margin_padding"
+                android:layout_marginTop="@dimen/margin_padding_small"
+                android:text="Akexorcist" />
 
             <LinearLayout
                 android:id="@+id/layout_info_content"

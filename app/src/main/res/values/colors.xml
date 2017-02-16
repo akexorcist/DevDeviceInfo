@@ -4,7 +4,10 @@
     <color name="primary_dark">@color/dark_cyan</color>
     <color name="accent">@color/red</color>
 
+    <color name="text_primary">@color/primary</color>
+    <color name="text_accent">@color/accent</color>
     <color name="text_white">@color/white</color>
+    <color name="text_gray">@color/gray</color>
     <color name="text_black">@color/dark_gray</color>
     <color name="text_warning">@color/yellow</color>
     <color name="text_error">@color/red</color>
