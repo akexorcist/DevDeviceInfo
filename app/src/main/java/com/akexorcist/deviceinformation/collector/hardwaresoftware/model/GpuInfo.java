@@ -12,7 +12,6 @@ public class GpuInfo extends BaseInfo {
     private static final String VENDOR = "Vendor";
     private static final String VERSION = "Version";
     private static final String VULKAN_SUPPORTED = "Vulkan Supported";
-    private static final String EXTENSION = "Extension";
 
     public GpuInfo() {
         super();
@@ -60,15 +59,6 @@ public class GpuInfo extends BaseInfo {
 
     public GpuInfo setVulkanSupported(String vulkanSupported) {
         setDataInfo(VULKAN_SUPPORTED, vulkanSupported);
-        return this;
-    }
-
-    public String getExtension() {
-        return getValueByTitle(EXTENSION);
-    }
-
-    public GpuInfo setExtension(String extension) {
-        setDataInfo(EXTENSION, extension);
         return this;
     }
 }

@@ -37,8 +37,7 @@ public class GpuInfoCollector extends BaseInfoCollector {
                             .collect(glSurfaceView.getContext())
                             .setVendor(gl10.glGetString(GL10.GL_VENDOR))
                             .setRenderer(gl10.glGetString(GL10.GL_RENDERER))
-                            .setVersion(gl10.glGetString(GL10.GL_VERSION))
-                            .setExtension(gl10.glGetString(GL10.GL_EXTENSIONS)));
+                            .setVersion(gl10.glGetString(GL10.GL_VERSION)));
                 }
             }
 
