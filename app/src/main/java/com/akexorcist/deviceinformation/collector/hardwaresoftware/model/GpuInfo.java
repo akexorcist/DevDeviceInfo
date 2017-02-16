@@ -15,6 +15,7 @@ public class GpuInfo extends BaseInfo {
     private static final String EXTENSION = "Extension";
 
     public GpuInfo() {
+        super();
     }
 
     public String getOpenGlSupported() {
