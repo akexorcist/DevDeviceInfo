@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.akexorcist.deviceinformation.R;
-import com.akexorcist.deviceinformation.collector.hardwaresoftware.CommunicationInfoCollector;
-import com.akexorcist.deviceinformation.collector.sensor.SensorInfoCollector;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.CpuInfoCollector;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CpuInfo;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
+import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.widget.SyncInfoView;
 
 public class MainActivity extends BaseDdiActivity implements View.OnClickListener, SyncInfoView.SyncClickListener {
@@ -93,8 +94,14 @@ public class MainActivity extends BaseDdiActivity implements View.OnClickListene
 
     @Override
     public void onSyncClick() {
-        SensorInfoCollector.getInstance().collect(this);
-        Log.e("Check", "Daydream VR Supported : " + CommunicationInfoCollector.getInstance().collect(this).getDaydreamVr());
+        CpuInfo cpuInfo = CpuInfoCollector.getInstance().collect(this);
+        if (cpuInfo != null) {
+            for (DataInfo dataInfo : cpuInfo.getDataInfoList()) {
+                Log.e("Check", dataInfo.getTitle() + " : " + dataInfo.getValue());
+            }
+        }
+//        SensorInfoCollector.getInstance().collect(this);
+//        Log.e("Check", "Daydream VR Supported : " + CommunicationInfoCollector.getInstance().collect(this).getDaydreamVr());
 //        Log.e("Check", "Total Internal Storage : " + StorageInfoCollector.getInstance().getTotalInternalStorage());
 //        Log.e("Check", "SD Card Supported : " + StorageInfoCollector.getInstance().getSdCardSupported());
     }
