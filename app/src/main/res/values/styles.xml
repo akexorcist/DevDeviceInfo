@@ -1,0 +1,192 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Text View -->
+    <style name="TextView">
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="TextView.Black">
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="TextView.Black.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.Black.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.Black.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.Black.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.Black.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
+    <style name="TextView.White">
+        <item name="android:textColor">@color/text_white</item>
+    </style>
+
+    <style name="TextView.White.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.White.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.White.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.White.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.White.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
+    <style name="TextView.Warning">
+        <item name="android:textColor">@color/text_warning</item>
+    </style>
+
+    <style name="TextView.Warning.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.Warning.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.Warning.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.Warning.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.Warning.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
+    <style name="TextView.Error">
+        <item name="android:textColor">@color/text_error</item>
+    </style>
+
+    <style name="TextView.Error.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.Error.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.Error.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.Error.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.Error.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
+    <style name="TextView.Link">
+        <item name="android:textColor">@color/text_link</item>
+    </style>
+
+    <style name="TextView.Link.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.Link.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.Link.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.Link.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.Link.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
+    <!-- Button -->
+    <style name="Button" />
+
+    <style name="Button.Borderless">
+        <item name="android:background">@drawable/selector_button_borderless</item>
+    </style>
+
+    <style name="Button.Borderless.Link">
+        <item name="android:textColor">@color/text_link</item>
+    </style>
+
+    <style name="Button.Borderless.Error">
+        <item name="android:textColor">@color/text_error</item>
+    </style>
+
+    <style name="Button.Borderless.Black">
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <!-- Divider -->
+    <style name="Divider" />
+
+    <style name="Divider.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider</item>
+    </style>
+
+    <style name="Divider.Vertical">
+        <item name="android:layout_width">@dimen/divider</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Divider.Horizontal.White">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Divider.Vertical.White">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Divider.Horizontal.Transparent">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="Divider.Vertical.Transparent">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <!-- Tab Layout -->
+    <style name="TabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+</resources>

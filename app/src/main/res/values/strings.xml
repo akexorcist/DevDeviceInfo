@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Dev Device Info</string>
+    <string name="title_hardware_software">Hardware &amp; Software</string>
+    <string name="title_sensor">Sensor</string>
+    <string name="title_screen">Screen</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_camera_2">Camera 2</string>
+    <string name="title_feature">Feature</string>
+    <string name="title_app_list">App List</string>
+
+    <string name="sync_from_server">Sync your device info from server</string>
+</resources>

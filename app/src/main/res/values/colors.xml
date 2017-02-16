@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">@color/cyan</color>
+    <color name="primary_dark">@color/dark_cyan</color>
+    <color name="accent">@color/red</color>
+
+    <color name="text_white">@color/white</color>
+    <color name="text_black">@color/dark_gray</color>
+    <color name="text_warning">@color/yellow</color>
+    <color name="text_error">@color/red</color>
+    <color name="text_link">@color/blue</color>
+
+    <color name="button_borderless_normal">@color/transparent</color>
+    <color name="button_borderless_pressed">@color/black_alpha_10</color>
+    <color name="button_borderless_focused">@color/transparent</color>
+    <color name="button_red_normal">@color/red</color>
+    <color name="button_red_pressed">@color/dark_red</color>
+    <color name="button_red_focused">@color/red</color>
+    <color name="button_yellow_normal">@color/yellow</color>
+    <color name="button_yellow_pressed">@color/dark_yellow</color>
+    <color name="button_yellow_focused">@color/yellow</color>
+
+    <color name="warning">@color/yellow</color>
+    <color name="error">@color/red</color>
+
+    <color name="divider">@color/extra_light_gray</color>
+    <color name="focused_border">@color/orange</color>
+
+    <color name="light_red">#ef375e</color>
+    <color name="red">#ef375e</color>
+    <color name="dark_red">#dd244b</color>
+    <color name="light_cyan">#27ccd8</color>
+    <color name="cyan">#14bdc9</color>
+    <color name="dark_cyan">#09b1bd</color>
+    <color name="blue">#1f41c3</color>
+    <color name="green">#9bce7d</color>
+    <color name="light_green">#a6d987</color>
+    <color name="dark_green">#8dc56e</color>
+    <color name="light_yellow">#ffd653</color>
+    <color name="yellow">#f5c531</color>
+    <color name="dark_yellow">#eebb20</color>
+    <color name="orange">#ff9c00</color>
+    <color name="white">#ffffff</color>
+    <color name="extra_light_gray">#ededed</color>
+    <color name="light_gray">#dddddd</color>
+    <color name="gray">#777777</color>
+    <color name="dark_gray">#333333</color>
+    <color name="black">#111111</color>
+    <color name="black_alpha_40">#40000000</color>
+    <color name="black_alpha_20">#20000000</color>
+    <color name="black_alpha_10">#10000000</color>
+    <color name="transparent">#00000000</color>
+
+</resources>
+
