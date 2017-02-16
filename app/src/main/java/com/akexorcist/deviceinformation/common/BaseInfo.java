@@ -56,7 +56,7 @@ public class BaseInfo {
                 return dataInfo.getValue();
             }
         }
-        return null;
+        return "Unknown";
     }
 
     public boolean contains(String title) {
