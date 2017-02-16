@@ -44,6 +44,7 @@
     <color name="dark_yellow">#eebb20</color>
     <color name="orange">#ff9c00</color>
     <color name="white">#ffffff</color>
+    <color name="extra_extra_light_gray">#fafafa</color>
     <color name="extra_light_gray">#ededed</color>
     <color name="light_gray">#dddddd</color>
     <color name="gray">#777777</color>
