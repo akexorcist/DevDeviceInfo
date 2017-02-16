@@ -1,25 +1,24 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
 public class BatteryInfo extends BaseInfo {
-    @SerializedName("Battery")
-    private String batteryCapacity;
+    private static final String CAPABILITY = "Capacity";
 
     public BatteryInfo() {
+        super();
     }
 
-    public String getBatteryCapacity() {
-        return batteryCapacity;
+    public String getCapacity() {
+        return getValueByTitle(CAPABILITY);
     }
 
-    public BatteryInfo setBatteryCapacity(String batteryCapacity) {
-        this.batteryCapacity = batteryCapacity;
+    public BatteryInfo setCapacity(String capacity) {
+        setDataInfo(CAPABILITY, capacity);
         return this;
     }
 }

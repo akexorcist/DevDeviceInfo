@@ -27,7 +27,6 @@ public class AndroidInfo extends BaseInfo {
         return this;
     }
 
-    //
     public String getSystemType() {
         return getValueByTitle(SYSTEM_TYPE);
     }
