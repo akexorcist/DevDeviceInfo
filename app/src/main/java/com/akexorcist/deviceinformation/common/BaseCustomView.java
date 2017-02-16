@@ -32,8 +32,8 @@ public abstract class BaseCustomView extends FrameLayout {
         if (getLayoutView() != 0) {
             inflate(context, getLayoutView(), this);
             bindView();
-            setupView();
             setupStyleable(attrs);
+            setupView();
         }
     }
 
