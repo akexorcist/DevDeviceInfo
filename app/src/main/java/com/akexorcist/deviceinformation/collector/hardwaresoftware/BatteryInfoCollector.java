@@ -38,11 +38,12 @@ public class BatteryInfoCollector extends BaseInfoCollector {
         } catch (Exception ignored) {
         }
         try {
-            double batteryCapacity = (Double) Class.forName(POWER_PROFILE_CLASS)
+            double capability = (Double) Class.forName(POWER_PROFILE_CLASS)
                     .getMethod(GET_AVERAGE_POWER_METHOD, java.lang.String.class)
                     .invoke(powerProfile, BATTERY_CAPACITY_VARIABLE);
-            if (batteryCapacity != 1000) {
-                return (int) batteryCapacity + " mA";
+            int batteryCapacity = (int) capability;
+            if (batteryCapacity != 1000 && batteryCapacity != 0) {
+                return batteryCapacity + " mA";
             }
         } catch (Exception ignored) {
         }
