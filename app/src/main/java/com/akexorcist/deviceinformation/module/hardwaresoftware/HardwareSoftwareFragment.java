@@ -67,7 +67,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
         layoutContent = (FrameLayout) view.findViewById(R.id.layout_hardware_software_content);
         layoutLoading = (FrameLayout) view.findViewById(R.id.layout_hardware_software_loading);
         layoutOpenGlContainer = (FrameLayout) view.findViewById(R.id.layout_open_gl_container);
-        srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_refresh);
+        srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_hardware_software_refresh);
         icvAndroidInfo = (InfoCardView) view.findViewById(R.id.icv_android_info);
         icvBatteryInfo = (InfoCardView) view.findViewById(R.id.icv_battery_info);
         icvBuildInfo = (InfoCardView) view.findViewById(R.id.icv_build_info);
