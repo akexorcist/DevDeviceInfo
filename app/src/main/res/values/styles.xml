@@ -63,6 +63,30 @@
         <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
     </style>
 
+    <style name="TextView.LightGray">
+        <item name="android:textColor">@color/text_light_gray</item>
+    </style>
+
+    <style name="TextView.LightGray.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextView.LightGray.ExtraSmall">
+        <item name="android:textSize">@dimen/text_size_extra_small</item>
+    </style>
+
+    <style name="TextView.LightGray.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextView.LightGray.ExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+    </style>
+
+    <style name="TextView.LightGray.ExtraExtraLarge">
+        <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
+    </style>
+
     <style name="TextView.White">
         <item name="android:textColor">@color/text_white</item>
     </style>
