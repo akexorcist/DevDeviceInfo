@@ -1,38 +1,66 @@
 package com.akexorcist.deviceinformation.collector.sensor.model;
 
-import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Akexorcist on 11/27/2016 AD.
+ * Created by Akexorcist on 2/17/2017 AD.
  */
 
-public class SensorInfo extends BaseInfo {
-    @SerializedName("Sensor List")
-    private List<SensorData> sensorDataList;
+public class SensorInfo {
+    private List<SensorItem> sensorItemList;
 
     public SensorInfo() {
-        sensorDataList = new ArrayList<>();
+        sensorItemList = new ArrayList<>();
     }
 
-    public SensorInfo(List<SensorData> sensorDataList) {
-        this.sensorDataList = sensorDataList;
+    public List<SensorItem> getSensorItemList() {
+        return sensorItemList;
     }
 
-    public List<SensorData> getSensorDataList() {
-        return sensorDataList;
+    public void setSensorItemList(List<SensorItem> sensorItemList) {
+        this.sensorItemList = sensorItemList;
     }
 
-    public SensorInfo setSensorDataList(List<SensorData> sensorDataList) {
-        this.sensorDataList = sensorDataList;
-        return this;
+    public void setSensorItem(SensorItem newSensorItem) {
+        SensorItem oldSensorItem = getSensorInfoByName(newSensorItem.getName());
+        if (oldSensorItem != null) {
+            // SensorItem already exist then set new value to old SensorItem.
+            oldSensorItem.setSensorData(newSensorItem.getSensorData());
+        } else {
+            // SensorItem not exist then add new SensorItem to the list.
+            this.sensorItemList.add(newSensorItem);
+        }
     }
 
-    public SensorInfo addSensorData(SensorData sensorData) {
-        sensorDataList.add(sensorData);
-        return this;
+    public int getSensorItemCount() {
+        return this.sensorItemList.size();
+    }
+
+    public SensorItem getSensorInfoByName(String name) {
+        for (SensorItem sensorItem : sensorItemList) {
+            if (sensorItem.getName().equals(name)) {
+                return sensorItem;
+            }
+        }
+        return null;
+    }
+
+    public SensorItem.Data getSensorDataByName(String name) {
+        for (SensorItem sensorItem : sensorItemList) {
+            if (sensorItem.getName().equals(name)) {
+                return sensorItem.getSensorData();
+            }
+        }
+        return null;
+    }
+
+    public boolean contains(String name) {
+        for (SensorItem sensorItem : sensorItemList) {
+            if (sensorItem.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

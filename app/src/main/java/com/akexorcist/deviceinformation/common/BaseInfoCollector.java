@@ -8,6 +8,6 @@ import android.content.Context;
 
 public abstract class BaseInfoCollector {
 
-    public abstract BaseInfo collect(Context context);
+    public abstract Object collect(Context context);
 
 }

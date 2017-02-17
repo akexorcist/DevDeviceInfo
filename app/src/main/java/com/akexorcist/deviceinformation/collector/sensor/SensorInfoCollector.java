@@ -6,8 +6,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 
-import com.akexorcist.deviceinformation.collector.sensor.model.SensorData;
 import com.akexorcist.deviceinformation.collector.sensor.model.SensorInfo;
+import com.akexorcist.deviceinformation.collector.sensor.model.SensorItem;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
 import java.util.ArrayList;
@@ -34,12 +34,11 @@ public class SensorInfoCollector extends BaseInfoCollector {
     public SensorInfo collect(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        List<SensorData> sensorDataList = new ArrayList<>();
+        List<SensorItem> sensorItemList = new ArrayList<>();
         if (sensorList != null) {
             for (Sensor sensor : sensorList) {
-                sensorDataList.add(new SensorData()
+                SensorItem.Data sensorData = new SensorItem.Data()
                         .setId(getId(sensor))
-                        .setName(getName(sensor))
                         .setType(getType(sensor))
                         .setVendor(getVendor(sensor))
                         .setVersion(getVersion(sensor))
@@ -51,10 +50,16 @@ public class SensorInfoCollector extends BaseInfoCollector {
                         .setFifoReservedEventCount(getFifoReservedEventCount(sensor))
                         .setFifoMaxEventCount(getFifoMaxEventCount(sensor))
                         .setWakeUpSensor(getWakeUpSensor(sensor))
-                        .setDynamicSensor(getDynamicSensor(sensor)));
+                        .setDynamicSensor(getDynamicSensor(sensor));
+                SensorItem sensorItem = new SensorItem();
+                sensorItem.setSensorData(sensorData);
+                sensorItem.setName(getName(sensor));
+                sensorItemList.add(sensorItem);
             }
         }
-        return new SensorInfo(sensorDataList);
+        SensorInfo sensorInfo = new SensorInfo();
+        sensorInfo.setSensorItemList(sensorItemList);
+        return sensorInfo;
     }
 
     private String getId(Sensor sensor) {
