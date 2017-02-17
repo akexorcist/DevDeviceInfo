@@ -13,8 +13,6 @@ import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.type;
-
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
@@ -127,7 +125,8 @@ public class SensorInfoCollector extends BaseInfoCollector {
 
     @SuppressWarnings("deprecation")
     private String getType(Sensor sensor) {
-        switch (sensor.getType()) {
+        int type = sensor.getType();
+        switch (type) {
             case Sensor.TYPE_ACCELEROMETER:
                 return "Accelerometer";
             case Sensor.TYPE_AMBIENT_TEMPERATURE:
