@@ -1,164 +1,150 @@
 package com.akexorcist.deviceinformation.collector.sensor.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.akexorcist.deviceinformation.common.BaseInfo;
 
 /**
  * Created by Akexorcist on 11/27/2016 AD.
  */
 
-public class SensorData {
-    @SerializedName("ID")
-    private String id;
-    @SerializedName("Name")
-    private String name;
-    @SerializedName("Vendor")
-    private String vendor;
-    @SerializedName("Type")
-    private String type;
-    @SerializedName("Version")
-    private String version;
-    @SerializedName("Power")
-    private String power;
-    @SerializedName("Maximum Range")
-    private String maximumRange;
-    @SerializedName("Resolution")
-    private String resolution;
-    @SerializedName("Minimum Delay")
-    private String minimumDelay;
-    @SerializedName("Maximum Delay")
-    private String maximumDelay;
-    @SerializedName("Fifo Max Event Count")
-    private String fifoMaxEventCount;
-    @SerializedName("Fifo Reserved Event Count")
-    private String fifoReservedEventCount;
-    @SerializedName("Dynamic Sensor")
-    private String dynamicSensor;
-    @SerializedName("Wake Up Sensor")
-    private String wakeUpSensor;
+public class SensorData extends BaseInfo {
+    private static final String ID = "ID";
+    private static final String NAME = "Name";
+    private static final String VENDOR = "Vendor";
+    private static final String TYPE = "Type";
+    private static final String VERSION = "Version";
+    private static final String POWER = "Power";
+    private static final String MAXIMUM_RANGE = "Maximum Range";
+    private static final String RESOLUTION = "Resolution";
+    private static final String MINIMUM_DELAY = "Minimum Delay";
+    private static final String MAXIMUM_DELAY = "Maximum Delay";
+    private static final String FIFO_MAX_EVENT_COUNT = "Fifo Max Event Count";
+    private static final String FIFO_RESERVED_EVENT_COUNT = "Fifo Reserved Event Count";
+    private static final String DYNAMIC_SENSOR = "Dynamic Sensor";
+    private static final String WAKE_UP_SENSOR = "Wake Up Sensor";
 
     public String getId() {
-        return id;
+        return getValueByTitle(ID);
     }
 
     public SensorData setId(String id) {
-        this.id = id;
+        setDataInfo(ID, id);
         return this;
     }
 
     public String getName() {
-        return name;
+        return getValueByTitle(NAME);
     }
 
     public SensorData setName(String name) {
-        this.name = name;
+        setDataInfo(NAME, name);
         return this;
     }
 
     public String getVendor() {
-        return vendor;
+        return getValueByTitle(VENDOR);
     }
 
     public SensorData setVendor(String vendor) {
-        this.vendor = vendor;
+        setDataInfo(VENDOR, vendor);
         return this;
     }
 
     public String getType() {
-        return type;
+        return getValueByTitle(TYPE);
     }
 
     public SensorData setType(String type) {
-        this.type = type;
+        setDataInfo(TYPE, type);
         return this;
     }
 
     public String getVersion() {
-        return version;
+        return getValueByTitle(VERSION);
     }
 
     public SensorData setVersion(String version) {
-        this.version = version;
+        setDataInfo(VERSION, version);
         return this;
     }
 
     public String getPower() {
-        return power;
+        return getValueByTitle(POWER);
     }
 
     public SensorData setPower(String power) {
-        this.power = power;
+        setDataInfo(POWER, power);
         return this;
     }
 
     public String getMaximumRange() {
-        return maximumRange;
+        return getValueByTitle(MAXIMUM_RANGE);
     }
 
     public SensorData setMaximumRange(String maximumRange) {
-        this.maximumRange = maximumRange;
+        setDataInfo(MAXIMUM_RANGE, maximumRange);
         return this;
     }
 
     public String getResolution() {
-        return resolution;
+        return getValueByTitle(RESOLUTION);
     }
 
     public SensorData setResolution(String resolution) {
-        this.resolution = resolution;
+        setDataInfo(RESOLUTION, resolution);
         return this;
     }
 
     public String getMinimumDelay() {
-        return minimumDelay;
+        return getValueByTitle(MINIMUM_DELAY);
     }
 
     public SensorData setMinimumDelay(String minimumDelay) {
-        this.minimumDelay = minimumDelay;
+        setDataInfo(MINIMUM_DELAY, minimumDelay);
         return this;
     }
 
     public String getMaximumDelay() {
-        return maximumDelay;
+        return getValueByTitle(MAXIMUM_DELAY);
     }
 
     public SensorData setMaximumDelay(String maximumDelay) {
-        this.maximumDelay = maximumDelay;
+        setDataInfo(MAXIMUM_DELAY, maximumDelay);
         return this;
     }
 
     public String getFifoMaxEventCount() {
-        return fifoMaxEventCount;
+        return getValueByTitle(FIFO_MAX_EVENT_COUNT);
     }
 
     public SensorData setFifoMaxEventCount(String fifoMaxEventCount) {
-        this.fifoMaxEventCount = fifoMaxEventCount;
+        setDataInfo(FIFO_MAX_EVENT_COUNT, fifoMaxEventCount);
         return this;
     }
 
     public String getFifoReservedEventCount() {
-        return fifoReservedEventCount;
+        return getValueByTitle(FIFO_RESERVED_EVENT_COUNT);
     }
 
     public SensorData setFifoReservedEventCount(String fifoReservedEventCount) {
-        this.fifoReservedEventCount = fifoReservedEventCount;
+        setDataInfo(FIFO_RESERVED_EVENT_COUNT, fifoReservedEventCount);
         return this;
     }
 
     public String getDynamicSensor() {
-        return dynamicSensor;
+        return getValueByTitle(DYNAMIC_SENSOR);
     }
 
     public SensorData setDynamicSensor(String dynamicSensor) {
-        this.dynamicSensor = dynamicSensor;
+        setDataInfo(DYNAMIC_SENSOR, dynamicSensor);
         return this;
     }
 
     public String getWakeUpSensor() {
-        return wakeUpSensor;
+        return getValueByTitle(WAKE_UP_SENSOR);
     }
 
     public SensorData setWakeUpSensor(String wakeUpSensor) {
-        this.wakeUpSensor = wakeUpSensor;
+        setDataInfo(WAKE_UP_SENSOR, wakeUpSensor);
         return this;
     }
 }
