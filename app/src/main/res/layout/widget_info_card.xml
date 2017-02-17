@@ -27,8 +27,7 @@
                 android:layout_marginLeft="@dimen/margin_padding"
                 android:layout_marginRight="@dimen/margin_padding"
                 android:layout_marginStart="@dimen/margin_padding"
-                android:layout_marginTop="@dimen/margin_padding_small"
-                android:text="Akexorcist" />
+                android:layout_marginTop="@dimen/margin_padding_small" />
 
             <LinearLayout
                 android:id="@+id/layout_info_content"
