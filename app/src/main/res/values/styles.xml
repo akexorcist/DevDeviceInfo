@@ -305,4 +305,11 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <!-- AV Loading Indicator View -->
+    <style name="LoadingIndicatorView">
+        <item name="indicatorColor">@color/accent</item>
+        <item name="indicatorName">BallPulseIndicator</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
 </resources>

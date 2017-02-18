@@ -10,11 +10,9 @@
         android:layout_height="match_parent">
 
         <com.wang.avi.AVLoadingIndicatorView
+            style="@style/LoadingIndicatorView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:indicatorColor="@color/accent"
-            app:indicatorName="BallPulseIndicator" />
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
     <FrameLayout
