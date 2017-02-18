@@ -16,7 +16,7 @@
     <dimen name="text_size_extra_large">20sp</dimen>
     <dimen name="text_size_extra_extra_large">24sp</dimen>
 
-    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
     <dimen name="divider">1dp</dimen>
     <dimen name="focused_border">2dp</dimen>
 
