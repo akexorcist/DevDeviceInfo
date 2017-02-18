@@ -1,49 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/margin_padding_small"
+    android:paddingEnd="@dimen/margin_padding"
     android:paddingLeft="@dimen/margin_padding"
     android:paddingRight="@dimen/margin_padding"
+    android:paddingStart="@dimen/margin_padding"
     android:paddingTop="@dimen/margin_padding_small">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_sensor_info_title"
+        style="@style/TextView.Gray.Small"
+        android:layout_width="@dimen/widget_bottom_sheet_info_title_width"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_padding_small"
-        app:cardCornerRadius="@dimen/corner_radius">
+        android:layout_marginEnd="@dimen/margin_padding_small"
+        android:layout_marginRight="@dimen/margin_padding" />
 
-        <LinearLayout
-            android:id="@+id/layout_info_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_padding">
-
-            <TextView
-                android:id="@+id/tv_sensor_title"
-                style="@style/TextView.Black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_padding"
-                android:layout_marginLeft="@dimen/margin_padding"
-                android:layout_marginRight="@dimen/margin_padding"
-                android:layout_marginStart="@dimen/margin_padding"
-                android:layout_marginTop="@dimen/margin_padding_small" />
-
-            <TextView
-                android:id="@+id/tv_sensor_type"
-                style="@style/TextView.LightGray.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_padding_small"
-                android:layout_marginEnd="@dimen/margin_padding"
-                android:layout_marginLeft="@dimen/margin_padding"
-                android:layout_marginRight="@dimen/margin_padding"
-                android:layout_marginStart="@dimen/margin_padding"
-                android:layout_marginTop="@dimen/margin_padding_small" />
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_sensor_info_value"
+        style="@style/TextView.Gray.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

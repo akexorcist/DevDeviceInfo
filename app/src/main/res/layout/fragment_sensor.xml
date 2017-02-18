@@ -22,22 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/srl_sensor_refresh"
+        <com.akexorcist.deviceinformation.widget.NestedCoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <include layout="@layout/view_sensor_content" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_sensor_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <include layout="@layout/view_sensor_bottom_sheet" />
 
-            </android.support.v4.widget.NestedScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </com.akexorcist.deviceinformation.widget.NestedCoordinatorLayout>
     </FrameLayout>
 </FrameLayout>

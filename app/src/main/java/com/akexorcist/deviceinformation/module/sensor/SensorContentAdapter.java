@@ -17,6 +17,7 @@ import java.util.List;
 
 public class SensorContentAdapter extends RecyclerView.Adapter<SensorInfoViewHolder> {
     private List<SensorItem> sensorItemList;
+    private OnSensorInfoClickListener onSensorInfoClickListener;
 
     public SensorContentAdapter() {
         sensorItemList = new ArrayList<>();
@@ -28,7 +29,7 @@ public class SensorContentAdapter extends RecyclerView.Adapter<SensorInfoViewHol
 
     @Override
     public SensorInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sensor_info_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sensor_item, parent, false);
         return new SensorInfoViewHolder(view);
     }
 
@@ -37,10 +38,27 @@ public class SensorContentAdapter extends RecyclerView.Adapter<SensorInfoViewHol
         SensorItem sensorItem = sensorItemList.get(position);
         holder.tvTitlt.setText(sensorItem.getName());
         holder.tvContent.setText(sensorItem.getSensorData().getType());
+        holder.itemView.setOnClickListener(onSensorInfoClick(sensorItem));
     }
 
     @Override
     public int getItemCount() {
         return sensorItemList != null ? sensorItemList.size() : 0;
+    }
+
+    private View.OnClickListener onSensorInfoClick(final SensorItem sensorItem) {
+        return v -> {
+            if (onSensorInfoClickListener != null) {
+                onSensorInfoClickListener.onSensorInfoClick(sensorItem);
+            }
+        };
+    }
+
+    public void setOnSensorInfoClickListener(OnSensorInfoClickListener onSensorInfoClickListener) {
+        this.onSensorInfoClickListener = onSensorInfoClickListener;
+    }
+
+    public interface OnSensorInfoClickListener {
+        void onSensorInfoClick(SensorItem sensorItem);
     }
 }

@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tv_sensor_title"
-                style="@style/TextView.Black"
+                style="@style/TextView.Gray"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_padding"
