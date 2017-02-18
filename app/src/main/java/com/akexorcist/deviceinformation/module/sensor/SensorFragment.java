@@ -80,6 +80,8 @@ public class SensorFragment extends DdiFragment implements SensorContentAdapter.
         sensorBottomSheetBehavior.setHideable(true);
         sensorBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         srlRefresh.setOnRefreshListener(onContentRefresh());
+        // Temporary disable swipe refresh layout in this version
+        srlRefresh.setEnabled(false);
         rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
         contentAdapter = new SensorContentAdapter();
         contentAdapter.setOnSensorInfoClickListener(this);

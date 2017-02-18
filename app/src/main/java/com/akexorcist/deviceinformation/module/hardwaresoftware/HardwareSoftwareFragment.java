@@ -80,6 +80,8 @@ public class HardwareSoftwareFragment extends DdiFragment {
     @Override
     protected void setupView() {
         srlRefresh.setOnRefreshListener(onContentRefresh());
+        // Temporary disable swipe refresh layout in this version
+        srlRefresh.setEnabled(false);
         setContentLayout(layoutContent);
         setLoadingLayout(layoutLoading);
     }
