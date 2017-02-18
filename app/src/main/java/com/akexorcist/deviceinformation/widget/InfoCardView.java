@@ -59,7 +59,7 @@ public class InfoCardView extends BaseCustomView {
 
     @Override
     protected void setupView() {
-        tvInfoTitle.setText(title);
+        setTitle(title);
     }
 
     @Override
