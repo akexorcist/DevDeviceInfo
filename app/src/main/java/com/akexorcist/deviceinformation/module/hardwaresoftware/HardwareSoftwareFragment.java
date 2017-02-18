@@ -147,12 +147,12 @@ public class HardwareSoftwareFragment extends DdiFragment {
     }
 
     private void collectAllInfo(GpuInfo gpuInfo) {
-        AndroidInfo androidInfo = AndroidInfoCollector.getInstance().collect(getContext());
+        AndroidInfo androidInfo = AndroidInfoCollector.getInstance().collect();
         BatteryInfo batteryInfo = BatteryInfoCollector.getInstance().collect(getContext());
-        BuildInfo buildInfo = BuildInfoCollector.getInstance().collect(getContext());
+        BuildInfo buildInfo = BuildInfoCollector.getInstance().collect();
         CpuInfo cpuInfo = CpuInfoCollector.getInstance().collect(getContext());
-        MemoryInfo memoryInfo = MemoryInfoCollector.getInstance().collect(getContext());
-        StorageInfo storageInfo = StorageInfoCollector.getInstance().collect(getContext());
+        MemoryInfo memoryInfo = MemoryInfoCollector.getInstance().collect();
+        StorageInfo storageInfo = StorageInfoCollector.getInstance().collect();
         icvAndroidInfo.setDataInfoList(androidInfo.getDataInfoList(), true);
         icvBatteryInfo.setDataInfoList(batteryInfo.getDataInfoList(), true);
         icvBuildInfo.setDataInfoList(buildInfo.getDataInfoList(), true);
