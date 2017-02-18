@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_feature_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:id="@+id/layout_feature_bottom_sheet_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/shape_shadow_gradient_top" />
+
+        <TextView
+            android:id="@+id/tv_feature_bottom_sheet_title"
+            style="@style/TextView.Accent.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin_padding_large"
+            android:paddingRight="@dimen/margin_padding_large"
+            android:paddingTop="@dimen/margin_padding_large" />
+
+        <LinearLayout
+            android:id="@+id/layout_feature_bottom_sheet_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/sensor_bottom_sheet_info_padding_bottom"
+            android:paddingLeft="@dimen/margin_padding_extra_large"
+            android:paddingRight="@dimen/margin_padding_extra_large"
+            android:paddingTop="@dimen/margin_padding_large" />
+    </LinearLayout>
+</FrameLayout>
