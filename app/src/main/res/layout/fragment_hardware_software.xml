@@ -34,7 +34,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/margin_padding"
                     android:paddingEnd="@dimen/margin_padding"
@@ -50,43 +50,43 @@
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_android_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_android_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_battery_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_battery_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_build_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_build_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_cpu_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_cpu_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_gpu_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_gpu_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_memory_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_memory_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_storage_info"
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
                         app:icv_title="@string/hardware_and_software_storage_info" />
 

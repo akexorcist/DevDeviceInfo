@@ -25,6 +25,8 @@
     <dimen name="screen_measurement_horizontal_text_margin_top">-18dp</dimen>
     <dimen name="screen_measurement_horizontal_text_margin_start">6dp</dimen>
 
+    <dimen name="content_width">320dp</dimen>
+
     <dimen name="hardware_and_software_surface_view_size">1dp</dimen>
     <dimen name="sensor_bottom_sheet_info_padding_bottom">80dp</dimen>
     <dimen name="widget_bottom_sheet_info_title_width">140dp</dimen>
