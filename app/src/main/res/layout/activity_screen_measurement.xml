@@ -205,6 +205,34 @@
 
         </RelativeLayout>
 
+        <!-- 384dp -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view_vertical_384"
+                android:layout_width="@dimen/divider"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="384dp"
+                android:layout_marginStart="384dp"
+                android:background="@color/primary" />
+
+            <TextView
+                android:id="@+id/tv_vertical_384"
+                style="@style/TextView.Black.ExtraSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/view_vertical_384"
+                android:layout_alignRight="@+id/view_vertical_384"
+                android:layout_marginEnd="@dimen/screen_measurement_vertical_text_margin_end"
+                android:layout_marginRight="@dimen/screen_measurement_vertical_text_margin_end"
+                android:layout_marginTop="@dimen/screen_measurement_vertical_text_margin_top"
+                android:rotation="90"
+                android:text="384dp" />
+
+        </RelativeLayout>
+
         <!-- 400dp -->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -971,6 +999,31 @@
                 android:layout_marginStart="@dimen/screen_measurement_horizontal_text_margin_start"
                 android:layout_marginTop="@dimen/screen_measurement_horizontal_text_margin_top"
                 android:text="360dp" />
+
+        </RelativeLayout>
+
+        <!-- 384dp -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view_horizontal_384"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginTop="384dp"
+                android:background="@color/primary" />
+
+            <TextView
+                android:id="@+id/tv_horizontal_384"
+                style="@style/TextView.Black.ExtraSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_horizontal_384"
+                android:layout_marginLeft="@dimen/screen_measurement_horizontal_text_margin_start"
+                android:layout_marginStart="@dimen/screen_measurement_horizontal_text_margin_start"
+                android:layout_marginTop="@dimen/screen_measurement_horizontal_text_margin_top"
+                android:text="384dp" />
 
         </RelativeLayout>
 
