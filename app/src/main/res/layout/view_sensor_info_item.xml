@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/tv_sensor_info_title"
-        style="@style/TextView.Gray.Small"
+        style="@style/TextView.Black.Small"
         android:layout_width="@dimen/widget_bottom_sheet_info_title_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_padding_small"

@@ -121,8 +121,12 @@ public class InfoCardView extends BaseCustomView {
     }
 
     private void updateTitle() {
-        tvInfoTitle.setText(title);
-        updateDataInfoList();
+        if (title != null) {
+            tvInfoTitle.setVisibility(View.VISIBLE);
+            tvInfoTitle.setText(title);
+        } else {
+            tvInfoTitle.setVisibility(View.GONE);
+        }
     }
 
     private void updateDataInfoList() {
