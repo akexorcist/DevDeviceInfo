@@ -312,4 +312,11 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <!-- Card View -->
+    <style name="InfoCardView">
+        <item name="android:layout_margin">@dimen/margin_padding_small</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardCornerRadius">@dimen/corner_radius</item>
+    </style>
+
 </resources>
