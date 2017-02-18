@@ -1,7 +1,5 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
-import android.content.Context;
-
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.MemoryInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import com.akexorcist.deviceinformation.utility.AndroidUtility;
@@ -29,8 +27,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
-    public MemoryInfo collect(Context context) {
+    public MemoryInfo collect() {
         return new MemoryInfo()
                 .setTotalMemory(getTotalMemory())
                 .setHeapSize(getHeapSize())

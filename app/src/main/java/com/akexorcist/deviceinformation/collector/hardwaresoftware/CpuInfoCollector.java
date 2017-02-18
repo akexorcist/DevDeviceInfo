@@ -24,7 +24,6 @@ public class CpuInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
     public CpuInfo collect(Context context) {
         String rawCpuInfo = getCpuInfo(context);
         return createCpuInfoFromRaw(rawCpuInfo);

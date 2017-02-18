@@ -1,7 +1,6 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.BuildInfo;
@@ -28,8 +27,7 @@ public class BuildInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
-    public BuildInfo collect(Context context) {
+    public BuildInfo collect() {
         return new BuildInfo()
                 .setBoard(getBoard())
                 .setBootloader(getBootloader())

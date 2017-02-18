@@ -1,7 +1,6 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
@@ -25,8 +24,7 @@ public class StorageInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
-    public StorageInfo collect(Context context) {
+    public StorageInfo collect() {
         return new StorageInfo()
                 .setInternalStorage(getTotalInternalStorage())
                 .setSdCardSupported(getSdCardSupported());

@@ -1,6 +1,5 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
-import android.content.Context;
 import android.os.Build;
 
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.AndroidInfo;
@@ -20,8 +19,7 @@ public class AndroidInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
-    public AndroidInfo collect(Context context) {
+    public AndroidInfo collect() {
         return new AndroidInfo()
                 .setApiVersion(getApiVersion())
                 .setSystemType(getSystemType())

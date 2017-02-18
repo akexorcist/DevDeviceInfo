@@ -28,7 +28,6 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
     public CommunicationInfo collect(Context context) {
         return new CommunicationInfo()
                 .setBluetooth(hasBluetooth(context))

@@ -23,7 +23,6 @@ public class BatteryInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
     public BatteryInfo collect(Context context) {
         return new BatteryInfo()
                 .setCapacity(getCapacity(context));

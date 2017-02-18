@@ -52,8 +52,7 @@ public class GpuInfoCollector extends BaseInfoCollector {
         });
     }
 
-    @Override
-    public GpuInfo collect(Context context) {
+    private GpuInfo collect(Context context) {
         return new GpuInfo()
                 .setVulkanSupported(getVulkanSupported(context))
                 .setOpenGlSupported(getOpenGLVersion(context));

@@ -28,7 +28,6 @@ public class SensorInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    @Override
     public SensorInfo collect(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
@@ -89,10 +88,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
 
     @SuppressLint("NewApi")
     private String getMinimumDelay(Sensor sensor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            return sensor.getMinDelay() + "";
-        }
-        return "Unknown";
+        return sensor.getMinDelay() + "";
     }
 
     @SuppressLint("NewApi")
