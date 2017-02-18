@@ -9,7 +9,6 @@
     android:paddingTop="@dimen/margin_padding_small">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cv_android_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_padding_small"
@@ -24,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tv_sensor_title"
-                style="@style/TextView.Accent"
+                style="@style/TextView.Black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_padding"
