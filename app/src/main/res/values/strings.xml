@@ -19,4 +19,6 @@
     <string name="hardware_and_software_memory_info">Memory Info</string>
     <string name="hardware_and_software_storage_info">Storage Info</string>
 
+    <string name="screen_open_screen_measurement">Open Screen Measurement</string>
+
 </resources>
