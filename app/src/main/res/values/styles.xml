@@ -231,6 +231,23 @@
         <item name="android:textSize">@dimen/text_size_extra_extra_large</item>
     </style>
 
+    <!-- Button -->
+    <style name="Button.Borderless">
+        <item name="android:background">@drawable/selector_button_borderless</item>
+    </style>
+
+    <style name="Button.Borderless.Link">
+        <item name="android:textColor">@color/text_link</item>
+    </style>
+
+    <style name="Button.Borderless.Error">
+        <item name="android:textColor">@color/text_error</item>
+    </style>
+
+    <style name="Button.Borderless.Black">
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
     <style name="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size</item>
