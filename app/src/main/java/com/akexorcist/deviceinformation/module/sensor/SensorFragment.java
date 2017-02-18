@@ -104,7 +104,7 @@ public class SensorFragment extends DdiFragment implements SensorContentAdapter.
 
     @Override
     public void restoreView() {
-
+        collectSensorInfo();
     }
 
     @Override

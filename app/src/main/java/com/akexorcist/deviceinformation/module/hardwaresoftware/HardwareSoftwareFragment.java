@@ -102,7 +102,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
 
     @Override
     public void restoreView() {
-
+        collectGpuInfo();
     }
 
     @Override
