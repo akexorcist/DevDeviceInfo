@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Akexorcist on 2/17/2017 AD.
  */
 
-public class SensorContentAdapter extends RecyclerView.Adapter<SensorInfoViewHolder> {
+public class SensorContentAdapter extends RecyclerView.Adapter<SensorContentViewHolder> {
     private List<SensorItem> sensorItemList;
     private OnSensorInfoClickListener onSensorInfoClickListener;
 
@@ -28,13 +28,13 @@ public class SensorContentAdapter extends RecyclerView.Adapter<SensorInfoViewHol
     }
 
     @Override
-    public SensorInfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SensorContentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_sensor_item, parent, false);
-        return new SensorInfoViewHolder(view);
+        return new SensorContentViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SensorInfoViewHolder holder, int position) {
+    public void onBindViewHolder(SensorContentViewHolder holder, int position) {
         SensorItem sensorItem = sensorItemList.get(position);
         holder.tvTitlt.setText(sensorItem.getName());
         holder.tvContent.setText(sensorItem.getSensorData().getType());
