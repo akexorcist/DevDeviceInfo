@@ -291,6 +291,22 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="Divider.Horizontal.Gray">
+        <item name="android:background">@color/gray</item>
+    </style>
+
+    <style name="Divider.Vertical.Gray">
+        <item name="android:background">@color/gray</item>
+    </style>
+
+    <style name="Divider.Horizontal.LightGray">
+        <item name="android:background">@color/light_gray</item>
+    </style>
+
+    <style name="Divider.Vertical.LightGray">
+        <item name="android:background">@color/light_gray</item>
+    </style>
+
     <style name="Divider.Horizontal.Transparent">
         <item name="android:background">@color/transparent</item>
     </style>
