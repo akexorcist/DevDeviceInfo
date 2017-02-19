@@ -103,5 +103,8 @@
     <string name="feature_description_webview">The device has a full implementation of the android.webkit.* APIs. Devices lacking this feature will not have a functioning WebView implementation.</string>
     <string name="feature_description_wifi">The device supports WiFi (802.11) networking.</string>
     <string name="feature_description_wifi_direct">The device supports Wi-Fi Direct networking.</string>
+    <string name="feature_empty_feature_available">Empty feature available here.</string>
+    <string name="feature_supported_feature_header">Supported Feature</string>
+    <string name="feature_unsupported_feature_header">Unsupported Feature</string>
 
 </resources>
