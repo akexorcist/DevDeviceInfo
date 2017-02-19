@@ -6,12 +6,12 @@ import java.util.List;
  * Created by Akexorcist on 2/19/2017 AD.
  */
 
-public class ApplicationItem {
+public class AppItem {
     private String name;
     private String packageName;
     private String versionName;
     private String versionCode;
-    private String iconResId;
+    private int iconResId;
     private List<String> requiredFeatureList;
     private List<String> permissionList;
     private List<String> activityList;
@@ -19,14 +19,14 @@ public class ApplicationItem {
     private List<String> receiverList;
     private List<String> providerList;
 
-    public ApplicationItem() {
+    public AppItem() {
     }
 
     public String getName() {
         return name;
     }
 
-    public ApplicationItem setName(String name) {
+    public AppItem setName(String name) {
         this.name = name;
         return this;
     }
@@ -35,7 +35,7 @@ public class ApplicationItem {
         return packageName;
     }
 
-    public ApplicationItem setPackageName(String packageName) {
+    public AppItem setPackageName(String packageName) {
         this.packageName = packageName;
         return this;
     }
@@ -44,7 +44,7 @@ public class ApplicationItem {
         return versionName;
     }
 
-    public ApplicationItem setVersionName(String versionName) {
+    public AppItem setVersionName(String versionName) {
         this.versionName = versionName;
         return this;
     }
@@ -53,16 +53,16 @@ public class ApplicationItem {
         return versionCode;
     }
 
-    public ApplicationItem setVersionCode(String versionCode) {
+    public AppItem setVersionCode(String versionCode) {
         this.versionCode = versionCode;
         return this;
     }
 
-    public String getIconResId() {
+    public int getIconResId() {
         return iconResId;
     }
 
-    public ApplicationItem setIconResId(String iconResId) {
+    public AppItem setIconResId(int iconResId) {
         this.iconResId = iconResId;
         return this;
     }
@@ -71,7 +71,7 @@ public class ApplicationItem {
         return requiredFeatureList;
     }
 
-    public ApplicationItem setRequiredFeatureList(List<String> requiredFeatureList) {
+    public AppItem setRequiredFeatureList(List<String> requiredFeatureList) {
         this.requiredFeatureList = requiredFeatureList;
         return this;
     }
@@ -80,7 +80,7 @@ public class ApplicationItem {
         return permissionList;
     }
 
-    public ApplicationItem setPermissionList(List<String> permissionList) {
+    public AppItem setPermissionList(List<String> permissionList) {
         this.permissionList = permissionList;
         return this;
     }
@@ -89,7 +89,7 @@ public class ApplicationItem {
         return activityList;
     }
 
-    public ApplicationItem setActivityList(List<String> activityList) {
+    public AppItem setActivityList(List<String> activityList) {
         this.activityList = activityList;
         return this;
     }
@@ -98,7 +98,7 @@ public class ApplicationItem {
         return serviceList;
     }
 
-    public ApplicationItem setServiceList(List<String> serviceList) {
+    public AppItem setServiceList(List<String> serviceList) {
         this.serviceList = serviceList;
         return this;
     }
@@ -107,7 +107,7 @@ public class ApplicationItem {
         return receiverList;
     }
 
-    public ApplicationItem setReceiverList(List<String> receiverList) {
+    public AppItem setReceiverList(List<String> receiverList) {
         this.receiverList = receiverList;
         return this;
     }
@@ -116,7 +116,7 @@ public class ApplicationItem {
         return providerList;
     }
 
-    public ApplicationItem setProviderList(List<String> providerList) {
+    public AppItem setProviderList(List<String> providerList) {
         this.providerList = providerList;
         return this;
     }
