@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.applist;
+package com.akexorcist.deviceinformation.module.application;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +10,13 @@ import com.akexorcist.deviceinformation.common.BaseDdiFragment;
  * Created by Akexorcist on 11/20/2016 AD.
  */
 
-public class AppListFragment extends BaseDdiFragment {
+public class ApplicationFragment extends BaseDdiFragment {
 
-    public static AppListFragment newInstance() {
-        return new AppListFragment();
+    public static ApplicationFragment newInstance() {
+        return new ApplicationFragment();
     }
 
-    public AppListFragment() {
+    public ApplicationFragment() {
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.akexorcist.deviceinformation.R;
-import com.akexorcist.deviceinformation.module.applist.AppListFragment;
+import com.akexorcist.deviceinformation.module.application.ApplicationFragment;
 import com.akexorcist.deviceinformation.module.camera2.Camera2Fragment;
 import com.akexorcist.deviceinformation.module.camera.CameraFragment;
 import com.akexorcist.deviceinformation.module.feature.FeatureFragment;
@@ -50,7 +50,7 @@ public class TabContentAdapter extends FragmentStatePagerAdapter {
         } else if (position == PAGE_FEATURE) {
             return FeatureFragment.newInstance();
         } else if (position == PAGE_APP_LIST) {
-            return AppListFragment.newInstance();
+            return ApplicationFragment.newInstance();
         }
         throw new NullPointerException("Position doesn't match with any fragment");
     }
