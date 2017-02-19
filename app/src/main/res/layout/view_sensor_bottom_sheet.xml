@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/sensor_bottom_sheet_info_padding_bottom"
+            android:paddingBottom="@dimen/widget_bottom_sheet_info_padding_bottom"
             android:paddingLeft="@dimen/margin_padding_extra_large"
             android:paddingRight="@dimen/margin_padding_extra_large"
             android:paddingTop="@dimen/margin_padding_large" />
