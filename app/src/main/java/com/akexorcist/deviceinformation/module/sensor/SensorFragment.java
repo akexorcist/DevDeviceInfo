@@ -34,7 +34,7 @@ import rx.schedulers.Schedulers;
  * Created by Akexorcist on 11/20/2016 AD.
  */
 
-public class SensorFragment extends DdiFragment implements SensorContentAdapter.OnSensorInfoClickListener {
+public class SensorFragment extends DdiFragment {
     private FrameLayout layoutSensorLoading;
     private FrameLayout layoutSensorContent;
     private FrameLayout layoutBottomSheet;
@@ -84,7 +84,7 @@ public class SensorFragment extends DdiFragment implements SensorContentAdapter.
         srlRefresh.setEnabled(false);
         rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
         contentAdapter = new SensorContentAdapter();
-        contentAdapter.setOnSensorInfoClickListener(this);
+        contentAdapter.setOnSensorInfoClickListener(onSensorInfoClick());
         rvContent.setAdapter(contentAdapter);
     }
 
@@ -115,9 +115,8 @@ public class SensorFragment extends DdiFragment implements SensorContentAdapter.
 
     }
 
-    @Override
-    public void onSensorInfoClick(SensorItem sensorItem) {
-        showSensorInfoBottomSheet(sensorItem);
+    private SensorContentAdapter.OnSensorInfoClickListener onSensorInfoClick() {
+        return this::showSensorInfoBottomSheet;
     }
 
     private SwipeRefreshLayout.OnRefreshListener onContentRefresh() {
