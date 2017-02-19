@@ -11,8 +11,8 @@ import com.akexorcist.deviceinformation.R;
  */
 
 public class SensorContentViewHolder extends RecyclerView.ViewHolder {
-    TextView tvTitle;
-    TextView tvContent;
+    public TextView tvTitle;
+    public TextView tvContent;
 
     public SensorContentViewHolder(View itemView) {
         super(itemView);

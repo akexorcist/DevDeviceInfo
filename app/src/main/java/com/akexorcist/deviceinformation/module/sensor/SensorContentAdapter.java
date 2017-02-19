@@ -36,7 +36,7 @@ public class SensorContentAdapter extends RecyclerView.Adapter<SensorContentView
     @Override
     public void onBindViewHolder(SensorContentViewHolder holder, int position) {
         SensorItem sensorItem = sensorItemList.get(position);
-        holder.tvTitlt.setText(sensorItem.getName());
+        holder.tvTitle.setText(sensorItem.getName());
         holder.tvContent.setText(sensorItem.getSensorData().getType());
         holder.itemView.setOnClickListener(onSensorInfoClick(sensorItem));
     }
