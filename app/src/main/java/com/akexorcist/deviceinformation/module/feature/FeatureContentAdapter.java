@@ -15,16 +15,20 @@ import com.akexorcist.deviceinformation.module.feature.holder.FeatureUnknownView
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
+
 /**
  * Created by Akexorcist on 2/17/2017 AD.
  */
 
-public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final int TYPE_SUPPORTED_HEADER = 0;
-    private static final int TYPE_UNSUPPORTED_HEADER = 1;
-    private static final int TYPE_FEATURE_ITEM = 2;
-    private static final int TYPE_EMPTY_ITEM = 3;
-    private static final int TYPE_UNKNOWN = 4;
+public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements StickyHeaderAdapter<RecyclerView.ViewHolder> {
+    private static final int TYPE_FEATURE_ITEM = 0;
+    private static final int TYPE_EMPTY_SUPPORTED_ITEM = 1;
+    private static final int TYPE_EMPTY_UNSUPPORTED_ITEM = 2;
+    private static final int TYPE_UNKNOWN = 3;
+    private static final int HEADER_ID_SUPPORTED = 1;
+    private static final int HEADER_ID_UNSUPPORTED = 2;
 
     private List<FeatureItem> supportedFeatureItem;
     private List<FeatureItem> unsupportedFeatureItem;
@@ -45,12 +49,9 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (viewType == TYPE_FEATURE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_feature_item, parent, false);
             return new FeatureContentViewHolder(view);
-        } else if (viewType == TYPE_EMPTY_ITEM) {
+        } else if (viewType == TYPE_EMPTY_SUPPORTED_ITEM || viewType == TYPE_EMPTY_UNSUPPORTED_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_feature_empty_item, parent, false);
             return new FeatureEmptyViewHolder(view);
-        } else if (viewType == TYPE_SUPPORTED_HEADER || viewType == TYPE_UNSUPPORTED_HEADER) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_feature_header_item, parent, false);
-            return new FeatureHeaderViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_feature_unknown_item, parent, false);
             return new FeatureUnknownViewHolder(view);
@@ -67,40 +68,33 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 contentViewHolder.tvPackageName.setText(featureItem.getPackageName());
                 contentViewHolder.itemView.setOnClickListener(onFeatureContentClick(featureItem));
             }
-        } else if (holder instanceof FeatureHeaderViewHolder) {
-            FeatureHeaderViewHolder headerViewHolder = (FeatureHeaderViewHolder) holder;
-            headerViewHolder.tvHeader.setVisibility(View.VISIBLE);
-            int viewType = getItemViewType(position);
-            if (viewType == TYPE_SUPPORTED_HEADER) {
-                headerViewHolder.tvHeader.setText(R.string.feature_supported_feature_header);
-            } else if (viewType == TYPE_UNSUPPORTED_HEADER) {
-                headerViewHolder.tvHeader.setText(R.string.feature_unsupported_feature_header);
-            } else {
-                headerViewHolder.tvHeader.setVisibility(View.GONE);
-            }
         } else if (holder instanceof FeatureEmptyViewHolder) {
             FeatureEmptyViewHolder emptyViewHolder = (FeatureEmptyViewHolder) holder;
-            // Nothing to do yet
+            emptyViewHolder.tvEmptyDescription.setVisibility(View.VISIBLE);
+            int viewType = getItemViewType(position);
+            if (viewType == TYPE_EMPTY_SUPPORTED_ITEM) {
+                emptyViewHolder.tvEmptyDescription.setText(R.string.feature_empty_supported_feature_available);
+            } else if (viewType == TYPE_EMPTY_UNSUPPORTED_ITEM) {
+                emptyViewHolder.tvEmptyDescription.setText(R.string.feature_empty_unsupported_feature_available);
+            } else {
+                emptyViewHolder.tvEmptyDescription.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (isSupportedFeatureHeader(position)) {
-            return TYPE_SUPPORTED_HEADER;
-        } else if (isSupportedFeatureContent(position)) {
+        if (isSupportedFeatureContent(position)) {
             if (isSupportedFeatureAvailable()) {
                 return TYPE_FEATURE_ITEM;
             } else {
-                return TYPE_EMPTY_ITEM;
+                return TYPE_EMPTY_SUPPORTED_ITEM;
             }
-        } else if (isUnsupportedFeatureHeader(position)) {
-            return TYPE_UNSUPPORTED_HEADER;
         } else if (isUnsupportedFeatureContent(position)) {
             if (isUnsupportedFeatureAvailable()) {
                 return TYPE_FEATURE_ITEM;
             } else {
-                return TYPE_EMPTY_ITEM;
+                return TYPE_EMPTY_UNSUPPORTED_ITEM;
             }
         }
         return TYPE_UNKNOWN;
@@ -110,8 +104,7 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemCount() {
         int supportedItemCount = getSupportedItemCount();
         int unsupportedItemCount = getUnsupportedItemCount();
-        int headerCount = 2;
-        return supportedItemCount + unsupportedItemCount + headerCount;
+        return supportedItemCount + unsupportedItemCount;
     }
 
     private int getSupportedItemCount() {
@@ -125,22 +118,16 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private FeatureItem getFeatureContentByPosition(int position) {
-        if (isSupportedFeatureHeader(position)) {
-            // Supported header type
-            return null;
-        } else if (isSupportedFeatureContent(position)) {
+        if (isSupportedFeatureContent(position)) {
             // getSupportedItemCount can be 1 when have no feature in supported feature
             if (isSupportedFeatureAvailable()) {
                 // Supported feature item type
-                return supportedFeatureItem.get(position - 1);
+                return supportedFeatureItem.get(position);
             }
-        } else if (isUnsupportedFeatureHeader(position)) {
-            // Unsupported header type
-            return null;
         } else if (isUnsupportedFeatureContent(position)) {
             if (isUnsupportedFeatureAvailable()) {
                 // Unsupported feature item type
-                return unsupportedFeatureItem.get(position - (getSupportedItemCount() + 2));
+                return unsupportedFeatureItem.get(position - getSupportedItemCount());
             }
         }
         // For other view holder type
@@ -155,20 +142,12 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return unsupportedFeatureItem != null && unsupportedFeatureItem.size() != 0;
     }
 
-    private boolean isSupportedFeatureHeader(int position) {
-        return position == 0;
-    }
-
     private boolean isSupportedFeatureContent(int position) {
-        return position > 0 && position <= getSupportedItemCount();
-    }
-
-    private boolean isUnsupportedFeatureHeader(int position) {
-        return position == getSupportedItemCount() + 1;
+        return position >= 0 && position < getSupportedItemCount();
     }
 
     private boolean isUnsupportedFeatureContent(int position) {
-        return position > getSupportedItemCount() + 1 && position <= getSupportedItemCount() + getUnsupportedItemCount() + 1;
+        return position >= getSupportedItemCount() && position < getSupportedItemCount() + getUnsupportedItemCount();
     }
 
     private View.OnClickListener onFeatureContentClick(final FeatureItem featureItem) {
@@ -181,6 +160,36 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void setOnFeatureInfoClickListener(OnFeatureInfoClickListener onFeatureInfoClickListener) {
         this.onFeatureInfoClickListener = onFeatureInfoClickListener;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        if (isSupportedFeatureContent(position)) {
+            return HEADER_ID_SUPPORTED;
+        } else if (isUnsupportedFeatureContent(position)) {
+            return HEADER_ID_UNSUPPORTED;
+        } else {
+            return StickyHeaderDecoration.NO_HEADER_ID;
+        }
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_feature_header_item, parent, false);
+        return new FeatureHeaderViewHolder(view);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+        FeatureHeaderViewHolder headerViewHolder = (FeatureHeaderViewHolder) holder;
+        headerViewHolder.tvHeader.setVisibility(View.VISIBLE);
+        if (isSupportedFeatureContent(position)) {
+            headerViewHolder.tvHeader.setText(R.string.feature_supported_feature_header);
+        } else if (isUnsupportedFeatureContent(position)) {
+            headerViewHolder.tvHeader.setText(R.string.feature_unsupported_feature_header);
+        } else {
+            headerViewHolder.tvHeader.setVisibility(View.GONE);
+        }
     }
 
     public interface OnFeatureInfoClickListener {
