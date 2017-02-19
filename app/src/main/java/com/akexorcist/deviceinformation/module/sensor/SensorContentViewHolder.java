@@ -11,12 +11,12 @@ import com.akexorcist.deviceinformation.R;
  */
 
 public class SensorContentViewHolder extends RecyclerView.ViewHolder {
-    TextView tvTitlt;
+    TextView tvTitle;
     TextView tvContent;
 
     public SensorContentViewHolder(View itemView) {
         super(itemView);
-        tvTitlt = (TextView) itemView.findViewById(R.id.tv_sensor_title);
+        tvTitle = (TextView) itemView.findViewById(R.id.tv_sensor_title);
         tvContent = (TextView) itemView.findViewById(R.id.tv_sensor_type);
     }
 }
