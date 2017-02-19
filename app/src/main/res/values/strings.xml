@@ -107,5 +107,6 @@
     <string name="feature_empty_unsupported_feature_available">This device have no unsupported feature</string>
     <string name="feature_supported_feature_header">Supported Feature</string>
     <string name="feature_unsupported_feature_header">Unsupported Feature</string>
+    <string name="feature_api_level">API Level</string>
 
 </resources>

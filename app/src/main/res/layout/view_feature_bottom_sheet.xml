@@ -20,25 +20,41 @@
             android:layout_height="8dp"
             android:background="@drawable/shape_shadow_gradient_top" />
 
-        <TextView
-            android:id="@+id/tv_feature_bottom_sheet_title"
-            style="@style/TextView.Accent.Large"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/margin_padding_large"
-            android:paddingRight="@dimen/margin_padding_large"
-            android:paddingTop="@dimen/margin_padding_large" />
-
         <LinearLayout
-            android:id="@+id/layout_feature_bottom_sheet_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/sensor_bottom_sheet_info_padding_bottom"
-            android:paddingLeft="@dimen/margin_padding_extra_large"
-            android:paddingRight="@dimen/margin_padding_extra_large"
-            android:paddingTop="@dimen/margin_padding_large" />
+            android:paddingLeft="@dimen/margin_padding_large"
+            android:paddingRight="@dimen/margin_padding_large">
+
+            <TextView
+                android:id="@+id/tv_feature_bottom_sheet_name"
+                style="@style/TextView.Accent.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_padding"
+                android:paddingTop="@dimen/margin_padding_large" />
+
+            <TextView
+                android:id="@+id/tv_feature_bottom_sheet_package_name"
+                style="@style/TextView.LightGray.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_feature_bottom_sheet_minimum_sdk"
+                style="@style/TextView.LightGray.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_feature_bottom_sheet_description"
+                style="@style/TextView.Gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/widget_bottom_sheet_info_padding_bottom"
+                android:layout_marginTop="@dimen/margin_padding" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
