@@ -6,33 +6,33 @@ import java.util.List;
  * Created by Akexorcist on 2/19/2017 AD.
  */
 
-public class ApplicationInfo {
-    private List<ApplicationItem> downloadedApplicationItemList;
-    private List<ApplicationItem> systemApplicationItemList;
+public class AppInfo {
+    private List<AppItem> downloadedAppItemList;
+    private List<AppItem> systemAppItemList;
 
-    public ApplicationInfo() {
+    public AppInfo() {
     }
 
-    public ApplicationInfo(List<ApplicationItem> downloadedApplicationItemList, List<ApplicationItem> systemApplicationItemList) {
-        this.downloadedApplicationItemList = downloadedApplicationItemList;
-        this.systemApplicationItemList = systemApplicationItemList;
+    public AppInfo(List<AppItem> downloadedAppItemList, List<AppItem> systemAppItemList) {
+        this.downloadedAppItemList = downloadedAppItemList;
+        this.systemAppItemList = systemAppItemList;
     }
 
-    public List<ApplicationItem> getDownloadedApplicationItemList() {
-        return downloadedApplicationItemList;
+    public List<AppItem> getDownloadedAppItemList() {
+        return downloadedAppItemList;
     }
 
-    public ApplicationInfo setDownloadedApplicationItemList(List<ApplicationItem> downloadedApplicationItemList) {
-        this.downloadedApplicationItemList = downloadedApplicationItemList;
+    public AppInfo setDownloadedAppItemList(List<AppItem> downloadedAppItemList) {
+        this.downloadedAppItemList = downloadedAppItemList;
         return this;
     }
 
-    public List<ApplicationItem> getSystemApplicationItemList() {
-        return systemApplicationItemList;
+    public List<AppItem> getSystemAppItemList() {
+        return systemAppItemList;
     }
 
-    public ApplicationInfo setSystemApplicationItemList(List<ApplicationItem> systemApplicationItemList) {
-        this.systemApplicationItemList = systemApplicationItemList;
+    public AppInfo setSystemAppItemList(List<AppItem> systemAppItemList) {
+        this.systemAppItemList = systemAppItemList;
         return this;
     }
 }

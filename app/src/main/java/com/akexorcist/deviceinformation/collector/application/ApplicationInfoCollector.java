@@ -1,201 +1,166 @@
-package com.akexorcist.deviceinformation.collector.screen;
+package com.akexorcist.deviceinformation.collector.application;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.FeatureInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.os.Build;
-import android.util.DisplayMetrics;
-import android.view.Display;
+import android.content.pm.ProviderInfo;
+import android.content.pm.ServiceInfo;
+import android.content.res.Resources;
+import android.util.Log;
 
-import com.akexorcist.deviceinformation.collector.screen.model.Resolution;
-import com.akexorcist.deviceinformation.collector.screen.model.ScreenInfo;
+import com.akexorcist.deviceinformation.collector.application.model.AppInfo;
+import com.akexorcist.deviceinformation.collector.application.model.AppItem;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Akexorcist on 11/22/2016 AD.
  */
 
-public class ScreenInfoCollector extends BaseInfoCollector {
-    private static ScreenInfoCollector collector;
+public class ApplicationInfoCollector extends BaseInfoCollector {
+    private static ApplicationInfoCollector collector;
 
-    public static ScreenInfoCollector getInstance() {
+    public static ApplicationInfoCollector getInstance() {
         if (collector == null) {
-            collector = new ScreenInfoCollector();
+            collector = new ApplicationInfoCollector();
         }
         return collector;
     }
 
-    public ScreenInfo collect(Activity activity) {
-        return new ScreenInfo()
-                .setResolutionPx(getResolutionPx(activity))
-                .setResolutionDp(getResolutionDp(activity))
-                .setDpiX(getDpiX(activity))
-                .setDpiY(getDpiY(activity))
-                .setDpi(getDpi(activity))
-                .setSize(getSize(activity))
-                .setDensity(getDensity(activity))
-                .setRatio(getRatio(activity))
-                .setMultitouch(getMultitouch(activity));
+    public AppInfo collect(Context context) {
+        return new AppInfo()
+                .setDownloadedAppItemList(getApplicationList(context, AppItem.Type.DOWNLOADED))
+                .setSystemAppItemList(getApplicationList(context, AppItem.Type.SYSTEM));
     }
 
-    private String getResolutionPx(Activity activity) {
-        Resolution screenResolution = getScreenResolutionPX(activity, null);
-        return (int) screenResolution.getY() + " x " + (int) screenResolution.getX() + " DP";
-    }
-
-    private String getResolutionDp(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        display.getMetrics(dm);
-        Resolution screenResolution = getScreenResolutionPX(activity, display);
-        int heightDp = (int) (screenResolution.getY() * (1f / dm.density));
-        int widthDp = (int) (screenResolution.getX() * (1f / dm.density));
-        return heightDp + " x " + widthDp + " DP";
-    }
-
-    private String getDpiX(Activity activity) {
-        return getScreenResolutionDpi(activity).getX() + " DPI";
-    }
-
-    private String getDpiY(Activity activity) {
-        return getScreenResolutionDpi(activity).getY() + " DPI";
-    }
-
-    private String getDpi(Activity activity) {
-        DisplayMetrics dm = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        return dm.densityDpi + " DPI";
-    }
-
-    private String getSize(Context context) {
-        int screenSize = context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK;
-        if (screenSize == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            return "Small";
-        } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            return "Normal";
-        } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            return "Large";
-        } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-            return "Extra Large";
-        } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_UNDEFINED) {
-            return "Undefined";
-        }
-        return "Unknown";
-    }
-
-    private String getDensity(Activity activity) {
-        DisplayMetrics dm = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        if (dm.densityDpi == DisplayMetrics.DENSITY_LOW) {
-            return "Low";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_MEDIUM) {
-            return "Medium";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_TV) {
-            return "TV";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_HIGH) {
-            return "High";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_XHIGH) {
-            return "Extra High";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_XXHIGH) {
-            return "Extra Extra High";
-        } else if (dm.densityDpi == DisplayMetrics.DENSITY_XXXHIGH) {
-            return "Extra Extra Extra High";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
-                && dm.densityDpi == DisplayMetrics.DENSITY_260) {
-            return "Density 260";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
-                && dm.densityDpi == DisplayMetrics.DENSITY_280) {
-            return "Density 280";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
-                && dm.densityDpi == DisplayMetrics.DENSITY_300) {
-            return "Density 300";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
-                && dm.densityDpi == DisplayMetrics.DENSITY_340) {
-            return "Density 340";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && dm.densityDpi == DisplayMetrics.DENSITY_360) {
-            return "Density 360";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && dm.densityDpi == DisplayMetrics.DENSITY_400) {
-            return "Density 400";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && dm.densityDpi == DisplayMetrics.DENSITY_420) {
-            return "Density 420";
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                && dm.densityDpi == DisplayMetrics.DENSITY_560) {
-            return "Density 560";
-        }
-        return "Unknown";
-    }
-
-    private String getRatio(Context context) {
-        int screenSize = context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_LONG_MASK;
-        if (screenSize == Configuration.SCREENLAYOUT_LONG_YES) {
-            return "Long";
-        } else if (screenSize == Configuration.SCREENLAYOUT_LONG_NO) {
-            return "Not Long";
-        } else if (screenSize == Configuration.SCREENLAYOUT_LONG_UNDEFINED) {
-            return "Undefined";
-        }
-        return "Unknown";
-    }
-
-    private String getMultitouch(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_JAZZHAND)) {
-            return "5+ Points";
-        } else if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT)) {
-            return "2-5 Points";
-        } else if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH)) {
-            return "2 Points";
-        }
-        return "Not supported";
-    }
-
-    @SuppressWarnings("deprecation")
-    private Resolution getScreenResolutionPX(Activity activity, Display display) {
-        if (display == null) {
-            display = activity.getWindowManager().getDefaultDisplay();
-        }
-        int resolutionX = 0, resolutionY = 0;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            try {
-                Method mGetRawH = Display.class.getMethod("getRawHeight");
-                Method mGetRawW = Display.class.getMethod("getRawWidth");
-                resolutionX = (Integer) mGetRawW.invoke(display);
-                resolutionY = (Integer) mGetRawH.invoke(display);
-            } catch (Exception e) {
-                resolutionX = display.getWidth();
-                resolutionY = display.getHeight();
+    private List<AppItem> getApplicationList(Context context, int applicationType) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ApplicationInfo> applicationInfoList = packageManager.getInstalledApplications(0);
+        List<AppItem> appItemList = new ArrayList<>();
+        for (ApplicationInfo applicationInfo : applicationInfoList) {
+            if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == applicationType) {
+                String packageName = applicationInfo.packageName;
+                if (!isAppInfoContains(appItemList, packageName)) {
+                    String name = getApplicationName(packageManager, applicationInfo);
+                    PackageInfo packageInfo = getPackageInfo(packageManager, packageName);
+                    if (packageInfo != null) {
+                        AppItem appItem = new AppItem()
+                                .setName(name)
+                                .setPackageName(packageName)
+                                .setVersionCode(packageInfo.versionCode + "")
+                                .setVersionName(packageInfo.versionName)
+                                .setIconResId(applicationInfo.icon)
+                                .setPermissionList(getPermissionList(packageInfo))
+                                .setActivityList(getActivityList(packageInfo))
+                                .setServiceList(getServiceList(packageInfo))
+                                .setReceiverList(getReceiverList(packageInfo))
+                                .setProviderList(getProviderList(packageInfo))
+                                .setRequiredFeatureList(getRequiredFeatureList(packageInfo));
+                        appItemList.add(appItem);
+                    }
+                }
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DisplayMetrics outMetrics = new DisplayMetrics();
-            display.getRealMetrics(outMetrics);
-            resolutionX = outMetrics.widthPixels;
-            resolutionY = outMetrics.heightPixels;
         }
-        return new Resolution(resolutionX, resolutionY);
+        return appItemList;
     }
 
-    private Resolution getScreenResolutionDpi(Activity activity) {
-        float densityX = 0;
-        float densityY = 0;
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            densityY = activity.getResources().getDisplayMetrics().ydpi;
-            densityX = activity.getResources().getDisplayMetrics().xdpi;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DisplayMetrics outMetrics = new DisplayMetrics();
-            display.getRealMetrics(outMetrics);
-            densityY = outMetrics.ydpi;
-            densityX = outMetrics.xdpi;
+    private boolean isAppInfoContains(List<AppItem> appItemList, String packageName) {
+        if (appItemList != null) {
+            for (AppItem appItem : appItemList) {
+                if (appItem.getPackageName().equals(packageName)) {
+                    return true;
+                }
+            }
         }
-        return new Resolution(densityX, densityY);
+        return false;
+    }
+
+    private PackageInfo getPackageInfo(PackageManager packageManager, String packageName) {
+        try {
+            return packageManager.getPackageInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getApplicationName(PackageManager packageManager, ApplicationInfo applicationInfo) {
+        try {
+            return packageManager.getApplicationLabel(applicationInfo).toString();
+        } catch (Resources.NotFoundException e) {
+            return applicationInfo.packageName;
+        }
+    }
+
+    private List<String> getPermissionList(PackageInfo packageInfo) {
+        List<String> permissionList = Arrays.asList(packageInfo.requestedPermissions);
+        permissionList.sort(sortByStringComparator());
+        return permissionList;
+    }
+
+    private List<String> getActivityList(PackageInfo packageInfo) {
+        List<String> activityList = new ArrayList<>();
+        ActivityInfo[] activityInfoList = packageInfo.activities;
+        for (ActivityInfo activityInfo : activityInfoList) {
+            Log.e("Check", "Activity Package Name : " + activityInfo.packageName);
+            activityList.add(activityInfo.packageName);
+        }
+        activityList.sort(sortByStringComparator());
+        return activityList;
+    }
+
+    private List<String> getServiceList(PackageInfo packageInfo) {
+        List<String> serviceList = new ArrayList<>();
+        ServiceInfo[] activityInfoList = packageInfo.services;
+        for (ServiceInfo serviceInfo : activityInfoList) {
+            Log.e("Check", "Service Package Name : " + serviceInfo.packageName);
+            serviceList.add(serviceInfo.packageName);
+        }
+        serviceList.sort(sortByStringComparator());
+        return serviceList;
+    }
+
+    private List<String> getReceiverList(PackageInfo packageInfo) {
+        List<String> receiverList = new ArrayList<>();
+        ActivityInfo[] receiverInfoList = packageInfo.receivers;
+        for (ActivityInfo receiverInfo : receiverInfoList) {
+            Log.e("Check", "Receiver Package Name : " + receiverInfo.packageName);
+            receiverList.add(receiverInfo.packageName);
+        }
+        receiverList.sort(sortByStringComparator());
+        return receiverList;
+    }
+
+    private List<String> getProviderList(PackageInfo packageInfo) {
+        List<String> providerList = new ArrayList<>();
+        ProviderInfo[] providerInfoList = packageInfo.providers;
+        for (ProviderInfo providerInfo : providerInfoList) {
+            Log.e("Check", "Provider Package Name : " + providerInfo.packageName);
+            providerList.add(providerInfo.packageName);
+        }
+        providerList.sort(sortByStringComparator());
+        return providerList;
+    }
+
+    private List<String> getRequiredFeatureList(PackageInfo packageInfo) {
+        List<String> requireFeatureList = new ArrayList<>();
+        FeatureInfo[] requiredFeatureInfoList = packageInfo.reqFeatures;
+        for (FeatureInfo requiredFeatureInfo : requiredFeatureInfoList) {
+            Log.e("Check", "Required Feature Name : " + requiredFeatureInfo.name);
+            requireFeatureList.add(requiredFeatureInfo.name);
+        }
+        requireFeatureList.sort(sortByStringComparator());
+        return requireFeatureList;
+    }
+
+    private Comparator<String> sortByStringComparator() {
+        return String::compareToIgnoreCase;
     }
 }
