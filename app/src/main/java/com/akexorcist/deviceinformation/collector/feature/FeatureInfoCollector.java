@@ -46,9 +46,9 @@ public class FeatureInfoCollector extends BaseInfoCollector {
             boolean isSupported = hasFeature(context, featureData.getPackageName(), featureData.getMinimumSdk());
             if (isSupported == isSupportedFeature) {
                 FeatureItem featureItem = new FeatureItem();
-                featureData.setName(featureData.getName());
-                featureData.setPackageName(featureData.getPackageName());
-                featureData.setMinimumSdk(featureData.getMinimumSdk());
+                featureItem.setName(featureData.getName());
+                featureItem.setPackageName(featureData.getPackageName());
+                featureItem.setMinimumSdk(featureData.getMinimumSdk() + "");
                 expectFeatureItemList.add(featureItem);
             }
         }
