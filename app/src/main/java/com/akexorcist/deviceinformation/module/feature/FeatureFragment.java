@@ -19,6 +19,7 @@ import com.akexorcist.deviceinformation.utility.RxGenerator;
 
 import java.util.concurrent.TimeUnit;
 
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -39,6 +40,7 @@ public class FeatureFragment extends DdiFragment {
     private SwipeRefreshLayout srlRefresh;
     private FeatureContentAdapter contentAdapter;
     private BottomSheetBehavior featureBottomSheetBehavior;
+    private StickyHeaderDecoration stickyHeaderDecoration;
 
     public static FeatureFragment newInstance() {
         return new FeatureFragment();
@@ -77,6 +79,8 @@ public class FeatureFragment extends DdiFragment {
         rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
         contentAdapter = new FeatureContentAdapter();
         contentAdapter.setOnFeatureInfoClickListener(onFeatureInfoClick());
+        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
+        rvContent.addItemDecoration(stickyHeaderDecoration);
         rvContent.setAdapter(contentAdapter);
     }
 
