@@ -109,4 +109,9 @@
     <string name="feature_unsupported_feature_header">Unsupported Feature</string>
     <string name="feature_api_level">API Level</string>
 
+    <string name="application_downloaded_app_header">Downloaded Application</string>
+    <string name="application_system_app_header">System Application</string>
+    <string name="application_empty_downloaded_app_available">This device have no downloaded app</string>
+    <string name="application_empty_system_app_available">This device have no system app</string>
+
 </resources>

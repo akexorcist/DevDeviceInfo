@@ -17,7 +17,7 @@ import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,22 +49,19 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
                 String packageName = applicationInfo.packageName;
                 if (!isAppInfoContains(appItemList, packageName)) {
                     String name = getApplicationName(packageManager, applicationInfo);
-                    PackageInfo packageInfo = getPackageInfo(packageManager, packageName);
-                    if (packageInfo != null) {
-                        AppItem appItem = new AppItem()
-                                .setName(name)
-                                .setPackageName(packageName)
-                                .setVersionCode(packageInfo.versionCode + "")
-                                .setVersionName(packageInfo.versionName)
-                                .setIconResId(applicationInfo.icon)
-                                .setPermissionList(getPermissionList(packageInfo))
-                                .setActivityList(getActivityList(packageInfo))
-                                .setServiceList(getServiceList(packageInfo))
-                                .setReceiverList(getReceiverList(packageInfo))
-                                .setProviderList(getProviderList(packageInfo))
-                                .setRequiredFeatureList(getRequiredFeatureList(packageInfo));
-                        appItemList.add(appItem);
-                    }
+                    AppItem appItem = new AppItem()
+                            .setName(name)
+                            .setPackageName(packageName)
+                            .setVersionCode(getVersionCode(packageManager, packageName))
+                            .setVersionName(getVersionName(packageManager, packageName))
+                            .setIconResId(applicationInfo.icon)
+                            .setPermissionList(getPermissionList(packageManager, packageName))
+                            .setActivityList(getActivityList(packageManager, packageName))
+                            .setServiceList(getServiceList(packageManager, packageName))
+                            .setReceiverList(getReceiverList(packageManager, packageName))
+                            .setProviderList(getProviderList(packageManager, packageName))
+                            .setRequiredFeatureList(getRequiredFeatureList(packageManager, packageName));
+                    appItemList.add(appItem);
                 }
             }
         }
@@ -82,9 +79,9 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
         return false;
     }
 
-    private PackageInfo getPackageInfo(PackageManager packageManager, String packageName) {
+    private PackageInfo getPackageInfo(PackageManager packageManager, String packageName, int flag) {
         try {
-            return packageManager.getPackageInfo(packageName, 0);
+            return packageManager.getPackageInfo(packageName, flag);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -99,68 +96,116 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
         }
     }
 
-    private List<String> getPermissionList(PackageInfo packageInfo) {
-        List<String> permissionList = Arrays.asList(packageInfo.requestedPermissions);
-        permissionList.sort(sortByStringComparator());
-        return permissionList;
-    }
-
-    private List<String> getActivityList(PackageInfo packageInfo) {
-        List<String> activityList = new ArrayList<>();
-        ActivityInfo[] activityInfoList = packageInfo.activities;
-        for (ActivityInfo activityInfo : activityInfoList) {
-            Log.e("Check", "Activity Package Name : " + activityInfo.packageName);
-            activityList.add(activityInfo.packageName);
+    private String getVersionName(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, 0);
+        if (packageInfo != null) {
+            return packageInfo.versionName + "";
+        } else {
+            return "Unknown";
         }
-        activityList.sort(sortByStringComparator());
-        return activityList;
     }
 
-    private List<String> getServiceList(PackageInfo packageInfo) {
-        List<String> serviceList = new ArrayList<>();
-        ServiceInfo[] activityInfoList = packageInfo.services;
-        for (ServiceInfo serviceInfo : activityInfoList) {
-            Log.e("Check", "Service Package Name : " + serviceInfo.packageName);
-            serviceList.add(serviceInfo.packageName);
+    private String getVersionCode(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, 0);
+        if (packageInfo != null) {
+            return packageInfo.versionCode + "";
+        } else {
+            return "Unknown";
         }
-        serviceList.sort(sortByStringComparator());
-        return serviceList;
     }
 
-    private List<String> getReceiverList(PackageInfo packageInfo) {
-        List<String> receiverList = new ArrayList<>();
-        ActivityInfo[] receiverInfoList = packageInfo.receivers;
-        for (ActivityInfo receiverInfo : receiverInfoList) {
-            Log.e("Check", "Receiver Package Name : " + receiverInfo.packageName);
-            receiverList.add(receiverInfo.packageName);
+    private List<String> getPermissionList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_PERMISSIONS);
+        if (packageInfo != null) {
+            String[] permissions = packageInfo.requestedPermissions;
+            if (permissions != null) {
+                List<String> permissionList = Arrays.asList(packageInfo.requestedPermissions);
+                Collections.sort(permissionList);
+                return permissionList;
+            }
         }
-        receiverList.sort(sortByStringComparator());
-        return receiverList;
+        return new ArrayList<>();
     }
 
-    private List<String> getProviderList(PackageInfo packageInfo) {
-        List<String> providerList = new ArrayList<>();
-        ProviderInfo[] providerInfoList = packageInfo.providers;
-        for (ProviderInfo providerInfo : providerInfoList) {
-            Log.e("Check", "Provider Package Name : " + providerInfo.packageName);
-            providerList.add(providerInfo.packageName);
+    private List<String> getActivityList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_ACTIVITIES);
+        if (packageInfo != null) {
+            ActivityInfo[] activities = packageInfo.activities;
+            if (activities != null) {
+                List<String> activityList = new ArrayList<>();
+                for (ActivityInfo activityInfo : activities) {
+                    activityList.add(activityInfo.name);
+                }
+                Collections.sort(activityList);
+                return activityList;
+            }
         }
-        providerList.sort(sortByStringComparator());
-        return providerList;
+        return new ArrayList<>();
     }
 
-    private List<String> getRequiredFeatureList(PackageInfo packageInfo) {
-        List<String> requireFeatureList = new ArrayList<>();
-        FeatureInfo[] requiredFeatureInfoList = packageInfo.reqFeatures;
-        for (FeatureInfo requiredFeatureInfo : requiredFeatureInfoList) {
-            Log.e("Check", "Required Feature Name : " + requiredFeatureInfo.name);
-            requireFeatureList.add(requiredFeatureInfo.name);
+    private List<String> getServiceList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_SERVICES);
+        if (packageInfo != null) {
+            ServiceInfo[] services = packageInfo.services;
+            if (services != null) {
+                List<String> serviceList = new ArrayList<>();
+                for (ServiceInfo service : services) {
+                    serviceList.add(service.name);
+                }
+                Collections.sort(serviceList);
+                return serviceList;
+            }
         }
-        requireFeatureList.sort(sortByStringComparator());
-        return requireFeatureList;
+        return new ArrayList<>();
     }
 
-    private Comparator<String> sortByStringComparator() {
-        return String::compareToIgnoreCase;
+    private List<String> getReceiverList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_RECEIVERS);
+        if (packageInfo != null) {
+            ActivityInfo[] receivers = packageInfo.receivers;
+            if (receivers != null) {
+                List<String> receiverList = new ArrayList<>();
+                for (ActivityInfo receiver : receivers) {
+                    receiverList.add(receiver.name);
+                }
+                Collections.sort(receiverList);
+                return receiverList;
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    private List<String> getProviderList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_PROVIDERS);
+        if (packageInfo != null) {
+            ProviderInfo[] providers = packageInfo.providers;
+            if (providers != null) {
+                List<String> providerList = new ArrayList<>();
+                for (ProviderInfo provider : providers) {
+                    providerList.add(provider.name);
+                }
+                Collections.sort(providerList);
+                return providerList;
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    private List<String> getRequiredFeatureList(PackageManager packageManager, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(packageManager, packageName, PackageManager.GET_CONFIGURATIONS);
+        if (packageInfo != null) {
+            FeatureInfo[] features = packageInfo.reqFeatures;
+            if (features != null) {
+                List<String> featureList = new ArrayList<>();
+                for (FeatureInfo feature : features) {
+                    // OpenGL ES Version is valid when feature name is null
+                    String featureName = feature.name != null ? feature.name : "OpenGL ES " + feature.getGlEsVersion();
+                    featureList.add(featureName);
+                }
+                Collections.sort(featureList);
+                return featureList;
+            }
+        }
+        return new ArrayList<>();
     }
 }
