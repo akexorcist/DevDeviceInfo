@@ -143,7 +143,7 @@ public class FeatureFragment extends DdiFragment {
 
     private void collectFeatureInfo() {
         createCollectFeatureInfoObservable(getContext())
-                .subscribe(showSensorFeature());
+                .subscribe(showFeatureInfo());
     }
 
     private Observable<FeatureInfo> createCollectFeatureInfoObservable(Context context) {
@@ -152,7 +152,7 @@ public class FeatureFragment extends DdiFragment {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private Action1<FeatureInfo> showSensorFeature() {
+    private Action1<FeatureInfo> showFeatureInfo() {
         return featureInfo -> {
             contentAdapter.setFeatureItemList(featureInfo.getSupportedFeatureItem(), featureInfo.getUnsupportedFeatureItem());
             contentAdapter.notifyDataSetChanged();
