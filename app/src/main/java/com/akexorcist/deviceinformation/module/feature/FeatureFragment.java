@@ -23,10 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -148,8 +146,7 @@ public class FeatureFragment extends DdiFragment {
 
     private Observable<FeatureInfo> createCollectFeatureInfoObservable(Context context) {
         return Observable.just(FeatureInfoCollector.getInstance().collect(context))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .compose(RxGenerator.getInstance().applySchedulers());
     }
 
     private Action1<FeatureInfo> showFeatureInfo() {

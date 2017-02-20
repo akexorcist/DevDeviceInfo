@@ -18,10 +18,8 @@ import com.akexorcist.deviceinformation.widget.InfoCardView;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -113,8 +111,7 @@ public class ScreenFragment extends DdiFragment {
 
     private Observable<ScreenInfo> createCollectScreenInfoObservable(Activity activity) {
         return Observable.just(ScreenInfoCollector.getInstance().collect(activity))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .compose(RxGenerator.getInstance().applySchedulers());
     }
 
     private Action1<ScreenInfo> showScreenInfo() {

@@ -24,11 +24,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -149,8 +147,7 @@ public class SensorFragment extends DdiFragment {
 
     private Observable<SensorInfo> createCollectSensorInfoObservable(Context context) {
         return Observable.just(SensorInfoCollector.getInstance().collect(context))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .compose(RxGenerator.getInstance().applySchedulers());
     }
 
     private Action1<List<SensorItem>> showSensorInfo() {
