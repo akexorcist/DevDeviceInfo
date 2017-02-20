@@ -16,9 +16,17 @@ import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseCustomView;
 import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.helper.DataInfoComparator;
+import com.akexorcist.deviceinformation.utility.RxGenerator;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 /**
  * Created by Akexorcist on 2/17/2017 AD.
@@ -31,6 +39,9 @@ public class InfoCardView extends BaseCustomView {
     private TextView tvInfoTitle;
     private LinearLayout layoutInfoContainer;
     private LinearLayout layoutInfoContent;
+
+    private Subscription addDataInfoSubscription;
+    private Subscription addDataLayoutSubscription;
 
     public InfoCardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -112,12 +123,33 @@ public class InfoCardView extends BaseCustomView {
         setDataInfoList(dataInfoList, false);
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        destroySubscription();
+    }
+
+    private void destroySubscription() {
+        if (addDataInfoSubscription != null && !addDataInfoSubscription.isUnsubscribed()) {
+            addDataInfoSubscription.unsubscribe();
+            addDataInfoSubscription = null;
+        }
+        if (addDataLayoutSubscription != null && !addDataLayoutSubscription.isUnsubscribed()) {
+            addDataLayoutSubscription.unsubscribe();
+            addDataLayoutSubscription = null;
+        }
+    }
+
     public void setDataInfoList(List<DataInfo> dataInfoList, boolean orderByAscending) {
+        setDataInfoList(dataInfoList, orderByAscending, null);
+    }
+
+    public void setDataInfoList(List<DataInfo> dataInfoList, boolean orderByAscending, OnUpdateDataInfoCallback callback) {
         if (orderByAscending) {
             Collections.sort(dataInfoList, new DataInfoComparator());
         }
         this.dataInfoList = dataInfoList;
-        updateDataInfoList();
+        updateDataInfoList(callback);
     }
 
     private void updateTitle() {
@@ -129,18 +161,86 @@ public class InfoCardView extends BaseCustomView {
         }
     }
 
-    private void updateDataInfoList() {
+    private void updateDataInfoList(OnUpdateDataInfoCallback callback) {
+        destroySubscription();
         layoutInfoContent.removeAllViews();
         if (dataInfoList != null) {
-            for (DataInfo dataInfo : dataInfoList) {
-                View view = LayoutInflater.from(getContext()).inflate(R.layout.view_data_info_item, layoutInfoContent, false);
-                TextView tvTitle = (TextView) view.findViewById(R.id.tv_data_title);
-                TextView tvValue = (TextView) view.findViewById(R.id.tv_data_value);
-                tvTitle.setText(dataInfo.getTitle());
-                tvValue.setText(dataInfo.getValue());
-                layoutInfoContent.addView(view);
-            }
+            addDataInfoSubscription = createAddDataInfoObservable().doOnNext(createAddDataInfoAction())
+                    .doOnCompleted(createAddDataInfoCompletedAction(callback))
+                    .subscribe();
         }
+    }
+
+    private Action0 createAddDataInfoCompletedAction(OnUpdateDataInfoCallback callback) {
+        return () -> {
+            if (callback != null) {
+                callback.onDataInfoUpdated();
+            }
+        };
+    }
+
+    private Observable<DataInfo> createAddDataInfoObservable() {
+        return Observable.create(new Observable.OnSubscribe<DataInfo>() {
+            @Override
+            public void call(Subscriber<? super DataInfo> subscriber) {
+                if (!subscriber.isUnsubscribed()) {
+                    setOnDataInfoViewAddedListener((parent, child) -> {
+                        if (!subscriber.isUnsubscribed()) {
+                            performPopDataInfoEvent(subscriber);
+                        }
+                    });
+                    performPopDataInfoEvent(subscriber);
+                }
+            }
+
+            private void performPopDataInfoEvent(Subscriber<? super DataInfo> subscriber) {
+                DataInfo dataInfo = popDataInfoFromList(dataInfoList);
+                if (dataInfo != null) {
+                    subscriber.onNext(dataInfo);
+                } else {
+                    subscriber.onCompleted();
+                    setOnDataInfoViewAddedListener(null);
+                }
+            }
+        });
+    }
+
+    private DataInfo popDataInfoFromList(List<DataInfo> dataInfoList) {
+        if (dataInfoList != null && !dataInfoList.isEmpty()) {
+            DataInfo dataInfo = dataInfoList.get(0);
+            dataInfoList.remove(0);
+            return dataInfo;
+        }
+        return null;
+    }
+
+    private Action1<DataInfo> createAddDataInfoAction() {
+        return this::addDataInfoLayoutWithDelay;
+    }
+
+    private void addDataInfoLayoutWithDelay(DataInfo dataInfo) {
+        addDataLayoutSubscription = Observable.empty()
+                .delay(15, TimeUnit.MILLISECONDS)
+                .compose(RxGenerator.getInstance().applySchedulers())
+                .doOnCompleted(() -> {
+                    if (isAddDataLayoutSubscriptionSubscribing()) {
+                        addDataInfoToLayout(dataInfo);
+                    }
+                })
+                .subscribe();
+    }
+
+    private boolean isAddDataLayoutSubscriptionSubscribing() {
+        return addDataLayoutSubscription != null && !addDataLayoutSubscription.isUnsubscribed();
+    }
+
+    private void addDataInfoToLayout(DataInfo dataInfo) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_data_info_item, layoutInfoContent, false);
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_data_title);
+        TextView tvValue = (TextView) view.findViewById(R.id.tv_data_value);
+        tvTitle.setText(dataInfo.getTitle());
+        tvValue.setText(dataInfo.getValue());
+        layoutInfoContent.addView(view);
     }
 
     private static class SavedState extends BaseSavedState {
@@ -173,5 +273,30 @@ public class InfoCardView extends BaseCustomView {
                 return new SavedState[size];
             }
         };
+    }
+
+    private void setOnDataInfoViewAddedListener(OnDataInfoViewAddedListener listener) {
+        if (listener != null) {
+            layoutInfoContent.setOnHierarchyChangeListener(new OnHierarchyChangeListener() {
+                @Override
+                public void onChildViewAdded(View parent, View child) {
+                    listener.onDataInfoViewAdded(parent, child);
+                }
+
+                @Override
+                public void onChildViewRemoved(View parent, View child) {
+                }
+            });
+        } else {
+            layoutInfoContent.setOnHierarchyChangeListener(null);
+        }
+    }
+
+    private interface OnDataInfoViewAddedListener {
+        void onDataInfoViewAdded(View parent, View child);
+    }
+
+    public interface OnUpdateDataInfoCallback {
+        void onDataInfoUpdated();
     }
 }
