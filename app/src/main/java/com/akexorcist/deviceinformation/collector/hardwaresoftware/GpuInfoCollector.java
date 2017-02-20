@@ -4,13 +4,11 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
-import android.opengl.GLSurfaceView;
 import android.os.Build;
 
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.GpuInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
-import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
@@ -27,33 +25,11 @@ public class GpuInfoCollector extends BaseInfoCollector {
         return collector;
     }
 
-    public void collect(final GLSurfaceView glSurfaceView, final OnInfoCollectCallback callback) {
-        glSurfaceView.setEGLContextClientVersion(2);
-        glSurfaceView.setRenderer(new GLSurfaceView.Renderer() {
-            @Override
-            public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-                if (callback != null) {
-                    callback.onInfoCollected(GpuInfoCollector.getInstance()
-                            .collect(glSurfaceView.getContext())
-                            .setVendor(gl10.glGetString(GL10.GL_VENDOR))
-                            .setRenderer(gl10.glGetString(GL10.GL_RENDERER))
-                            .setVersion(gl10.glGetString(GL10.GL_VERSION)));
-                }
-            }
-
-            @Override
-            public void onSurfaceChanged(GL10 gl10, int i, int i1) {
-            }
-
-            @Override
-            public void onDrawFrame(GL10 gl10) {
-                gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
-            }
-        });
-    }
-
-    private GpuInfo collect(Context context) {
+    public GpuInfo collect(Context context, GL10 gl10) {
         return new GpuInfo()
+                .setVendor(gl10.glGetString(GL10.GL_VENDOR))
+                .setRenderer(gl10.glGetString(GL10.GL_RENDERER))
+                .setVersion(gl10.glGetString(GL10.GL_VERSION))
                 .setVulkanSupported(getVulkanSupported(context))
                 .setOpenGlSupported(getOpenGLVersion(context));
     }
@@ -79,9 +55,5 @@ public class GpuInfoCollector extends BaseInfoCollector {
 
     private float getOpenGLMinorVersion(int glEsVersion) {
         return (float) (Integer.parseInt(Integer.toHexString(glEsVersion).replace("0x", "")) % 10) / 10;
-    }
-
-    public interface OnInfoCollectCallback {
-        void onInfoCollected(GpuInfo gpuInfo);
     }
 }
