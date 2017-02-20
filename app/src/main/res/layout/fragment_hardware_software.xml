@@ -41,8 +41,8 @@
                     android:paddingStart="@dimen/margin_padding"
                     android:paddingTop="@dimen/margin_padding">
 
-                    <FrameLayout
-                        android:id="@+id/layout_open_gl_container"
+                    <android.opengl.GLSurfaceView
+                        android:id="@+id/sv_hardware_and_software_open_gl"
                         android:layout_width="@dimen/hardware_and_software_surface_view_size"
                         android:layout_height="@dimen/hardware_and_software_surface_view_size" />
 
