@@ -1,6 +1,5 @@
 package com.akexorcist.deviceinformation.module.screen;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,15 +10,18 @@ import android.widget.FrameLayout;
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.collector.screen.ScreenInfoCollector;
 import com.akexorcist.deviceinformation.collector.screen.model.ScreenInfo;
+import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.common.DdiFragment;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
 import com.akexorcist.deviceinformation.widget.InfoCardView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -105,23 +107,40 @@ public class ScreenFragment extends DdiFragment {
     }
 
     private void collectScreenInfo() {
-        createCollectScreenInfoObservable(getActivity())
-                .subscribe(showScreenInfo());
+        createScreenInfoObservable()
+                .doOnCompleted(onCollectedAllInfoAction())
+                .subscribe();
     }
 
-    private Observable<ScreenInfo> createCollectScreenInfoObservable(Activity activity) {
-        return Observable.just(ScreenInfoCollector.getInstance().collect(activity))
-                .compose(RxGenerator.getInstance().applySchedulers());
-    }
-
-    private Action1<ScreenInfo> showScreenInfo() {
-        return screenInfo -> {
-            icvScreenInfo.setDataInfoList(screenInfo.getDataInfoList());
-            showContent();
-        };
+    private Action0 onCollectedAllInfoAction() {
+        return this::showContent;
     }
 
     private Action0 refreshAllInfoAction() {
         return this::collectScreenInfo;
+    }
+
+    private Observable<ScreenInfo> createScreenInfoObservable() {
+        return createScreenInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createScreenInfoFunc());
+    }
+
+    private Observable<ScreenInfo> createScreenInfoCollectorObservable() {
+        return Observable.fromCallable(() -> ScreenInfoCollector.getInstance().collect(getActivity()));
+    }
+
+    private Observable<ScreenInfo> createSetScreenInfoObservable(ScreenInfo screenInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = screenInfo.getDataInfoList();
+            icvScreenInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(screenInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<ScreenInfo, Observable<ScreenInfo>> createScreenInfoFunc() {
+        return this::createSetScreenInfoObservable;
     }
 }
