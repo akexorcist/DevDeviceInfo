@@ -15,42 +15,36 @@
             android:id="@+id/layout_application_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/margin_padding">
 
             <ImageView
                 android:id="@+id/iv_application_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/application_icon_size"
+                android:layout_height="@dimen/application_icon_size"
                 android:contentDescription="@null" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_padding">
+                android:layout_marginEnd="@dimen/margin_padding"
+                android:layout_marginLeft="@dimen/margin_padding_large"
+                android:layout_marginRight="@dimen/margin_padding"
+                android:layout_marginStart="@dimen/margin_padding_large"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_application_name"
                     style="@style/TextView.Black"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_padding"
-                    android:layout_marginLeft="@dimen/margin_padding"
-                    android:layout_marginRight="@dimen/margin_padding"
-                    android:layout_marginStart="@dimen/margin_padding"
-                    android:layout_marginTop="@dimen/margin_padding_small" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_application_package_name"
                     style="@style/TextView.LightGray.ExtraSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_padding_small"
-                    android:layout_marginEnd="@dimen/margin_padding"
-                    android:layout_marginLeft="@dimen/margin_padding"
-                    android:layout_marginRight="@dimen/margin_padding"
-                    android:layout_marginStart="@dimen/margin_padding"
                     android:layout_marginTop="@dimen/margin_padding_small" />
 
             </LinearLayout>

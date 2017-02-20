@@ -26,6 +26,8 @@
     <dimen name="screen_measurement_horizontal_text_margin_top">-18dp</dimen>
     <dimen name="screen_measurement_horizontal_text_margin_start">6dp</dimen>
 
+    <dimen name="application_icon_size">60dp</dimen>
+
     <dimen name="content_width">320dp</dimen>
 
     <dimen name="hardware_and_software_surface_view_size">1dp</dimen>
