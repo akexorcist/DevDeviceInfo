@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
-import android.util.Log;
 
 import com.akexorcist.deviceinformation.collector.application.model.AppInfo;
 import com.akexorcist.deviceinformation.collector.application.model.AppItem;
@@ -18,6 +17,7 @@ import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -65,6 +65,7 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
                 }
             }
         }
+        Collections.sort(appItemList, getAppItemComparator());
         return appItemList;
     }
 
@@ -207,5 +208,9 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
             }
         }
         return new ArrayList<>();
+    }
+
+    private Comparator<AppItem> getAppItemComparator() {
+        return (o1, o2) -> o1.getName().compareTo(o2.getName());
     }
 }
