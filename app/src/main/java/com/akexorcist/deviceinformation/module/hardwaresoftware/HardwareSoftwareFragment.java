@@ -22,16 +22,22 @@ import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CpuInfo
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.GpuInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.MemoryInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.StorageInfo;
+import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.common.DdiFragment;
+import com.akexorcist.deviceinformation.utility.EventShortener;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
 import com.akexorcist.deviceinformation.widget.InfoCardView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -40,7 +46,7 @@ import rx.functions.Action1;
 public class HardwareSoftwareFragment extends DdiFragment {
     private FrameLayout layoutLoading;
     private FrameLayout layoutContent;
-    private FrameLayout layoutOpenGlContainer;
+    private GLSurfaceView svOpenGl;
     private SwipeRefreshLayout srlRefresh;
     private InfoCardView icvAndroidInfo;
     private InfoCardView icvBatteryInfo;
@@ -66,7 +72,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
     protected void bindView(View view) {
         layoutContent = (FrameLayout) view.findViewById(R.id.layout_hardware_software_content);
         layoutLoading = (FrameLayout) view.findViewById(R.id.layout_hardware_software_loading);
-        layoutOpenGlContainer = (FrameLayout) view.findViewById(R.id.layout_open_gl_container);
+        svOpenGl = (GLSurfaceView) view.findViewById(R.id.sv_hardware_and_software_open_gl);
         srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_hardware_software_refresh);
         icvAndroidInfo = (InfoCardView) view.findViewById(R.id.icv_android_info);
         icvBatteryInfo = (InfoCardView) view.findViewById(R.id.icv_battery_info);
@@ -84,6 +90,9 @@ public class HardwareSoftwareFragment extends DdiFragment {
         srlRefresh.setEnabled(false);
         setContentLayout(layoutContent);
         setLoadingLayout(layoutLoading);
+        svOpenGl.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.extra_extra_light_gray));
+        svOpenGl.setEGLContextClientVersion(2);
+        svOpenGl.setRenderer(onSetRenderer());
     }
 
     @Override
@@ -94,7 +103,6 @@ public class HardwareSoftwareFragment extends DdiFragment {
     @Override
     protected void initialize() {
         forceHideContent();
-        collectGpuInfo();
     }
 
     @Override
@@ -105,7 +113,6 @@ public class HardwareSoftwareFragment extends DdiFragment {
     @Override
     public void restoreView() {
         forceHideContent();
-        collectGpuInfo();
     }
 
     @Override
@@ -113,59 +120,255 @@ public class HardwareSoftwareFragment extends DdiFragment {
 
     }
 
-    private void collectGpuInfo() {
-        GLSurfaceView glSurfaceView = new GLSurfaceView(getContext());
-        glSurfaceView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.extra_extra_light_gray));
-        layoutOpenGlContainer.addView(glSurfaceView);
-        GpuInfoCollector.getInstance().collect(glSurfaceView, onGpuInfoCollected());
+    private EventShortener.GlSurfaceRenderer onSetRenderer() {
+        return new EventShortener.GlSurfaceRenderer() {
+            @Override
+            public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+                collectAllInfo(gl);
+            }
+        };
     }
 
     private SwipeRefreshLayout.OnRefreshListener onContentRefresh() {
-        return () ->
-                RxGenerator.getInstance().createDelayObservable(500, TimeUnit.MILLISECONDS)
-                        .doOnCompleted(refreshAllInfoAction())
-                        .subscribe();
+        return () -> RxGenerator.getInstance().createDelayObservable(500, TimeUnit.MILLISECONDS)
+                .doOnCompleted(refreshAllInfoAction())
+                .subscribe();
     }
 
     private Action0 refreshAllInfoAction() {
         return () -> {
-            hideContent();
-            collectGpuInfo();
-            srlRefresh.setRefreshing(false);
+//            hideContent();
+//            collectGpuInfo();
+//            srlRefresh.setRefreshing(false);
         };
     }
 
-    private GpuInfoCollector.OnInfoCollectCallback onGpuInfoCollected() {
-        return (gpuInfo) ->
-                Observable.just(gpuInfo)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(collectAllInfoAction());
-    }
-
-    private Action1<GpuInfo> collectAllInfoAction() {
-        return gpuInfo -> {
-            collectAllInfo(gpuInfo);
-            layoutOpenGlContainer.removeAllViews();
-        };
-    }
-
-    private void collectAllInfo(GpuInfo gpuInfo) {
-        AndroidInfo androidInfo = AndroidInfoCollector.getInstance().collect();
-        BatteryInfo batteryInfo = BatteryInfoCollector.getInstance().collect(getContext());
-        BuildInfo buildInfo = BuildInfoCollector.getInstance().collect();
-        CpuInfo cpuInfo = CpuInfoCollector.getInstance().collect(getContext());
-        MemoryInfo memoryInfo = MemoryInfoCollector.getInstance().collect();
-        StorageInfo storageInfo = StorageInfoCollector.getInstance().collect();
-        icvAndroidInfo.setDataInfoList(androidInfo.getDataInfoList(), true);
-        icvBatteryInfo.setDataInfoList(batteryInfo.getDataInfoList(), true);
-        icvBuildInfo.setDataInfoList(buildInfo.getDataInfoList(), true);
-        icvCpuInfo.setDataInfoList(cpuInfo.getDataInfoList(), true);
-        icvGpuInfo.setDataInfoList(gpuInfo.getDataInfoList(), true);
-        icvMemoryInfo.setDataInfoList(memoryInfo.getDataInfoList(), true);
-        icvStorageInfo.setDataInfoList(storageInfo.getDataInfoList(), true);
-
-        RxGenerator.getInstance().createDelayObservable(2, TimeUnit.SECONDS)
-                .doOnCompleted(this::showContent)
+    private void collectAllInfo(GL10 gl10) {
+        createGpuInfoObservable(gl10)
+                .flatMap(flatMapGpuInfoToAndroidInfoFunc())
+                .flatMap(flatMapAndroidInfoToBuildInfoFunc())
+                .flatMap(flatMapBuildInfoToBatteryInfoFunc())
+                .flatMap(flatMapBatteryInfoToCpuInfoFunc())
+                .flatMap(flatMapCpuInfoToMemoryInfoFunc())
+                .flatMap(flatMapMemoryInfoToStorageInfoFunc())
+                .doOnCompleted(onCollectedAllInfoAction())
                 .subscribe();
+    }
+
+    private Action0 onCollectedAllInfoAction() {
+        return this::showContent;
+    }
+
+    private Func1<GpuInfo, Observable<AndroidInfo>> flatMapGpuInfoToAndroidInfoFunc() {
+        return gpuInfo -> createAndroidInfoObservable();
+    }
+
+    private Func1<AndroidInfo, Observable<BuildInfo>> flatMapAndroidInfoToBuildInfoFunc() {
+        return androidInfo -> createBuildInfoObservable();
+    }
+
+    private Func1<BuildInfo, Observable<BatteryInfo>> flatMapBuildInfoToBatteryInfoFunc() {
+        return buildInfo -> createBatteryInfoObservable();
+    }
+
+    private Func1<BatteryInfo, Observable<CpuInfo>> flatMapBatteryInfoToCpuInfoFunc() {
+        return batteryInfo -> createCpuInfoObservable();
+    }
+
+    private Func1<CpuInfo, Observable<MemoryInfo>> flatMapCpuInfoToMemoryInfoFunc() {
+        return cpuInfo -> createMemoryInfoObservable();
+    }
+
+    private Func1<MemoryInfo, Observable<StorageInfo>> flatMapMemoryInfoToStorageInfoFunc() {
+        return memoryInfo -> createStorageInfoObservable();
+    }
+
+    /////////////////////////////
+    // GPU Info Observable
+    /////////////////////////////
+    private Observable<GpuInfo> createGpuInfoObservable(GL10 gl10) {
+        return createGpuInfoCollectorObservable(gl10)
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createGpuInfoFunc());
+    }
+
+    private Observable<GpuInfo> createGpuInfoCollectorObservable(GL10 gl10) {
+        return Observable.fromCallable(() -> GpuInfoCollector.getInstance().collect(getContext(), gl10));
+    }
+
+    private Observable<GpuInfo> createSetGpuInfoObservable(GpuInfo gpuInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = gpuInfo.getDataInfoList();
+            icvGpuInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(gpuInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<GpuInfo, Observable<GpuInfo>> createGpuInfoFunc() {
+        return this::createSetGpuInfoObservable;
+    }
+
+    /////////////////////////////
+    // Android Info Observable
+    /////////////////////////////
+    private Observable<AndroidInfo> createAndroidInfoObservable() {
+        return createAndroidInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createAndroidInfoFunc());
+    }
+
+    private Observable<AndroidInfo> createAndroidInfoCollectorObservable() {
+        return Observable.just(AndroidInfoCollector.getInstance().collect());
+    }
+
+    private Observable<AndroidInfo> createSetAndroidInfoObservable(AndroidInfo androidInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = androidInfo.getDataInfoList();
+            icvAndroidInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(androidInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<AndroidInfo, Observable<AndroidInfo>> createAndroidInfoFunc() {
+        return this::createSetAndroidInfoObservable;
+    }
+
+    /////////////////////////////
+    // Battery Info Observable
+    /////////////////////////////
+    private Observable<BatteryInfo> createBatteryInfoObservable() {
+        return createBatteryInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createBatteryInfoFunc());
+    }
+
+    private Observable<BatteryInfo> createBatteryInfoCollectorObservable() {
+        return Observable.just(BatteryInfoCollector.getInstance().collect(getContext()));
+    }
+
+    private Observable<BatteryInfo> createSetBatteryInfoObservable(BatteryInfo batteryInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = batteryInfo.getDataInfoList();
+            icvBatteryInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(batteryInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<BatteryInfo, Observable<BatteryInfo>> createBatteryInfoFunc() {
+        return this::createSetBatteryInfoObservable;
+    }
+
+    /////////////////////////////
+    // Build Info Observable
+    /////////////////////////////
+    private Observable<BuildInfo> createBuildInfoObservable() {
+        return createBuildInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createBuildInfoFunc());
+    }
+
+    private Observable<BuildInfo> createBuildInfoCollectorObservable() {
+        return Observable.just(BuildInfoCollector.getInstance().collect());
+    }
+
+    private Observable<BuildInfo> createSetBuildInfoObservable(BuildInfo buildInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = buildInfo.getDataInfoList();
+            icvBuildInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(buildInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<BuildInfo, Observable<BuildInfo>> createBuildInfoFunc() {
+        return this::createSetBuildInfoObservable;
+    }
+
+    /////////////////////////////
+    // CPU Info Observable
+    /////////////////////////////
+    private Observable<CpuInfo> createCpuInfoObservable() {
+        return createCpuInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createCpuInfoFunc());
+    }
+
+    private Observable<CpuInfo> createCpuInfoCollectorObservable() {
+        return Observable.just(CpuInfoCollector.getInstance().collect(getContext()));
+    }
+
+    private Observable<CpuInfo> createSetCpuInfoObservable(CpuInfo cpuInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = cpuInfo.getDataInfoList();
+            icvCpuInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(cpuInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<CpuInfo, Observable<CpuInfo>> createCpuInfoFunc() {
+        return this::createSetCpuInfoObservable;
+    }
+
+    /////////////////////////////
+    // Memory Info Observable
+    /////////////////////////////
+    private Observable<MemoryInfo> createMemoryInfoObservable() {
+        return createMemoryInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createMemoryInfoFunc());
+    }
+
+    private Observable<MemoryInfo> createMemoryInfoCollectorObservable() {
+        return Observable.just(MemoryInfoCollector.getInstance().collect());
+    }
+
+    private Observable<MemoryInfo> createSetMemoryInfoObservable(MemoryInfo memoryInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = memoryInfo.getDataInfoList();
+            icvMemoryInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(memoryInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<MemoryInfo, Observable<MemoryInfo>> createMemoryInfoFunc() {
+        return this::createSetMemoryInfoObservable;
+    }
+
+    /////////////////////////////
+    // Storage Info Observable
+    /////////////////////////////
+    private Observable<StorageInfo> createStorageInfoObservable() {
+        return createStorageInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createStorageInfoFunc());
+    }
+
+    private Observable<StorageInfo> createStorageInfoCollectorObservable() {
+        return Observable.just(StorageInfoCollector.getInstance().collect());
+    }
+
+    private Observable<StorageInfo> createSetStorageInfoObservable(StorageInfo storageInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = storageInfo.getDataInfoList();
+            icvStorageInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(storageInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<StorageInfo, Observable<StorageInfo>> createStorageInfoFunc() {
+        return this::createSetStorageInfoObservable;
     }
 }
