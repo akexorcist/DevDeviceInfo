@@ -18,6 +18,7 @@
 
     <dimen name="corner_radius">2dp</dimen>
     <dimen name="divider">1dp</dimen>
+    <dimen name="card_shadow_height">4dp</dimen>
     <dimen name="focused_border">2dp</dimen>
 
     <dimen name="screen_measurement_vertical_text_margin_top">18dp</dimen>
