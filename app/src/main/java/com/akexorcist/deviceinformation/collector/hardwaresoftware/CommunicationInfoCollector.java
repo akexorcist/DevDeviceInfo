@@ -42,6 +42,7 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
                 .setMicrophone(hasMicrophone(context))
                 .setNfc(hasNfc(context))
                 .setNfcHostCardEmulation(hasNfcHostCardEmulation(context))
+                .setNfcFHostCardEmulation(hasNfcFHostCardEmulation(context))
                 .setTelephony(hasTelephony(context))
                 .setUsbAccessory(hasUsbAccessory(context))
                 .setUsbOtg(hasUsbOtg(context))
@@ -80,14 +81,18 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
     }
 
     private String hasCardboardVr(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE)) {
-            return "Yes";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE)) {
+                return "Yes";
+            }
+            return "No";
         }
-        return "No";
+        return "Unknown";
     }
 
     private String hasDaydreamVr(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE_HIGH_PERFORMANCE)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE_HIGH_PERFORMANCE)) {
             return "Yes";
         }
         return "No";
@@ -105,7 +110,8 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
     }
 
     private String hasFingerprint(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
             return "Yes";
         }
         return "No";
@@ -135,6 +141,14 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
     private String hasNfcHostCardEmulation(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
+            return "Yes";
+        }
+        return "No";
+    }
+
+    private String hasNfcFHostCardEmulation(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION_NFCF)) {
             return "Yes";
         }
         return "No";

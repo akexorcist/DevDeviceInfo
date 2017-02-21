@@ -19,6 +19,7 @@ public class CommunicationInfo extends BaseInfo {
     private static final String MICROPHONE = "Microphone";
     private static final String NFC = "NFC";
     private static final String NFC_HOST_CARD_EMULATION = "NFC Host Card Emulation";
+    private static final String NFCF_HOST_CARD_EMULATION = "NFC-F Host Card Emulation";
     private static final String TELEPHONY = "Telephony";
     private static final String USB_OTG = "USB OTG";
     private static final String USB_ACCESSORY = "USB Accessory";
@@ -136,6 +137,15 @@ public class CommunicationInfo extends BaseInfo {
 
     public CommunicationInfo setNfcHostCardEmulation(String nfcHce) {
         setDataInfo(NFC_HOST_CARD_EMULATION, nfcHce);
+        return this;
+    }
+
+    public String getNfcFHostCardEmulation() {
+        return getValueByTitle(NFCF_HOST_CARD_EMULATION);
+    }
+
+    public CommunicationInfo setNfcFHostCardEmulation(String nfcFHce) {
+        setDataInfo(NFCF_HOST_CARD_EMULATION, nfcFHce);
         return this;
     }
 

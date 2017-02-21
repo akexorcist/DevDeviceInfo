@@ -11,6 +11,7 @@ import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.AndroidInfoCollector;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.BatteryInfoCollector;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.BuildInfoCollector;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.CommunicationInfoCollector;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.CpuInfoCollector;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.GpuInfoCollector;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.MemoryInfoCollector;
@@ -18,6 +19,7 @@ import com.akexorcist.deviceinformation.collector.hardwaresoftware.StorageInfoCo
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.AndroidInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.BatteryInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.BuildInfo;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CommunicationInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CpuInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.GpuInfo;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.MemoryInfo;
@@ -51,6 +53,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private InfoCardView icvAndroidInfo;
     private InfoCardView icvBatteryInfo;
     private InfoCardView icvBuildInfo;
+    private InfoCardView icvCommunicationInfo;
     private InfoCardView icvCpuInfo;
     private InfoCardView icvGpuInfo;
     private InfoCardView icvMemoryInfo;
@@ -77,6 +80,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
         icvAndroidInfo = (InfoCardView) view.findViewById(R.id.icv_android_info);
         icvBatteryInfo = (InfoCardView) view.findViewById(R.id.icv_battery_info);
         icvBuildInfo = (InfoCardView) view.findViewById(R.id.icv_build_info);
+        icvCommunicationInfo = (InfoCardView) view.findViewById(R.id.icv_communication_info);
         icvCpuInfo = (InfoCardView) view.findViewById(R.id.icv_cpu_info);
         icvGpuInfo = (InfoCardView) view.findViewById(R.id.icv_gpu_info);
         icvMemoryInfo = (InfoCardView) view.findViewById(R.id.icv_memory_info);
@@ -148,7 +152,8 @@ public class HardwareSoftwareFragment extends DdiFragment {
                 .flatMap(flatMapGpuInfoToAndroidInfoFunc())
                 .flatMap(flatMapAndroidInfoToBuildInfoFunc())
                 .flatMap(flatMapBuildInfoToBatteryInfoFunc())
-                .flatMap(flatMapBatteryInfoToCpuInfoFunc())
+                .flatMap(flatMapBatteryInfoToCommunicationInfoFunc())
+                .flatMap(flatMapCommunicationInfoToCpuInfoFunc())
                 .flatMap(flatMapCpuInfoToMemoryInfoFunc())
                 .flatMap(flatMapMemoryInfoToStorageInfoFunc())
                 .doOnCompleted(onCollectedAllInfoAction())
@@ -171,8 +176,12 @@ public class HardwareSoftwareFragment extends DdiFragment {
         return buildInfo -> createBatteryInfoObservable();
     }
 
-    private Func1<BatteryInfo, Observable<CpuInfo>> flatMapBatteryInfoToCpuInfoFunc() {
-        return batteryInfo -> createCpuInfoObservable();
+    private Func1<BatteryInfo, Observable<CommunicationInfo>> flatMapBatteryInfoToCommunicationInfoFunc() {
+        return batteryInfo -> createCommunicationInfoObservable();
+    }
+
+    private Func1<CommunicationInfo, Observable<CpuInfo>> flatMapCommunicationInfoToCpuInfoFunc() {
+        return communicationInfo -> createCpuInfoObservable();
     }
 
     private Func1<CpuInfo, Observable<MemoryInfo>> flatMapCpuInfoToMemoryInfoFunc() {
@@ -289,6 +298,33 @@ public class HardwareSoftwareFragment extends DdiFragment {
 
     private Func1<BuildInfo, Observable<BuildInfo>> createBuildInfoFunc() {
         return this::createSetBuildInfoObservable;
+    }
+
+    /////////////////////////////
+    // Communication Info Observable
+    /////////////////////////////
+    private Observable<CommunicationInfo> createCommunicationInfoObservable() {
+        return createCommunicationInfoCollectorObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(createCommunicationInfoFunc());
+    }
+
+    private Observable<CommunicationInfo> createCommunicationInfoCollectorObservable() {
+        return Observable.just(CommunicationInfoCollector.getInstance().collect(getContext()));
+    }
+
+    private Observable<CommunicationInfo> createSetCommunicationInfoObservable(CommunicationInfo communicationInfo) {
+        return Observable.create(subscriber -> {
+            List<DataInfo> dataInfoList = communicationInfo.getDataInfoList();
+            icvCommunicationInfo.setDataInfoList(dataInfoList, true, () -> {
+                subscriber.onNext(communicationInfo);
+                subscriber.onCompleted();
+            });
+        });
+    }
+
+    private Func1<CommunicationInfo, Observable<CommunicationInfo>> createCommunicationInfoFunc() {
+        return this::createSetCommunicationInfoObservable;
     }
 
     /////////////////////////////

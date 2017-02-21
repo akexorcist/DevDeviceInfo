@@ -65,6 +65,12 @@
                         app:icv_title="@string/hardware_and_software_build_info" />
 
                     <com.akexorcist.deviceinformation.widget.InfoCardView
+                        android:id="@+id/icv_communication_info"
+                        android:layout_width="@dimen/content_width"
+                        android:layout_height="wrap_content"
+                        app:icv_title="@string/hardware_and_software_communication_info" />
+
+                    <com.akexorcist.deviceinformation.widget.InfoCardView
                         android:id="@+id/icv_cpu_info"
                         android:layout_width="@dimen/content_width"
                         android:layout_height="wrap_content"
