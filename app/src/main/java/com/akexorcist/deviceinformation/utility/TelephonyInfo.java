@@ -65,13 +65,11 @@ public class TelephonyInfo {
                 telephonyInfo.imsiSIM1 = getDeviceIdBySlot(context, "getDeviceIdGemini", 0);
                 telephonyInfo.imsiSIM2 = getDeviceIdBySlot(context, "getDeviceIdGemini", 1);
             } catch (GeminiMethodNotFoundException e) {
-                e.printStackTrace();
                 try {
                     telephonyInfo.imsiSIM1 = getDeviceIdBySlot(context, "getDeviceId", 0);
                     telephonyInfo.imsiSIM2 = getDeviceIdBySlot(context, "getDeviceId", 1);
                 } catch (GeminiMethodNotFoundException e1) {
                     //Call here for next manufacturer's predicted method name if you wish
-                    e1.printStackTrace();
                 }
             }
             telephonyInfo.isSIM1Ready = telephonyManager.getSimState() == TelephonyManager.SIM_STATE_READY;
@@ -80,13 +78,11 @@ public class TelephonyInfo {
                 telephonyInfo.isSIM1Ready = getSIMStateBySlot(context, "getSimStateGemini", 0);
                 telephonyInfo.isSIM2Ready = getSIMStateBySlot(context, "getSimStateGemini", 1);
             } catch (GeminiMethodNotFoundException e) {
-                e.printStackTrace();
                 try {
                     telephonyInfo.isSIM1Ready = getSIMStateBySlot(context, "getSimState", 0);
                     telephonyInfo.isSIM2Ready = getSIMStateBySlot(context, "getSimState", 1);
                 } catch (GeminiMethodNotFoundException e1) {
                     //Call here for next manufacturer's predicted method name if you wish
-                    e1.printStackTrace();
                 }
             }
         }
@@ -108,7 +104,6 @@ public class TelephonyInfo {
                 imsi = ob_phone.toString();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new GeminiMethodNotFoundException(predictedMethodName);
         }
         return imsi;
@@ -132,7 +127,6 @@ public class TelephonyInfo {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new GeminiMethodNotFoundException(predictedMethodName);
         }
 
