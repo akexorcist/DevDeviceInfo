@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.akexorcist.deviceinformation.helper.permission.QuickPermission;
+
 /**
  * Created by Akexorcist on 11/20/2016 AD.
  */
@@ -64,5 +66,9 @@ public abstract class BaseDdiFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         saveInstanceState(outState);
+    }
+
+    public void requestPermission(QuickPermission.PermissionCallback callback, String... permissions) {
+        QuickPermission.requestPermission(getActivity(), callback, permissions);
     }
 }

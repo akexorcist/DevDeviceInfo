@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.akexorcist.deviceinformation.helper.permission.QuickPermission;
+
 /**
  * Created by Akexorcist on 11/20/2016 AD.
  */
@@ -61,5 +63,9 @@ public abstract class BaseDdiActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         restoreInstanceState(savedInstanceState);
         restoreView();
+    }
+
+    public void requestPermission(QuickPermission.PermissionCallback callback, String... permissions) {
+        QuickPermission.requestPermission(this, callback, permissions);
     }
 }
