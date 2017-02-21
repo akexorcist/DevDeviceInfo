@@ -1,4 +1,4 @@
-package com.nextzy.myais.common.permission;
+package com.akexorcist.deviceinformation.helper.permission;
 
 import java.util.ArrayList;
 import java.util.List;

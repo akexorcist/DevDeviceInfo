@@ -1,4 +1,4 @@
-package com.nextzy.myais.common.permission;
+package com.akexorcist.deviceinformation.helper.permission;
 
 import android.app.Activity;
 
@@ -15,36 +15,28 @@ import java.util.List;
 /**
  * Created by Akexorcist on 8/5/16 AD.
  */
-public class NextzyPermission {
-//    public static void initialize(Context context) {
-//        Dexter.initialize(context.getApplicationContext());
-//    }
-
+public class QuickPermission {
     public static void requestPermission(Activity activity, final PermissionCallback callback, String... permissions) {
-        try {
-            Dexter.withActivity(activity)
-                    .withPermissions(permissions)
-                    .withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport report) {
-                            if (callback != null) {
-                                List<PermissionResult.Permission> permissionList = new ArrayList<>();
-                                permissionList.addAll(getGrantedPermissionList(report.getGrantedPermissionResponses()));
-                                permissionList.addAll(getDeniedPermissionList(report.getDeniedPermissionResponses()));
-                                PermissionResult permissionResult = new PermissionResult(permissionList);
-                                callback.onPermissionResult(permissionResult);
-                            }
+        Dexter.withActivity(activity)
+                .withPermissions(permissions)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (callback != null) {
+                            List<PermissionResult.Permission> permissionList = new ArrayList<>();
+                            permissionList.addAll(getGrantedPermissionList(report.getGrantedPermissionResponses()));
+                            permissionList.addAll(getDeniedPermissionList(report.getDeniedPermissionResponses()));
+                            PermissionResult permissionResult = new PermissionResult(permissionList);
+                            callback.onPermissionResult(permissionResult);
                         }
+                    }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions,
-                                                                       PermissionToken token) {
-                            token.continuePermissionRequest();
-                        }
-                    }).check();
-        } catch (NullPointerException exception) {
-            throw new NullPointerException("Application class should be extend from NextzyApplication class before use NextzyPermission class.");
-        }
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions,
+                                                                   PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     private static List<PermissionResult.Permission> getGrantedPermissionList(List<PermissionGrantedResponse> permissionGrantedResponseList) {
