@@ -48,25 +48,29 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == applicationType) {
                 String packageName = applicationInfo.packageName;
                 if (!isAppInfoContains(appItemList, packageName)) {
-                    String name = getApplicationName(packageManager, applicationInfo);
-                    AppItem appItem = new AppItem()
-                            .setName(name)
-                            .setPackageName(packageName)
-                            .setVersionCode(getVersionCode(packageManager, packageName))
-                            .setVersionName(getVersionName(packageManager, packageName))
-                            .setIconResId(applicationInfo.icon)
-                            .setPermissionList(getPermissionList(packageManager, packageName))
-                            .setActivityList(getActivityList(packageManager, packageName))
-                            .setServiceList(getServiceList(packageManager, packageName))
-                            .setReceiverList(getReceiverList(packageManager, packageName))
-                            .setProviderList(getProviderList(packageManager, packageName))
-                            .setRequiredFeatureList(getRequiredFeatureList(packageManager, packageName));
+                    AppItem appItem = getAppItemFromApplication(packageManager, applicationInfo);
                     appItemList.add(appItem);
                 }
             }
         }
         Collections.sort(appItemList, getAppItemComparator());
         return appItemList;
+    }
+
+    private AppItem getAppItemFromApplication(PackageManager packageManager, ApplicationInfo applicationInfo) {
+        String packageName = applicationInfo.packageName;
+        return new AppItem()
+                .setName(getApplicationName(packageManager, applicationInfo))
+                .setPackageName(packageName)
+                .setVersionCode(getVersionCode(packageManager, packageName))
+                .setVersionName(getVersionName(packageManager, packageName))
+                .setIconResId(applicationInfo.icon)
+                .setPermissionList(getPermissionList(packageManager, packageName))
+                .setActivityList(getActivityList(packageManager, packageName))
+                .setServiceList(getServiceList(packageManager, packageName))
+                .setReceiverList(getReceiverList(packageManager, packageName))
+                .setProviderList(getProviderList(packageManager, packageName))
+                .setRequiredFeatureList(getRequiredFeatureList(packageManager, packageName));
     }
 
     private boolean isAppInfoContains(List<AppItem> appItemList, String packageName) {
