@@ -248,7 +248,10 @@ public class CameraInfoCollector extends BaseInfoCollector {
 
     private String getPreferredPreviewSizeForVideo(Camera.Parameters cameraParam) {
         Camera.Size size = cameraParam.getPreferredPreviewSizeForVideo();
-        return size.width + "x" + size.height;
+        if (size != null) {
+            return size.width + "x" + size.height;
+        }
+        return InfoResultType.UNKNOWN;
     }
 
     private String getPreviewFpsRange(Camera.Parameters cameraParam) {
