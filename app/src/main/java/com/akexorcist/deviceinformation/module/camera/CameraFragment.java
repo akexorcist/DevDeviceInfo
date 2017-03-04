@@ -25,6 +25,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
@@ -39,6 +40,7 @@ public class CameraFragment extends DdiFragment {
     private TabLayout tlContent;
     private CameraContentAdapter contentAdapter;
     private StickyHeaderDecoration stickyHeaderDecoration;
+    private ScrollerLinearLayoutManager scrollerLinearLayoutManager;
 
     public static CameraFragment newInstance() {
         return new CameraFragment();
@@ -66,15 +68,9 @@ public class CameraFragment extends DdiFragment {
     protected void setupView() {
         setContentLayout(layoutContent);
         setLoadingLayout(layoutLoading);
-        srlRefresh.setOnRefreshListener(onContentRefresh());
-        // Temporary disable swipe refresh layout in this version
-        srlRefresh.setEnabled(false);
-        rvContent.setLayoutManager(new ScrollerLinearLayoutManager(getContext()));
-        contentAdapter = new CameraContentAdapter();
-        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
-        rvContent.addItemDecoration(stickyHeaderDecoration);
-        rvContent.setAdapter(contentAdapter);
-        tlContent.addOnTabSelectedListener(onTabSelected());
+        setupSwipeLayout();
+        setupRecyclerView();
+        setupTabLayout();
         pdCameraPermission.setOnRequestPermissionClickListener(onRequestPermissionClick());
     }
 
@@ -105,7 +101,27 @@ public class CameraFragment extends DdiFragment {
 
     }
 
-    private void setupTabLayout(int cameraCount) {
+    private void setupSwipeLayout() {
+        srlRefresh.setOnRefreshListener(onContentRefresh());
+        // Temporary disable swipe refresh layout in this version
+        srlRefresh.setEnabled(false);
+    }
+
+    private void setupRecyclerView() {
+        scrollerLinearLayoutManager = new ScrollerLinearLayoutManager(getContext());
+        rvContent.setLayoutManager(scrollerLinearLayoutManager);
+        contentAdapter = new CameraContentAdapter();
+        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
+        rvContent.addItemDecoration(stickyHeaderDecoration);
+        rvContent.setAdapter(contentAdapter);
+        rvContent.addOnScrollListener(onTabScroll());
+    }
+
+    private void setupTabLayout() {
+        tlContent.addOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    private void initTabLayout(int cameraCount) {
         Observable.range(0, cameraCount)
                 .subscribe(index -> {
                     TabLayout.Tab cameraTab = tlContent.newTab();
@@ -115,22 +131,37 @@ public class CameraFragment extends DdiFragment {
                 });
     }
 
-    private TabLayout.OnTabSelectedListener onTabSelected() {
-        return new TabLayout.OnTabSelectedListener() {
+    private RecyclerView.OnScrollListener onTabScroll() {
+        return new RecyclerView.OnScrollListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                rvContent.smoothScrollToPosition(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int position = scrollerLinearLayoutManager.findFirstVisibleItemPosition();
+                TabLayout.Tab tab = tlContent.getTabAt(position);
+                if (tab != null) {
+                    tlContent.removeOnTabSelectedListener(onTabSelectedListener);
+                    if (!tab.isSelected()) {
+                        tab.select();
+                    }
+                    tlContent.addOnTabSelectedListener(onTabSelectedListener);
+                }
             }
         };
     }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            rvContent.smoothScrollToPosition(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+        }
+    };
 
     private PermissionDeniedView.OnRequestPermissionClickListener onRequestPermissionClick() {
         return this::requestCameraPermission;
@@ -160,7 +191,7 @@ public class CameraFragment extends DdiFragment {
     private Action1<? super CameraInfo> onCollectedCameraInfoAction() {
         return (Action1<CameraInfo>) cameraInfo -> {
             int cameraCount = cameraInfo.getCameraItemList().size();
-            setupTabLayout(cameraCount);
+            initTabLayout(cameraCount);
             contentAdapter.setCameraItemList(cameraInfo.getCameraItemList());
             contentAdapter.notifyDataSetChanged();
         };
@@ -176,6 +207,7 @@ public class CameraFragment extends DdiFragment {
 
     private Observable<CameraInfo> createCameraInfoObservable() {
         return createScreenInfoCollectorObservable()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 

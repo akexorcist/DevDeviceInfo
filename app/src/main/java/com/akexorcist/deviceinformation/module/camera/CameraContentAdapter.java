@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraItem;
+import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.module.camera.holder.CameraContentViewHolder;
 import com.akexorcist.deviceinformation.module.camera.holder.CameraEmptyViewHolder;
 import com.akexorcist.deviceinformation.module.camera.holder.CameraHeaderViewHolder;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 /**
  * Created by Akexorcist on 2/17/2017 AD.
@@ -49,8 +51,13 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof CameraContentViewHolder) {
             CameraContentViewHolder contentViewHolder = (CameraContentViewHolder) holder;
-            CameraItem cameraItem = cameraItemList.get(position);
-            contentViewHolder.icvContent.setDataInfoList(cameraItem.getDataInfoList());
+            DataInfo dataInfo = getDataInfoByPosition(position);
+            if (dataInfo != null) {
+                contentViewHolder.tvTitle.setText(dataInfo.getTitle());
+                contentViewHolder.tvValue.setText(dataInfo.getValue());
+            } else {
+                throw new NullPointerException("WTF going on!");
+            }
         }
     }
 
@@ -64,16 +71,54 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return isCameraItemAvailable() ? cameraItemList.size() : 1;
+        return isCameraItemAvailable() ? getTotalCameraItemCount() : 1;
+    }
+
+    private DataInfo getDataInfoByPosition(int position) {
+        if (cameraItemList != null) {
+            int itemCount = 0;
+            for (CameraItem cameraItem : cameraItemList) {
+                if ((cameraItem.getDataInfoCount() + itemCount) - 1 >= position) {
+                    // Expected item is in this camera item
+                    return cameraItem.getDataInfoList().get(position - itemCount);
+                } else {
+                    // Item isn't here, let's check next camera info
+                    itemCount += cameraItem.getDataInfoCount();
+                }
+            }
+        }
+        // This case shouldn't occurred
+        return null;
     }
 
     private boolean isCameraItemAvailable() {
-        return cameraItemList != null && !cameraItemList.isEmpty();
+        return cameraItemList != null && !cameraItemList.isEmpty() && getTotalCameraItemCount() != 0;
+    }
+
+    private int getTotalCameraItemCount() {
+        int count = 0;
+        for (CameraItem cameraItem : cameraItemList) {
+            count += cameraItem.getDataInfoCount();
+        }
+        return count;
     }
 
     @Override
     public long getHeaderId(int position) {
-        return position;
+        if (cameraItemList != null) {
+            int itemCount = 0;
+            for (int index = 0; index < cameraItemList.size(); index++) {
+                CameraItem cameraItem = cameraItemList.get(index);
+                if ((cameraItem.getDataInfoCount() + itemCount) - 1 >= position) {
+                    // Expected header ID is in this camera item
+                    return index;
+                } else {
+                    // Header ID isn't here, let's check next camera info
+                    itemCount += cameraItem.getDataInfoCount();
+                }
+            }
+        }
+        return StickyHeaderDecoration.NO_HEADER_ID;
     }
 
     @Override
@@ -85,7 +130,7 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         CameraHeaderViewHolder headerViewHolder = (CameraHeaderViewHolder) holder;
-        String title = holder.itemView.getResources().getString(R.string.camera) + " " + position;
+        String title = String.format("%s %s", holder.itemView.getResources().getString(R.string.camera), getHeaderId(position));
         headerViewHolder.tvHeader.setText(title);
     }
 }
