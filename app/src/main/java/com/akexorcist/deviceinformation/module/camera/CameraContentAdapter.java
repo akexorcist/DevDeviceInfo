@@ -91,6 +91,18 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
         return null;
     }
 
+    public int getFirstDataInfoPositionByCameraId(int position) {
+        if (cameraItemList != null) {
+            int itemCount = 0;
+            for (int index = 0; index < position; index++) {
+                CameraItem cameraItem = cameraItemList.get(index);
+                itemCount += cameraItem.getDataInfoCount();
+            }
+            return itemCount;
+        }
+        return -1;
+    }
+
     private boolean isCameraItemAvailable() {
         return cameraItemList != null && !cameraItemList.isEmpty() && getTotalCameraItemCount() != 0;
     }

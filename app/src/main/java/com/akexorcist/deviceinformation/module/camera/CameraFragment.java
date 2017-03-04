@@ -136,7 +136,7 @@ public class CameraFragment extends DdiFragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int position = scrollerLinearLayoutManager.findFirstVisibleItemPosition();
-                TabLayout.Tab tab = tlContent.getTabAt(position);
+                TabLayout.Tab tab = tlContent.getTabAt((int) contentAdapter.getHeaderId(position));
                 if (tab != null) {
                     tlContent.removeOnTabSelectedListener(onTabSelectedListener);
                     if (!tab.isSelected()) {
@@ -151,7 +151,10 @@ public class CameraFragment extends DdiFragment {
     private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
-            rvContent.smoothScrollToPosition(tab.getPosition());
+            int position = contentAdapter.getFirstDataInfoPositionByCameraId(tab.getPosition());
+            if (position != -1) {
+                rvContent.smoothScrollToPosition(position);
+            }
         }
 
         @Override
