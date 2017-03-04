@@ -391,7 +391,7 @@ public class HardwareSoftwareFragment extends DdiFragment {
     }
 
     private Observable<StorageInfo> createStorageInfoCollectorObservable() {
-        return Observable.just(StorageInfoCollector.getInstance().collect());
+        return Observable.just(StorageInfoCollector.getInstance().collect(getContext()));
     }
 
     private Observable<StorageInfo> createSetStorageInfoObservable(StorageInfo storageInfo) {
