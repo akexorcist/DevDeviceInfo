@@ -127,13 +127,14 @@ public abstract class BaseCameraFragment<CI extends BaseCameraInfo<BI>, BI exten
     }
 
     private void initTabLayout(int cameraCount) {
-        Observable.range(0, cameraCount)
-                .subscribe(index -> {
-                    TabLayout.Tab cameraTab = tlContent.newTab();
-                    String title = getString(R.string.camera) + " " + index;
-                    cameraTab.setText(title);
-                    tlContent.addTab(cameraTab);
-                });
+        for (int index = 0; index < cameraCount; index++) {
+            if (isAdded()) {
+                TabLayout.Tab cameraTab = tlContent.newTab();
+                String title = getString(R.string.camera) + " " + index;
+                cameraTab.setText(title);
+                tlContent.addTab(cameraTab);
+            }
+        }
     }
 
     private RecyclerView.OnScrollListener onTabScroll() {
