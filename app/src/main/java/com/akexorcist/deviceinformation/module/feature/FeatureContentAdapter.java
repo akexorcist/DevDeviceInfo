@@ -143,19 +143,19 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return -1;
     }
 
-    private boolean isSupportedFeatureAvailable() {
+    public boolean isSupportedFeatureAvailable() {
         return supportedFeatureItem != null && supportedFeatureItem.size() != 0;
     }
 
-    private boolean isUnsupportedFeatureAvailable() {
+    public boolean isUnsupportedFeatureAvailable() {
         return unsupportedFeatureItem != null && unsupportedFeatureItem.size() != 0;
     }
 
-    private boolean isSupportedFeatureContent(int position) {
+    public boolean isSupportedFeatureContent(int position) {
         return position >= 0 && position < getSupportedItemCount();
     }
 
-    private boolean isUnsupportedFeatureContent(int position) {
+    public boolean isUnsupportedFeatureContent(int position) {
         return position >= getSupportedItemCount() && position < getSupportedItemCount() + getUnsupportedItemCount();
     }
 

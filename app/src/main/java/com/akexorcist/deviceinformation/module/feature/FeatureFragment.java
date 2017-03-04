@@ -46,6 +46,7 @@ public class FeatureFragment extends DdiFragment {
     private FeatureContentAdapter contentAdapter;
     private BottomSheetBehavior featureBottomSheetBehavior;
     private StickyHeaderDecoration stickyHeaderDecoration;
+    private ScrollerLinearLayoutManager scrollerLinearLayoutManager;
 
     public static FeatureFragment newInstance() {
         return new FeatureFragment();
@@ -78,21 +79,11 @@ public class FeatureFragment extends DdiFragment {
     protected void setupView() {
         setContentLayout(layoutContent);
         setLoadingLayout(layoutLoading);
-        layoutBottomSheet.setOnClickListener(onBottomSheetClick());
-        featureBottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        featureBottomSheetBehavior.setHideable(true);
-        featureBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        srlRefresh.setOnRefreshListener(onContentRefresh());
-        // Temporary disable swipe refresh layout in this version
-        srlRefresh.setEnabled(false);
-        rvContent.setLayoutManager(new ScrollerLinearLayoutManager(getContext()));
-        contentAdapter = new FeatureContentAdapter();
-        contentAdapter.setOnFeatureInfoClickListener(onFeatureInfoClick());
-        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
-        rvContent.addItemDecoration(stickyHeaderDecoration);
-        rvContent.setAdapter(contentAdapter);
-        tlContent.addOnTabSelectedListener(onTabSelected());
+        setupBottomSheet();
+        setupSwipeRefresh();
+        setupRecyclerView();
         setupTabLayout();
+        initTabLayout();
     }
 
     @Override
@@ -122,7 +113,35 @@ public class FeatureFragment extends DdiFragment {
 
     }
 
+    private void setupBottomSheet() {
+        layoutBottomSheet.setOnClickListener(onBottomSheetClick());
+        featureBottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        featureBottomSheetBehavior.setHideable(true);
+        featureBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    private void setupSwipeRefresh() {
+        srlRefresh.setOnRefreshListener(onContentRefresh());
+        // Temporary disable swipe refresh layout in this version
+        srlRefresh.setEnabled(false);
+    }
+
+    private void setupRecyclerView() {
+        scrollerLinearLayoutManager = new ScrollerLinearLayoutManager(getContext());
+        rvContent.setLayoutManager(scrollerLinearLayoutManager);
+        contentAdapter = new FeatureContentAdapter();
+        contentAdapter.setOnFeatureInfoClickListener(onFeatureInfoClick());
+        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
+        rvContent.addItemDecoration(stickyHeaderDecoration);
+        rvContent.setAdapter(contentAdapter);
+        rvContent.addOnScrollListener(onTabScroll());
+    }
+
     private void setupTabLayout() {
+        tlContent.addOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    private void initTabLayout() {
         TabLayout.Tab supportedTab = tlContent.newTab();
         supportedTab.setText(R.string.feature_supported_feature_header);
         tlContent.addTab(supportedTab);
@@ -131,25 +150,45 @@ public class FeatureFragment extends DdiFragment {
         tlContent.addTab(unsupportedTab);
     }
 
-    private TabLayout.OnTabSelectedListener onTabSelected() {
-        return new TabLayout.OnTabSelectedListener() {
+    private RecyclerView.OnScrollListener onTabScroll() {
+        return new RecyclerView.OnScrollListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = contentAdapter.getFirstFeatureContentPositionByHeaderId(tab.getPosition());
-                if (position != -1) {
-                    rvContent.smoothScrollToPosition(position);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int position = scrollerLinearLayoutManager.findFirstVisibleItemPosition();
+                TabLayout.Tab tab = null;
+                if (contentAdapter.isSupportedFeatureContent(position)) {
+                    tab = tlContent.getTabAt(0);
+                } else if (contentAdapter.isUnsupportedFeatureContent(position)) {
+                    tab = tlContent.getTabAt(1);
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                if (tab != null) {
+                    tlContent.removeOnTabSelectedListener(onTabSelectedListener);
+                    if (!tab.isSelected()) {
+                        tab.select();
+                    }
+                    tlContent.addOnTabSelectedListener(onTabSelectedListener);
+                }
             }
         };
     }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            int position = contentAdapter.getFirstFeatureContentPositionByHeaderId(tab.getPosition());
+            if (position != -1) {
+                rvContent.smoothScrollToPosition(position);
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+        }
+    };
 
     private FeatureContentAdapter.OnFeatureInfoClickListener onFeatureInfoClick() {
         return this::showFeatureInfoBottomSheet;
