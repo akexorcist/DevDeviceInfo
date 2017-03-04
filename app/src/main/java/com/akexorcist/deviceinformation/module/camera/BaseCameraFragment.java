@@ -127,13 +127,18 @@ public abstract class BaseCameraFragment<CI extends BaseCameraInfo<BI>, BI exten
     }
 
     private void initTabLayout(int cameraCount) {
-        for (int index = 0; index < cameraCount; index++) {
-            if (isAdded()) {
-                TabLayout.Tab cameraTab = tlContent.newTab();
-                String title = getString(R.string.camera) + " " + index;
-                cameraTab.setText(title);
-                tlContent.addTab(cameraTab);
+        if (cameraCount > 0) {
+            tlContent.setVisibility(View.VISIBLE);
+            for (int index = 0; index < cameraCount; index++) {
+                if (isAdded()) {
+                    TabLayout.Tab cameraTab = tlContent.newTab();
+                    String title = getString(R.string.camera) + " " + index;
+                    cameraTab.setText(title);
+                    tlContent.addTab(cameraTab);
+                }
             }
+        } else {
+            tlContent.setVisibility(View.GONE);
         }
     }
 
