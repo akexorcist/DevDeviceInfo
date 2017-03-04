@@ -316,7 +316,14 @@
     </style>
 
     <!-- Tab Layout -->
-    <style name="TabLayout" parent="TextAppearance.Design.Tab">
+    <style name="DefaultTabLayout" parent="Widget.Design.TabLayout">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabTextAppearance">@style/TabLayoutTextAppearance</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="textAllCaps">false</item>
     </style>
