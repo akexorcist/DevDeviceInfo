@@ -28,7 +28,7 @@ public class StringUtility {
         return str;
     }
 
-    public String wrapUnknownLower(String str) {
+    public String wrapUnknownWithLowerCase(String str) {
         if (str == null || str.toLowerCase(Locale.getDefault()).equals("null") || str.equals(""))
             str = "unknown";
         return str;
