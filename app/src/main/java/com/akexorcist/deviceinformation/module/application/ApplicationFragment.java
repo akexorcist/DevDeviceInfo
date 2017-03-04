@@ -43,6 +43,7 @@ public class ApplicationFragment extends DdiFragment {
     private ApplicationContentAdapter contentAdapter;
     private BottomSheetBehavior appBottomSheetBehavior;
     private StickyHeaderDecoration stickyHeaderDecoration;
+    private ScrollerLinearLayoutManager scrollerLinearLayoutManager;
 
     public static ApplicationFragment newInstance() {
         return new ApplicationFragment();
@@ -72,21 +73,11 @@ public class ApplicationFragment extends DdiFragment {
     protected void setupView() {
         setContentLayout(layoutContent);
         setLoadingLayout(layoutLoading);
-        layoutBottomSheet.setOnClickListener(onBottomSheetClick());
-        appBottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        appBottomSheetBehavior.setHideable(true);
-        appBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        srlRefresh.setOnRefreshListener(onContentRefresh());
-        // Temporary disable swipe refresh layout in this version
-        srlRefresh.setEnabled(false);
-        rvContent.setLayoutManager(new ScrollerLinearLayoutManager(getContext()));
-        contentAdapter = new ApplicationContentAdapter();
-        contentAdapter.setOnAppContentClickListener(onAppInfoClick());
-        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
-        rvContent.addItemDecoration(stickyHeaderDecoration);
-        rvContent.setAdapter(contentAdapter);
-        tlContent.addOnTabSelectedListener(onTabSelected());
+        setupBottomSheet();
+        setupSwipeRefresh();
+        setupRecyclerView();
         setupTabLayout();
+        initTabLayout();
     }
 
     @Override
@@ -116,7 +107,35 @@ public class ApplicationFragment extends DdiFragment {
 
     }
 
+    private void setupBottomSheet() {
+        layoutBottomSheet.setOnClickListener(onBottomSheetClick());
+        appBottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        appBottomSheetBehavior.setHideable(true);
+        appBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    private void setupSwipeRefresh() {
+        srlRefresh.setOnRefreshListener(onContentRefresh());
+        // Temporary disable swipe refresh layout in this version
+        srlRefresh.setEnabled(false);
+    }
+
+    private void setupRecyclerView() {
+        scrollerLinearLayoutManager = new ScrollerLinearLayoutManager(getContext());
+        rvContent.setLayoutManager(scrollerLinearLayoutManager);
+        contentAdapter = new ApplicationContentAdapter();
+        contentAdapter.setOnAppContentClickListener(onAppInfoClick());
+        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
+        rvContent.addItemDecoration(stickyHeaderDecoration);
+        rvContent.setAdapter(contentAdapter);
+        rvContent.addOnScrollListener(onTabScroll());
+    }
+
     private void setupTabLayout() {
+        tlContent.addOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    private void initTabLayout() {
         TabLayout.Tab supportedTab = tlContent.newTab();
         supportedTab.setText(R.string.application_downloaded_app_header);
         tlContent.addTab(supportedTab);
@@ -125,25 +144,44 @@ public class ApplicationFragment extends DdiFragment {
         tlContent.addTab(unsupportedTab);
     }
 
-    private TabLayout.OnTabSelectedListener onTabSelected() {
-        return new TabLayout.OnTabSelectedListener() {
+    private RecyclerView.OnScrollListener onTabScroll() {
+        return new RecyclerView.OnScrollListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = contentAdapter.getFirstAppContentPositionByHeaderId(tab.getPosition());
-                if (position != -1) {
-                    rvContent.smoothScrollToPosition(position);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int position = scrollerLinearLayoutManager.findFirstVisibleItemPosition();
+                TabLayout.Tab tab = null;
+                if (contentAdapter.isDownloadedAppContent(position)) {
+                    tab = tlContent.getTabAt(0);
+                } else if (contentAdapter.isSystemAppContent(position)) {
+                    tab = tlContent.getTabAt(1);
                 }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                if (tab != null) {
+                    tlContent.removeOnTabSelectedListener(onTabSelectedListener);
+                    tab.select();
+                    tlContent.addOnTabSelectedListener(onTabSelectedListener);
+                }
             }
         };
     }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            int position = contentAdapter.getFirstAppContentPositionByHeaderId(tab.getPosition());
+            if (position != -1) {
+                rvContent.smoothScrollToPosition(position);
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+        }
+    };
+
 
     private ApplicationContentAdapter.OnAppContentClickListener onAppInfoClick() {
         return this::showAppInfoBottomSheet;
@@ -169,7 +207,7 @@ public class ApplicationFragment extends DdiFragment {
 
     private void collectApplicationInfo() {
         createCollectAppInfoObservable(getContext())
-                .subscribe(showAppInfo());
+                .subscribe(showAppInfoAction());
     }
 
     private Observable<AppInfo> createCollectAppInfoObservable(Context context) {
@@ -181,7 +219,7 @@ public class ApplicationFragment extends DdiFragment {
         return () -> ApplicationInfoCollector.getInstance().collect(context);
     }
 
-    private Action1<AppInfo> showAppInfo() {
+    private Action1<AppInfo> showAppInfoAction() {
         return appInfo -> {
             contentAdapter.setAppItemList(appInfo.getDownloadedAppItemList(), appInfo.getSystemAppItemList());
             contentAdapter.notifyDataSetChanged();

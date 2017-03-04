@@ -152,19 +152,19 @@ public class ApplicationContentAdapter extends RecyclerView.Adapter<RecyclerView
         return -1;
     }
 
-    private boolean isDownloadedAppAvailable() {
+    public boolean isDownloadedAppAvailable() {
         return downloadedAppItem != null && downloadedAppItem.size() != 0;
     }
 
-    private boolean isSystemAppAvailable() {
+    public boolean isSystemAppAvailable() {
         return systemAppItem != null && systemAppItem.size() != 0;
     }
 
-    private boolean isDownloadedAppContent(int position) {
+    public boolean isDownloadedAppContent(int position) {
         return position >= 0 && position < getDownloadedAppItemCount();
     }
 
-    private boolean isSystemAppContent(int position) {
+    public boolean isSystemAppContent(int position) {
         return position >= getDownloadedAppItemCount() && position < getDownloadedAppItemCount() + getSystemAppItemCount();
     }
 
