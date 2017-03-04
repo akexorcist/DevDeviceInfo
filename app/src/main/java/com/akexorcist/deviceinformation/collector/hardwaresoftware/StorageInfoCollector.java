@@ -45,9 +45,11 @@ public class StorageInfoCollector extends BaseInfoCollector {
 
     // This method can detected when sd card inserted only
     private String getSdCardSupported(Context context) {
-        String[] storageDirectoryList = getExternalStorageDirectoryList(context);
-        if (storageDirectoryList.length > 0) {
-            return "Yes";
+        if (context != null) {
+            String[] storageDirectoryList = getExternalStorageDirectoryList(context);
+            if (storageDirectoryList.length > 0) {
+                return "Yes";
+            }
         }
         return "Unknown";
     }
