@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.camera.v1;
+package com.akexorcist.deviceinformation.module.camera.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.akexorcist.deviceinformation.R;
-import com.akexorcist.deviceinformation.collector.camera.model.CameraItem;
+import com.akexorcist.deviceinformation.common.BaseInfo;
 import com.akexorcist.deviceinformation.common.DataInfo;
-import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraContentViewHolder;
-import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraEmptyViewHolder;
-import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraHeaderViewHolder;
+import com.akexorcist.deviceinformation.module.camera.adapter.holder.CameraContentViewHolder;
+import com.akexorcist.deviceinformation.module.camera.adapter.holder.CameraEmptyViewHolder;
+import com.akexorcist.deviceinformation.module.camera.adapter.holder.CameraHeaderViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,17 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
  * Created by Akexorcist on 2/17/2017 AD.
  */
 
-public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements StickyHeaderAdapter<RecyclerView.ViewHolder> {
+public class CameraContentAdapter<BI extends BaseInfo> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements StickyHeaderAdapter<RecyclerView.ViewHolder> {
     private static final int TYPE_CAMERA_ITEM = 0;
     private static final int TYPE_EMPTY_CAMERA_ITEM = 1;
 
-    private List<CameraItem> cameraItemList;
+    private List<BI> cameraItemList;
 
     public CameraContentAdapter() {
         cameraItemList = new ArrayList<>();
     }
 
-    public void setCameraItemList(List<CameraItem> cameraItemList) {
+    public void setCameraItemList(List<BI> cameraItemList) {
         this.cameraItemList = cameraItemList;
     }
 
@@ -77,7 +77,7 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
     private DataInfo getDataInfoByPosition(int position) {
         if (cameraItemList != null) {
             int itemCount = 0;
-            for (CameraItem cameraItem : cameraItemList) {
+            for (BI cameraItem : cameraItemList) {
                 if ((cameraItem.getDataInfoCount() + itemCount) - 1 >= position) {
                     // Expected item is in this camera item
                     return cameraItem.getDataInfoList().get(position - itemCount);
@@ -95,7 +95,7 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (cameraItemList != null) {
             int itemCount = 0;
             for (int index = 0; index < position; index++) {
-                CameraItem cameraItem = cameraItemList.get(index);
+                BI cameraItem = cameraItemList.get(index);
                 itemCount += cameraItem.getDataInfoCount();
             }
             return itemCount;
@@ -109,7 +109,7 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private int getTotalCameraItemCount() {
         int count = 0;
-        for (CameraItem cameraItem : cameraItemList) {
+        for (BI cameraItem : cameraItemList) {
             count += cameraItem.getDataInfoCount();
         }
         return count;
@@ -120,7 +120,7 @@ public class CameraContentAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (cameraItemList != null) {
             int itemCount = 0;
             for (int index = 0; index < cameraItemList.size(); index++) {
-                CameraItem cameraItem = cameraItemList.get(index);
+                BI cameraItem = cameraItemList.get(index);
                 if ((cameraItem.getDataInfoCount() + itemCount) - 1 >= position) {
                     // Expected header ID is in this camera item
                     return index;

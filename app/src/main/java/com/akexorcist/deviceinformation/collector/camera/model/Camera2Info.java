@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Akexorcist on 3/4/2017 AD.
  */
 
-public class Camera2Info {
+public class Camera2Info extends BaseCameraInfo<Camera2Item> {
     private List<Camera2Item> cameraItemList;
 
     public Camera2Info() {
@@ -33,7 +33,7 @@ public class Camera2Info {
         return this;
     }
 
-    private int getCameraItemIndexById(String cameraId) {
+    protected int getCameraItemIndexById(String cameraId) {
         if (cameraItemList != null) {
             for (int index = 0; index < cameraItemList.size(); index++) {
                 Camera2Item cameraItem = cameraItemList.get(index);
