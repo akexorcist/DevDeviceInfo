@@ -29,12 +29,9 @@
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tl_content"
+                style="@style/DefaultTabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/colorPrimary"
-                app:tabMode="scrollable"
-                app:tabTextAppearance="@style/TabLayout"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:layout_height="match_parent" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -50,10 +47,12 @@
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click" />
+        android:text="Click"
+        android:visibility="gone" />
 
     <com.akexorcist.deviceinformation.widget.SyncInfoView
         android:id="@+id/siv_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 </LinearLayout>

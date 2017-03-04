@@ -23,12 +23,9 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_application_content"
+            style="@style/DefaultTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabLayout"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:layout_height="wrap_content" />
 
         <com.akexorcist.deviceinformation.widget.NestedCoordinatorLayout
             android:layout_width="match_parent"
