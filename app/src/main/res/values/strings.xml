@@ -9,6 +9,7 @@
     <string name="title_app_list">App List</string>
 
     <string name="sync_from_server">Sync your device info from server</string>
+    <string name="try_again">Try again</string>
 
     <string name="hardware_and_software_android_info">Android Info</string>
     <string name="hardware_and_software_battery_info">Battery Info</string>
@@ -23,6 +24,7 @@
 
     <string name="camera">Camera</string>
     <string name="camera_does_not_available_description">Camera does not available in this device</string>
+    <string name="camera_permission_denied">Camera info is unavailable. Please allow application to access camera permission.</string>
 
     <string name="feature_description_app_widgets">The device supports app widgets.</string>
     <string name="feature_description_audio_low_latency">The audio pipeline of device is low-latency, more suitable for audio applications sensitive to delays or lag in sound input or output.</string>

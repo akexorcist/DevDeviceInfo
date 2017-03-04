@@ -240,6 +240,10 @@
         <item name="android:textColor">@color/text_link</item>
     </style>
 
+    <style name="Button.Borderless.Accent">
+        <item name="android:textColor">@color/text_accent</item>
+    </style>
+
     <style name="Button.Borderless.Error">
         <item name="android:textColor">@color/text_error</item>
     </style>

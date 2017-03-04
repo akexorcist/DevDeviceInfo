@@ -44,5 +44,6 @@
         android:id="@+id/pd_camera_permission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_padding_large" />
 </FrameLayout>
