@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,10 +15,20 @@
             android:layout_height="wrap_content" />
     </FrameLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/layout_feature_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_feature_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayout"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <com.akexorcist.deviceinformation.widget.NestedCoordinatorLayout
             android:layout_width="match_parent"
@@ -28,5 +39,5 @@
             <include layout="@layout/view_feature_bottom_sheet" />
 
         </com.akexorcist.deviceinformation.widget.NestedCoordinatorLayout>
-    </FrameLayout>
+    </LinearLayout>
 </FrameLayout>

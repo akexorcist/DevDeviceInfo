@@ -27,8 +27,8 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_EMPTY_SUPPORTED_ITEM = 1;
     private static final int TYPE_EMPTY_UNSUPPORTED_ITEM = 2;
     private static final int TYPE_UNKNOWN = 3;
-    private static final int HEADER_ID_SUPPORTED = 1;
-    private static final int HEADER_ID_UNSUPPORTED = 2;
+    private static final int HEADER_ID_SUPPORTED = 0;
+    private static final int HEADER_ID_UNSUPPORTED = 1;
 
     private List<FeatureItem> supportedFeatureItem;
     private List<FeatureItem> unsupportedFeatureItem;
@@ -132,6 +132,15 @@ public class FeatureContentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         // For other view holder type
         return null;
+    }
+
+    public int getFirstFeatureContentPositionByHeaderId(int index) {
+        if (index == HEADER_ID_SUPPORTED) {
+            return 0;
+        } else if (index == HEADER_ID_UNSUPPORTED) {
+            return getSupportedItemCount();
+        }
+        return -1;
     }
 
     private boolean isSupportedFeatureAvailable() {
