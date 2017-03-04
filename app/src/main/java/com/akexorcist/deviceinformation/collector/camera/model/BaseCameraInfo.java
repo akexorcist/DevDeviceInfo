@@ -2,27 +2,19 @@ package com.akexorcist.deviceinformation.collector.camera.model;
 
 import com.akexorcist.deviceinformation.common.BaseInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Akexorcist on 3/5/2017 AD.
  */
 
-public abstract class BaseCameraInfo<BI extends BaseInfo> {
-    private List<BI> cameraItemList;
+public interface BaseCameraInfo<BI extends BaseInfo> {
 
-    public BaseCameraInfo() {
-        cameraItemList = new ArrayList<>();
-    }
+    List<BI> getCameraItemList();
 
-    public List<BI> getCameraItemList() {
-        return cameraItemList;
-    }
+    BaseCameraInfo addCameraItem(BI cameraItem);
 
-    public abstract BaseCameraInfo addCameraItem(BI cameraItem);
+    BaseCameraInfo setCameraItemList(List<BI> cameraItemList);
 
-    public abstract BaseCameraInfo setCameraItemList(List<BI> cameraItemList);
-
-    protected abstract int getCameraItemIndexById(String cameraId);
+    int getCameraItemIndexById(String cameraId);
 }
