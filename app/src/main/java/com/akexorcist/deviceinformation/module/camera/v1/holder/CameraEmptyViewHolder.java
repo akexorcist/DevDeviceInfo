@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.camera.holder;
+package com.akexorcist.deviceinformation.module.camera.v1.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

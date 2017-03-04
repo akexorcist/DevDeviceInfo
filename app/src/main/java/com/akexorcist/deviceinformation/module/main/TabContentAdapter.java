@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.module.application.ApplicationFragment;
-import com.akexorcist.deviceinformation.module.camera2.Camera2Fragment;
-import com.akexorcist.deviceinformation.module.camera.CameraFragment;
+import com.akexorcist.deviceinformation.module.camera.v2.Camera2Fragment;
+import com.akexorcist.deviceinformation.module.camera.v1.CameraFragment;
 import com.akexorcist.deviceinformation.module.feature.FeatureFragment;
 import com.akexorcist.deviceinformation.module.hardwaresoftware.HardwareSoftwareFragment;
 import com.akexorcist.deviceinformation.module.screen.ScreenFragment;

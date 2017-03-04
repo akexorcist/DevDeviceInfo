@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.camera2;
+package com.akexorcist.deviceinformation.module.camera.v2;
 
 import android.os.Bundle;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.camera;
+package com.akexorcist.deviceinformation.module.camera.v1;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraItem;
 import com.akexorcist.deviceinformation.common.DataInfo;
-import com.akexorcist.deviceinformation.module.camera.holder.CameraContentViewHolder;
-import com.akexorcist.deviceinformation.module.camera.holder.CameraEmptyViewHolder;
-import com.akexorcist.deviceinformation.module.camera.holder.CameraHeaderViewHolder;
+import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraContentViewHolder;
+import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraEmptyViewHolder;
+import com.akexorcist.deviceinformation.module.camera.v1.holder.CameraHeaderViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

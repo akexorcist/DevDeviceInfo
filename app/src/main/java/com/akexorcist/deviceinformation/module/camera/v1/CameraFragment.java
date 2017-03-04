@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.module.camera;
+package com.akexorcist.deviceinformation.module.camera.v1;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -72,7 +72,7 @@ public class CameraFragment extends DdiFragment {
         setupSwipeLayout();
         setupRecyclerView();
         setupTabLayout();
-        pdCameraPermission.setOnRequestPermissionClickListener(onRequestPermissionClick());
+        setupPermissionDenied();
     }
 
     @Override
@@ -122,6 +122,11 @@ public class CameraFragment extends DdiFragment {
 
     private void setupTabLayout() {
         tlContent.addOnTabSelectedListener(onTabSelectedListener);
+    }
+
+    private void setupPermissionDenied() {
+        pdCameraPermission.setPermissionDeniedDescription(R.string.camera_permission_denied);
+        pdCameraPermission.setOnRequestPermissionClickListener(onRequestPermissionClick());
     }
 
     private void initTabLayout(int cameraCount) {
