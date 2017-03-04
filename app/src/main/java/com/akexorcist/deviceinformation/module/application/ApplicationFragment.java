@@ -157,7 +157,9 @@ public class ApplicationFragment extends DdiFragment {
                 }
                 if (tab != null) {
                     tlContent.removeOnTabSelectedListener(onTabSelectedListener);
-                    tab.select();
+                    if (!tab.isSelected()) {
+                        tab.select();
+                    }
                     tlContent.addOnTabSelectedListener(onTabSelectedListener);
                 }
             }
