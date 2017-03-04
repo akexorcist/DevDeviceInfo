@@ -7,32 +7,41 @@ import com.akexorcist.deviceinformation.common.BaseInfo;
  */
 
 public class CameraItem extends BaseInfo {
-    private static final String CAMERA_ID = "Camera ID";
     private static final String ANTIBANDING = "Antibanding";
-    private static final String CAMERA_FACING = "Camera Facing";
-    private static final String COLOR_EFFECT = "Color Effect";
-    private static final String CAN_DISABLE_SHUTTER_SOUND = "Can Disable Shutter Sound";
-    private static final String FLASH_MODE = "Flash Mode";
-    private static final String FOCUS_MODE = "Focus Mode";
-    private static final String JPEG_THUMBNAIL_SIZE = "JPEG Thumbnail Size (PX)";
-    private static final String IMAGE_ORIENTATION = "Image Orientation";
-    private static final String PICTURE_FORMAT = "Picture Format";
-    private static final String PREVIEW_FORMAT = "Preview Format";
-    private static final String PICTURE_SIZE = "Picture Size (PX)";
-    private static final String PREVIEW_FRAMERATE = "Preview Framerate (FPS)";
-    private static final String PREVIEW_SIZE = "Preview Size (PX)";
-    private static final String PREVIEW_FPS_RANGE = "Preview FPS Range";
-    private static final String SCENE_MODE = "Scene Mode";
-    private static final String VIDEO_QUALITY_PROFILE = "Video Quality Profile (PX)";
-    private static final String TIMELAPSE_QUALITY_PROFILE = "Timelapse Quality Profile (PX)";
-    private static final String HIGH_SPEED_QUALITY_PROFILE = "High Speed Quality Profile (PX)";
-    private static final String VIDEO_SIZE = "Video Size";
-    private static final String WHITE_BALANCE = "White Balance";
     private static final String AUTO_EXPOSURE_LOCK_SUPPORTED = "Auto Exposure Lock Supported";
     private static final String AUTO_WHITE_BALANCE_LOCK_SUPPORTED = "Auto White Balance Lock Supported";
+    private static final String CAMERA_FACING = "Camera Facing";
+    private static final String CAMERA_ID = "Camera ID";
+    private static final String CAN_DISABLE_SHUTTER_SOUND = "Can Disable Shutter Sound";
+    private static final String COLOR_EFFECT = "Color Effect";
+    private static final String EXPOSURE_COMPENSATION_STEP = "Exposure Compensation Step";
+    private static final String FLASH_MODE = "Flash Mode";
+    private static final String FOCUS_MODE = "Focus Mode";
+    private static final String HIGH_SPEED_QUALITY_PROFILE = "High Speed Quality Profile (PX)";
+    private static final String IMAGE_ORIENTATION = "Image Orientation";
+    private static final String JPEG_THUMBNAIL_SIZE = "JPEG Thumbnail Size (PX)";
+    private static final String MAXIMUM_ZOOM_VALUE = "Maximum Zoom Value";
+    private static final String MAXIMUM_EXPOSURE_COMPENSATION = "Maximum Exposure Compensation";
+    private static final String MAXIMUM_NUMBER_OF_DETECTED_FACES = "Maximum Number Of Detected Faces";
+    private static final String MAXIMUM_NUMBER_OF_FOCUS_AREAS = "Maximum Number Of Focus Areas";
+    private static final String MAXIMUM_NUMBER_OF_METERING_AREAS = "Maximum Number Of Metering Areas";
+    private static final String MINIMUM_EXPOSURE_COMPENSATION = "Minimum Exposure Compensation";
+    private static final String PICTURE_FORMAT = "Picture Format";
+    private static final String PICTURE_SIZE = "Picture Size (PX)";
+    private static final String PREFERRED_PREVIEW_SIZE_FOR_VIDEO = "Preferred Preview Size For Video";
+    private static final String PREVIEW_FORMAT = "Preview Format";
+    private static final String PREVIEW_FPS_RANGE = "Preview FPS Range";
+    private static final String PREVIEW_SIZE = "Preview Size (PX)";
+    private static final String SCENE_MODE = "Scene Mode";
     private static final String SMOOTH_ZOOM_SUPPORTED = "Smooth Zoom Supported";
+    private static final String TIME_LAPSE_QUALITY_PROFILE = "Time-lapse Quality Profile (PX)";
+    private static final String VIDEO_QUALITY_PROFILE = "Video Quality Profile (PX)";
+    private static final String VIDEO_SIZE = "Video Size";
+    private static final String WHITE_BALANCE = "White Balance";
+    private static final String VERTICAL_VIEW_ANGLE = "Vertical View Angle";
     private static final String VIDEO_SNAPSHOT_SUPPORTED = "Video Snapshot Supported";
     private static final String VIDEO_STABILIZATION_SUPPORTED = "Video Stabilization Supported";
+    private static final String ZOOM_RATIO = "Zoom Ratio";
     private static final String ZOOM_SUPPORTED = "Zoom Supported";
 
     public CameraItem() {
@@ -44,7 +53,7 @@ public class CameraItem extends BaseInfo {
     }
 
     public CameraItem setCameraId(String cameraId) {
-        setDataInfo(CAMERA_FACING, cameraId);
+        setDataInfo(CAMERA_ID, cameraId);
         return this;
     }
 
@@ -84,6 +93,15 @@ public class CameraItem extends BaseInfo {
         return this;
     }
 
+    public String getExposureCompensationStep() {
+        return getValueByTitle(EXPOSURE_COMPENSATION_STEP);
+    }
+
+    public CameraItem setExposureCompensationStep(String exposureCompensationStep) {
+        setDataInfo(EXPOSURE_COMPENSATION_STEP, exposureCompensationStep);
+        return this;
+    }
+
     public String getFlashMode() {
         return getValueByTitle(FLASH_MODE);
     }
@@ -120,6 +138,60 @@ public class CameraItem extends BaseInfo {
         return this;
     }
 
+    public String getMaximumZoomValue() {
+        return getValueByTitle(MAXIMUM_ZOOM_VALUE);
+    }
+
+    public CameraItem setMaximumZoomValue(String maxZoomValue) {
+        setDataInfo(MAXIMUM_ZOOM_VALUE, maxZoomValue);
+        return this;
+    }
+
+    public String getMaximumExposureCompensation() {
+        return getValueByTitle(MAXIMUM_EXPOSURE_COMPENSATION);
+    }
+
+    public CameraItem setMaximumExposureCompensation(String maxExposureCompensation) {
+        setDataInfo(MAXIMUM_EXPOSURE_COMPENSATION, maxExposureCompensation);
+        return this;
+    }
+
+    public String getMaximumNumberOfDetectedFaces() {
+        return getValueByTitle(MAXIMUM_NUMBER_OF_DETECTED_FACES);
+    }
+
+    public CameraItem setMaximumNumberOfDetectedFaces(String maxNumberOfDetectedFaces) {
+        setDataInfo(MAXIMUM_NUMBER_OF_DETECTED_FACES, maxNumberOfDetectedFaces);
+        return this;
+    }
+
+    public String getMaximumNumberOfFocusAreas() {
+        return getValueByTitle(MAXIMUM_NUMBER_OF_FOCUS_AREAS);
+    }
+
+    public CameraItem setMaximumNumberOfFocusAreas(String maxNumberOfFocusAreas) {
+        setDataInfo(MAXIMUM_NUMBER_OF_FOCUS_AREAS, maxNumberOfFocusAreas);
+        return this;
+    }
+
+    public String getMaximumNumberOfMeteringAreas() {
+        return getValueByTitle(MAXIMUM_NUMBER_OF_METERING_AREAS);
+    }
+
+    public CameraItem setMaximumNumberOfMeteringAreas(String maxNumberOfMeteringAreas) {
+        setDataInfo(MAXIMUM_NUMBER_OF_METERING_AREAS, maxNumberOfMeteringAreas);
+        return this;
+    }
+
+    public String getMinimumExposureCompensation() {
+        return getValueByTitle(MINIMUM_EXPOSURE_COMPENSATION);
+    }
+
+    public CameraItem setMinimumExposureCompensation(String minExposureCompensation) {
+        setDataInfo(MINIMUM_EXPOSURE_COMPENSATION, minExposureCompensation);
+        return this;
+    }
+
     public String getPictureFormat() {
         return getValueByTitle(PICTURE_FORMAT);
     }
@@ -147,21 +219,21 @@ public class CameraItem extends BaseInfo {
         return this;
     }
 
-    public String getPreviewFramerate() {
-        return getValueByTitle(PREVIEW_FRAMERATE);
-    }
-
-    public CameraItem setPreviewFramerate(String previewFramerate) {
-        setDataInfo(PREVIEW_FRAMERATE, previewFramerate);
-        return this;
-    }
-
     public String getPreviewSize() {
         return getValueByTitle(PREVIEW_SIZE);
     }
 
     public CameraItem setPreviewSize(String previewSize) {
         setDataInfo(PREVIEW_SIZE, previewSize);
+        return this;
+    }
+
+    public String getPreferredPreviewSizeForVideo() {
+        return getValueByTitle(PREFERRED_PREVIEW_SIZE_FOR_VIDEO);
+    }
+
+    public CameraItem setPreferredPreviewSizeForVideo(String preferredPreviewSizeForVideo) {
+        setDataInfo(PREFERRED_PREVIEW_SIZE_FOR_VIDEO, preferredPreviewSizeForVideo);
         return this;
     }
 
@@ -192,12 +264,12 @@ public class CameraItem extends BaseInfo {
         return this;
     }
 
-    public String getTimelapseQualityProfile() {
-        return getValueByTitle(TIMELAPSE_QUALITY_PROFILE);
+    public String getTimeLapseQualityProfile() {
+        return getValueByTitle(TIME_LAPSE_QUALITY_PROFILE);
     }
 
-    public CameraItem setTimelapseQualityProfile(String timelapseQualityProfile) {
-        setDataInfo(TIMELAPSE_QUALITY_PROFILE, timelapseQualityProfile);
+    public CameraItem setTimeLapseQualityProfile(String timeLapseQualityProfile) {
+        setDataInfo(TIME_LAPSE_QUALITY_PROFILE, timeLapseQualityProfile);
         return this;
     }
 
@@ -255,6 +327,15 @@ public class CameraItem extends BaseInfo {
         return this;
     }
 
+    public String getVerticalViewAngle() {
+        return getValueByTitle(VERTICAL_VIEW_ANGLE);
+    }
+
+    public CameraItem setVerticalViewAngle(String verticalViewAngle) {
+        setDataInfo(VERTICAL_VIEW_ANGLE, verticalViewAngle);
+        return this;
+    }
+
     public String getVideoSnapshotSupported() {
         return getValueByTitle(VIDEO_SNAPSHOT_SUPPORTED);
     }
@@ -270,6 +351,15 @@ public class CameraItem extends BaseInfo {
 
     public CameraItem setVideoStabilizationSupported(String videoStabilizationSupported) {
         setDataInfo(VIDEO_STABILIZATION_SUPPORTED, videoStabilizationSupported);
+        return this;
+    }
+
+    public String getZoomRatio() {
+        return getValueByTitle(ZOOM_RATIO);
+    }
+
+    public CameraItem setZoomRatio(String zoomRatio) {
+        setDataInfo(ZOOM_RATIO, zoomRatio);
         return this;
     }
 
