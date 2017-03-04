@@ -3,8 +3,8 @@ package com.akexorcist.deviceinformation.module.application;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -17,6 +17,7 @@ import com.akexorcist.deviceinformation.collector.application.model.AppInfo;
 import com.akexorcist.deviceinformation.collector.application.model.AppItem;
 import com.akexorcist.deviceinformation.common.DdiFragment;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
+import com.akexorcist.deviceinformation.widget.ScrollerLinearLayoutManager;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -31,14 +32,14 @@ import rx.functions.Action1;
  */
 
 public class ApplicationFragment extends DdiFragment {
-    private FrameLayout layoutContent;
+    private LinearLayout layoutContent;
     private FrameLayout layoutLoading;
     private FrameLayout layoutBottomSheet;
     private LinearLayout layoutAppInfoContainer;
     private TextView tvBottomSheetName;
-
     private RecyclerView rvContent;
     private SwipeRefreshLayout srlRefresh;
+    private TabLayout tlContent;
     private ApplicationContentAdapter contentAdapter;
     private BottomSheetBehavior appBottomSheetBehavior;
     private StickyHeaderDecoration stickyHeaderDecoration;
@@ -57,13 +58,14 @@ public class ApplicationFragment extends DdiFragment {
 
     @Override
     protected void bindView(View view) {
-        layoutContent = (FrameLayout) view.findViewById(R.id.layout_application_content);
+        layoutContent = (LinearLayout) view.findViewById(R.id.layout_application_content);
         layoutLoading = (FrameLayout) view.findViewById(R.id.layout_application_loading);
         layoutBottomSheet = (FrameLayout) view.findViewById(R.id.layout_application_bottom_sheet);
         layoutAppInfoContainer = (LinearLayout) view.findViewById(R.id.layout_application_bottom_sheet_container);
         tvBottomSheetName = (TextView) view.findViewById(R.id.tv_application_bottom_sheet_name);
         rvContent = (RecyclerView) view.findViewById(R.id.rv_application_content);
         srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_application_refresh);
+        tlContent = (TabLayout) view.findViewById(R.id.tl_application_content);
     }
 
     @Override
@@ -77,12 +79,14 @@ public class ApplicationFragment extends DdiFragment {
         srlRefresh.setOnRefreshListener(onContentRefresh());
         // Temporary disable swipe refresh layout in this version
         srlRefresh.setEnabled(false);
-        rvContent.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvContent.setLayoutManager(new ScrollerLinearLayoutManager(getContext()));
         contentAdapter = new ApplicationContentAdapter();
         contentAdapter.setOnAppContentClickListener(onAppInfoClick());
         stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
         rvContent.addItemDecoration(stickyHeaderDecoration);
         rvContent.setAdapter(contentAdapter);
+        tlContent.addOnTabSelectedListener(onTabSelected());
+        setupTabLayout();
     }
 
     @Override
@@ -110,6 +114,35 @@ public class ApplicationFragment extends DdiFragment {
     @Override
     public void saveInstanceState(Bundle outState) {
 
+    }
+
+    private void setupTabLayout() {
+        TabLayout.Tab supportedTab = tlContent.newTab();
+        supportedTab.setText(R.string.application_downloaded_app_header);
+        tlContent.addTab(supportedTab);
+        TabLayout.Tab unsupportedTab = tlContent.newTab();
+        unsupportedTab.setText(R.string.application_system_app_header);
+        tlContent.addTab(unsupportedTab);
+    }
+
+    private TabLayout.OnTabSelectedListener onTabSelected() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = contentAdapter.getFirstAppContentPositionByHeaderId(tab.getPosition());
+                if (position != -1) {
+                    rvContent.smoothScrollToPosition(position);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        };
     }
 
     private ApplicationContentAdapter.OnAppContentClickListener onAppInfoClick() {

@@ -29,8 +29,8 @@ public class ApplicationContentAdapter extends RecyclerView.Adapter<RecyclerView
     private static final int TYPE_EMPTY_SUPPORTED_ITEM = 1;
     private static final int TYPE_EMPTY_UNSUPPORTED_ITEM = 2;
     private static final int TYPE_UNKNOWN = 3;
-    private static final int HEADER_ID_DOWNLOADED = 1;
-    private static final int HEADER_ID_SYSTEM = 2;
+    private static final int HEADER_ID_DOWNLOADED = 0;
+    private static final int HEADER_ID_SYSTEM = 1;
 
     private List<AppItem> downloadedAppItem;
     private List<AppItem> systemAppItem;
@@ -111,36 +111,45 @@ public class ApplicationContentAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        int supportedItemCount = getSupportedItemCount();
-        int unsupportedItemCount = getUnsupportedItemCount();
+        int supportedItemCount = getDownloadedAppItemCount();
+        int unsupportedItemCount = getSystemAppItemCount();
         return supportedItemCount + unsupportedItemCount;
     }
 
-    private int getSupportedItemCount() {
+    private int getDownloadedAppItemCount() {
         // Return 1 row if no data available (for empty item type)
         return downloadedAppItem != null && downloadedAppItem.size() != 0 ? downloadedAppItem.size() : 1;
     }
 
-    private int getUnsupportedItemCount() {
+    private int getSystemAppItemCount() {
         // Return 1 row if no data available (for empty item type)
         return systemAppItem != null && systemAppItem.size() != 0 ? systemAppItem.size() : 1;
     }
 
     private AppItem getAppContentByPosition(int position) {
         if (isDownloadedAppContent(position)) {
-            // getSupportedItemCount can be 1 when have no feature in supported feature
+            // getDownloadedAppItemCount can be 1 when have no downloaded app
             if (isDownloadedAppAvailable()) {
-                // Supported feature item type
+                // Download app item type
                 return downloadedAppItem.get(position);
             }
         } else if (isSystemAppContent(position)) {
             if (isSystemAppAvailable()) {
-                // Unsupported feature item type
-                return systemAppItem.get(position - getSupportedItemCount());
+                // System app item type
+                return systemAppItem.get(position - getDownloadedAppItemCount());
             }
         }
         // For other view holder type
         return null;
+    }
+
+    public int getFirstAppContentPositionByHeaderId(int index) {
+        if (index == HEADER_ID_DOWNLOADED) {
+            return 0;
+        } else if (index == HEADER_ID_SYSTEM) {
+            return getDownloadedAppItemCount();
+        }
+        return -1;
     }
 
     private boolean isDownloadedAppAvailable() {
@@ -152,11 +161,11 @@ public class ApplicationContentAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private boolean isDownloadedAppContent(int position) {
-        return position >= 0 && position < getSupportedItemCount();
+        return position >= 0 && position < getDownloadedAppItemCount();
     }
 
     private boolean isSystemAppContent(int position) {
-        return position >= getSupportedItemCount() && position < getSupportedItemCount() + getUnsupportedItemCount();
+        return position >= getDownloadedAppItemCount() && position < getDownloadedAppItemCount() + getSystemAppItemCount();
     }
 
     private View.OnClickListener onAppContentClick(final AppItem appItem) {
