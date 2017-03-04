@@ -1,5 +1,6 @@
 package com.akexorcist.deviceinformation.collector.feature.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,8 @@ public class FeatureInfo {
     private List<FeatureItem> unsupportedFeatureItem;
 
     public FeatureInfo() {
-        super();
+        supportedFeatureItem = new ArrayList<>();
+        unsupportedFeatureItem = new ArrayList<>();
     }
 
     public List<FeatureItem> getSupportedFeatureItem() {
