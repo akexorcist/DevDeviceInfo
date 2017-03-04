@@ -14,6 +14,7 @@ import com.akexorcist.deviceinformation.collector.camera.CameraInfoCollector;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraInfo;
 import com.akexorcist.deviceinformation.common.DdiFragment;
 import com.akexorcist.deviceinformation.helper.permission.QuickPermission;
+import com.akexorcist.deviceinformation.utility.AnimationUtility;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
 import com.akexorcist.deviceinformation.widget.PermissionDeniedView;
 import com.akexorcist.deviceinformation.widget.ScrollerLinearLayoutManager;
@@ -82,6 +83,7 @@ public class CameraFragment extends DdiFragment {
     @Override
     protected void initialize() {
         forceHideContent();
+        hidePermissionDenied();
         requestCameraPermission();
     }
 
@@ -93,6 +95,7 @@ public class CameraFragment extends DdiFragment {
     @Override
     public void restoreView() {
         forceHideContent();
+        hidePermissionDenied();
         requestCameraPermission();
     }
 
@@ -170,10 +173,6 @@ public class CameraFragment extends DdiFragment {
         return this::requestCameraPermission;
     }
 
-    private void requestCameraPermission() {
-        QuickPermission.requestPermission(getActivity(), permissionResult -> collectCameraInfo(), Manifest.permission.CAMERA);
-    }
-
     private SwipeRefreshLayout.OnRefreshListener onContentRefresh() {
         return () -> {
             hideContent();
@@ -182,6 +181,28 @@ public class CameraFragment extends DdiFragment {
                     .doOnCompleted(refreshAllInfoAction())
                     .subscribe();
         };
+    }
+
+    private void requestCameraPermission() {
+        QuickPermission.requestPermission(getActivity(), permissionResult -> {
+            if (permissionResult.areAllPermissionsGranted()) {
+                hideContent();
+                hidePermissionDenied();
+                collectCameraInfo();
+            } else {
+                showPermissionDenied();
+            }
+        }, Manifest.permission.CAMERA);
+    }
+
+    private void showPermissionDenied() {
+        AnimationUtility.getInstance().fadeOut(layoutContent);
+        AnimationUtility.getInstance().fadeOut(layoutLoading);
+        AnimationUtility.getInstance().fadeIn(pdCameraPermission);
+    }
+
+    private void hidePermissionDenied() {
+        AnimationUtility.getInstance().fadeOut(pdCameraPermission);
     }
 
     private void collectCameraInfo() {
