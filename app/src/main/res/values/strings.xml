@@ -21,6 +21,9 @@
 
     <string name="screen_open_screen_measurement">Open Screen Measurement</string>
 
+    <string name="camera">Camera</string>
+    <string name="camera_does_not_available_description">Camera does not available in this device</string>
+
     <string name="feature_description_app_widgets">The device supports app widgets.</string>
     <string name="feature_description_audio_low_latency">The audio pipeline of device is low-latency, more suitable for audio applications sensitive to delays or lag in sound input or output.</string>
     <string name="feature_description_audio_output">The device includes at least one form of audio output, such as speakers, audio jack or streaming over bluetooth.</string>

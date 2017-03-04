@@ -15,43 +15,30 @@
             android:layout_height="wrap_content" />
     </FrameLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/layout_camera_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_camera_content"
+            style="@style/DefaultTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/srl_camera_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.widget.NestedScrollView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_camera_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/margin_padding"
-                    android:paddingTop="@dimen/margin_padding">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Camera" />
-
-                    <com.akexorcist.deviceinformation.widget.InfoCardView
-                        android:id="@+id/icv_camera_info"
-                        android:layout_width="@dimen/content_width"
-                        android:layout_height="wrap_content"
-                        app:icv_title="@null" />
-
-                </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
+    </LinearLayout>
 
     <com.akexorcist.deviceinformation.widget.PermissionDeniedView
         android:id="@+id/pd_camera_permission"

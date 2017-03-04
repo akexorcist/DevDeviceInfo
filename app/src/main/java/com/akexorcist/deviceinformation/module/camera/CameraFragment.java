@@ -2,38 +2,43 @@ package com.akexorcist.deviceinformation.module.camera;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.collector.camera.CameraInfoCollector;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraInfo;
-import com.akexorcist.deviceinformation.common.DataInfo;
 import com.akexorcist.deviceinformation.common.DdiFragment;
 import com.akexorcist.deviceinformation.helper.permission.QuickPermission;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
-import com.akexorcist.deviceinformation.widget.InfoCardView;
 import com.akexorcist.deviceinformation.widget.PermissionDeniedView;
+import com.akexorcist.deviceinformation.widget.ScrollerLinearLayoutManager;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Func1;
+import rx.functions.Action1;
 
 /**
  * Created by Akexorcist on 11/20/2016 AD.
  */
 
 public class CameraFragment extends DdiFragment {
-    private FrameLayout layoutContent;
+    private LinearLayout layoutContent;
     private FrameLayout layoutLoading;
-    private SwipeRefreshLayout srlRefresh;
     private PermissionDeniedView pdCameraPermission;
-    private InfoCardView icvCameraInfo;
+    private RecyclerView rvContent;
+    private SwipeRefreshLayout srlRefresh;
+    private TabLayout tlContent;
+    private CameraContentAdapter contentAdapter;
+    private StickyHeaderDecoration stickyHeaderDecoration;
 
     public static CameraFragment newInstance() {
         return new CameraFragment();
@@ -49,20 +54,27 @@ public class CameraFragment extends DdiFragment {
 
     @Override
     protected void bindView(View view) {
-        layoutContent = (FrameLayout) view.findViewById(R.id.layout_camera_content);
+        layoutContent = (LinearLayout) view.findViewById(R.id.layout_camera_content);
         layoutLoading = (FrameLayout) view.findViewById(R.id.layout_camera_loading);
-        srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_camera_refresh);
         pdCameraPermission = (PermissionDeniedView) view.findViewById(R.id.pd_camera_permission);
-        icvCameraInfo = (InfoCardView) view.findViewById(R.id.icv_camera_info);
+        rvContent = (RecyclerView) view.findViewById(R.id.rv_camera_content);
+        srlRefresh = (SwipeRefreshLayout) view.findViewById(R.id.srl_camera_refresh);
+        tlContent = (TabLayout) view.findViewById(R.id.tl_camera_content);
     }
 
     @Override
     protected void setupView() {
+        setContentLayout(layoutContent);
+        setLoadingLayout(layoutLoading);
         srlRefresh.setOnRefreshListener(onContentRefresh());
         // Temporary disable swipe refresh layout in this version
         srlRefresh.setEnabled(false);
-        setContentLayout(layoutContent);
-        setLoadingLayout(layoutLoading);
+        rvContent.setLayoutManager(new ScrollerLinearLayoutManager(getContext()));
+        contentAdapter = new CameraContentAdapter();
+        stickyHeaderDecoration = new StickyHeaderDecoration(contentAdapter);
+        rvContent.addItemDecoration(stickyHeaderDecoration);
+        rvContent.setAdapter(contentAdapter);
+        tlContent.addOnTabSelectedListener(onTabSelected());
         pdCameraPermission.setOnRequestPermissionClickListener(onRequestPermissionClick());
     }
 
@@ -93,6 +105,33 @@ public class CameraFragment extends DdiFragment {
 
     }
 
+    private void setupTabLayout(int cameraCount) {
+        Observable.range(0, cameraCount)
+                .subscribe(index -> {
+                    TabLayout.Tab cameraTab = tlContent.newTab();
+                    String title = getString(R.string.camera) + " " + index;
+                    cameraTab.setText(title);
+                    tlContent.addTab(cameraTab);
+                });
+    }
+
+    private TabLayout.OnTabSelectedListener onTabSelected() {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                rvContent.smoothScrollToPosition(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        };
+    }
+
     private PermissionDeniedView.OnRequestPermissionClickListener onRequestPermissionClick() {
         return this::requestCameraPermission;
     }
@@ -113,11 +152,21 @@ public class CameraFragment extends DdiFragment {
 
     private void collectCameraInfo() {
         createCameraInfoObservable()
-                .doOnCompleted(onCollectedAllInfoAction())
+                .doOnNext(onCollectedCameraInfoAction())
+                .doOnCompleted(onCompletedCameraInfoAction())
                 .subscribe();
     }
 
-    private Action0 onCollectedAllInfoAction() {
+    private Action1<? super CameraInfo> onCollectedCameraInfoAction() {
+        return (Action1<CameraInfo>) cameraInfo -> {
+            int cameraCount = cameraInfo.getCameraItemList().size();
+            setupTabLayout(cameraCount);
+            contentAdapter.setCameraItemList(cameraInfo.getCameraItemList());
+            contentAdapter.notifyDataSetChanged();
+        };
+    }
+
+    private Action0 onCompletedCameraInfoAction() {
         return this::showContent;
     }
 
@@ -127,25 +176,10 @@ public class CameraFragment extends DdiFragment {
 
     private Observable<CameraInfo> createCameraInfoObservable() {
         return createScreenInfoCollectorObservable()
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(createCameraInfoFunc());
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private Observable<CameraInfo> createScreenInfoCollectorObservable() {
         return Observable.fromCallable(() -> CameraInfoCollector.getInstance().collect());
-    }
-
-    private Observable<CameraInfo> createSetCameraInfoObservable(CameraInfo cameraInfo) {
-        return Observable.create(subscriber -> {
-            List<DataInfo> dataInfoList = cameraInfo.getCameraItemList().get(0).getDataInfoList();
-            icvCameraInfo.setDataInfoList(dataInfoList, false, () -> {
-                subscriber.onNext(cameraInfo);
-                subscriber.onCompleted();
-            });
-        });
-    }
-
-    private Func1<CameraInfo, Observable<CameraInfo>> createCameraInfoFunc() {
-        return this::createSetCameraInfoObservable;
     }
 }
