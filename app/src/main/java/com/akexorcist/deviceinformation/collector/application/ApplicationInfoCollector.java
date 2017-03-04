@@ -10,6 +10,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.application.model.AppInfo;
 import com.akexorcist.deviceinformation.collector.application.model.AppItem;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
@@ -106,7 +107,7 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
         if (packageInfo != null) {
             return packageInfo.versionName + "";
         } else {
-            return "Unknown";
+            return InfoResultType.UNKNOWN;
         }
     }
 
@@ -115,7 +116,7 @@ public class ApplicationInfoCollector extends BaseInfoCollector {
         if (packageInfo != null) {
             return packageInfo.versionCode + "";
         } else {
-            return "Unknown";
+            return InfoResultType.UNKNOWN;
         }
     }
 

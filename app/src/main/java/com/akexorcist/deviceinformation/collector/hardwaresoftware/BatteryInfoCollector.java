@@ -2,6 +2,7 @@ package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
 import android.content.Context;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.BatteryInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
@@ -46,6 +47,6 @@ public class BatteryInfoCollector extends BaseInfoCollector {
             }
         } catch (Exception ignored) {
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 }

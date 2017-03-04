@@ -1,5 +1,6 @@
 package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.MemoryInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import com.akexorcist.deviceinformation.utility.AndroidUtility;
@@ -41,7 +42,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
             float mem = Float.parseFloat(memory) / 1000f;
             return String.format(Locale.getDefault(), "%.3f MB", mem);
         } else {
-            return "Unknown";
+            return InfoResultType.UNKNOWN;
         }
     }
 
@@ -57,7 +58,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private static String getHeapGrowthLimit() {
@@ -70,7 +71,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private static String getHeapSize() {
@@ -83,7 +84,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private static String getHeapStartSize() {
@@ -96,7 +97,7 @@ public class MemoryInfoCollector extends BaseInfoCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
 }

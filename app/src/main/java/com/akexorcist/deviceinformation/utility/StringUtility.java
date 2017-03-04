@@ -1,5 +1,7 @@
 package com.akexorcist.deviceinformation.utility;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
+
 import java.util.Locale;
 
 /**
@@ -24,13 +26,13 @@ public class StringUtility {
 
     public String wrapUnknown(String str) {
         if (str == null || str.toLowerCase(Locale.getDefault()).equals("null") || str.equals(""))
-            str = "Unknown";
+            str = InfoResultType.UNKNOWN;
         return str;
     }
 
     public String wrapUnknownWithLowerCase(String str) {
         if (str == null || str.toLowerCase(Locale.getDefault()).equals("null") || str.equals(""))
-            str = "unknown";
+            str = InfoResultType.UNKNOWN.toLowerCase();
         return str;
     }
 
@@ -41,6 +43,6 @@ public class StringUtility {
     }
 
     public String removeUnknown(String str) {
-        return str.replace("unknown", "").replace("Unknown", "");
+        return str.replace(InfoResultType.UNKNOWN.toLowerCase(), "").replace(InfoResultType.UNKNOWN, "");
     }
 }

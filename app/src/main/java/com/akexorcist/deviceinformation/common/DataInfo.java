@@ -3,6 +3,8 @@ package com.akexorcist.deviceinformation.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
+
 /**
  * Created by Akexorcist on 2/16/2017 AD.
  */
@@ -29,7 +31,7 @@ public class DataInfo implements Parcelable {
 
     public String getValue() {
         if (value == null || value.isEmpty()) {
-            return "Unknown";
+            return InfoResultType.UNKNOWN;
         }
         return value;
     }

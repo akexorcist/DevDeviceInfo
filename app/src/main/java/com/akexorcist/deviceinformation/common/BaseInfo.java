@@ -1,5 +1,7 @@
 package com.akexorcist.deviceinformation.common;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class BaseInfo {
                 return dataInfo.getValue();
             }
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     public boolean contains(String title) {

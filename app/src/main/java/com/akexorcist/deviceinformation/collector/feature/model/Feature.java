@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.akexorcist.deviceinformation.R;
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -269,7 +270,7 @@ public class Feature {
         } else if (featurePackageName.equals(PackageManager.FEATURE_WIFI_DIRECT)) {
             return context.getString(R.string.feature_description_wifi_direct);
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     public static class Data {

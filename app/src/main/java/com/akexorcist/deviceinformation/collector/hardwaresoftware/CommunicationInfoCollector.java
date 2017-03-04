@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CommunicationInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import com.akexorcist.deviceinformation.utility.TelephonyInfo;
@@ -54,19 +55,19 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
 
     private String hasBluetooth(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasBluetoothLowEnergy(Context context) {
         String hasBluetooth = hasBluetooth(context);
-        if (hasBluetooth.equals("Yes")
+        if (hasBluetooth.equals(InfoResultType.YES)
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     @SuppressWarnings("deprecation")
@@ -74,28 +75,28 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
             manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
-            return "Yes";
+            return InfoResultType.YES;
         } catch (NullPointerException ignored) {
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasCardboardVr(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE)) {
-                return "Yes";
+                return InfoResultType.YES;
             }
-            return "No";
+            return InfoResultType.NO;
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String hasDaydreamVr(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VR_MODE_HIGH_PERFORMANCE)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     @SuppressWarnings("deprecation")
@@ -103,85 +104,85 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
             manager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET).getState();
-            return "Yes";
+            return InfoResultType.YES;
         } catch (NullPointerException ignored) {
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasFingerprint(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasGps(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasMicrophone(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasNfc(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasNfcHostCardEmulation(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasNfcFHostCardEmulation(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION_NFCF)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasTelephony(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasUsbAccessory(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_ACCESSORY)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasUsbOtg(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     @SuppressLint("NewApi")
     private String hasVibrateMotor(Context context) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null && vibrator.hasVibrator()) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     @SuppressWarnings("deprecation")
@@ -189,18 +190,18 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
             manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
-            return "Yes";
+            return InfoResultType.YES;
         } catch (NullPointerException ignored) {
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasWiFiDirect(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_DIRECT)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     @SuppressWarnings("deprecation")
@@ -208,10 +209,10 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         try {
             manager.getNetworkInfo(ConnectivityManager.TYPE_WIMAX).getState();
-            return "Yes";
+            return InfoResultType.YES;
         } catch (NullPointerException ignored) {
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String hasDualSim(Context context) {
@@ -219,15 +220,15 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             int phoneCount = telephonyManager.getPhoneCount();
             if (phoneCount == 2) {
-                return "Yes";
+                return InfoResultType.YES;
             }
-            return "No";
+            return InfoResultType.NO;
         } else {
             TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(context);
             if (telephonyInfo.isDualSIM()) {
-                return "Yes";
+                return InfoResultType.YES;
             }
-            return "No";
+            return InfoResultType.NO;
         }
     }
 }

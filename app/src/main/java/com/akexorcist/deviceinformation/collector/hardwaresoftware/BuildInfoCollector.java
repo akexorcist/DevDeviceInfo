@@ -3,6 +3,7 @@ package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 import android.annotation.SuppressLint;
 import android.os.Build;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.BuildInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import com.akexorcist.deviceinformation.utility.AndroidUtility;
@@ -77,7 +78,7 @@ public class BuildInfoCollector extends BaseInfoCollector {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     @SuppressWarnings("deprecation")
@@ -152,7 +153,7 @@ public class BuildInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return getAbis(Build.SUPPORTED_ABIS);
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     @SuppressLint("NewApi")
@@ -160,7 +161,7 @@ public class BuildInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return getAbis(Build.SUPPORTED_32_BIT_ABIS);
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     @SuppressLint("NewApi")
@@ -168,7 +169,7 @@ public class BuildInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return getAbis(Build.SUPPORTED_64_BIT_ABIS);
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getTag() {

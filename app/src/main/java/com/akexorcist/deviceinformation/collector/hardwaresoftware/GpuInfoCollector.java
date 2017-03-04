@@ -6,6 +6,7 @@ import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.GpuInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
@@ -37,9 +38,9 @@ public class GpuInfoCollector extends BaseInfoCollector {
     private String getVulkanSupported(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                 && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_VULKAN_HARDWARE_LEVEL)) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String getOpenGLVersion(Context context) {

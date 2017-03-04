@@ -1,5 +1,6 @@
 package com.akexorcist.deviceinformation.collector.sensor.model;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.common.BaseInfo;
 import com.akexorcist.deviceinformation.common.DataInfo;
 
@@ -25,7 +26,7 @@ public class SensorItem {
         if (nameInfo != null && nameInfo.getValue() != null && !nameInfo.getValue().isEmpty()) {
             return nameInfo.getValue();
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     public SensorItem.Data getSensorData() {

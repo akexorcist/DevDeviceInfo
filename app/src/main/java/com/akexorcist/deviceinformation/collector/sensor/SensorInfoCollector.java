@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.sensor.model.SensorInfo;
 import com.akexorcist.deviceinformation.collector.sensor.model.SensorItem;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
@@ -63,7 +64,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return sensor.getId() + "";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getName(Sensor sensor) {
@@ -96,7 +97,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return sensor.getMaxDelay() + "";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getMaximumRange(Sensor sensor) {
@@ -108,7 +109,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return sensor.getFifoReservedEventCount() + "";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     @SuppressLint("NewApi")
@@ -116,7 +117,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             return sensor.getFifoMaxEventCount() + "";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     @SuppressWarnings("deprecation")
@@ -180,16 +181,16 @@ public class SensorInfoCollector extends BaseInfoCollector {
     private String getWakeUpSensor(Sensor sensor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
                 sensor.isWakeUpSensor()) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 
     private String getDynamicSensor(Sensor sensor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N &&
                 sensor.isDynamicSensor()) {
-            return "Yes";
+            return InfoResultType.YES;
         }
-        return "No";
+        return InfoResultType.NO;
     }
 }

@@ -2,6 +2,7 @@ package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
 import android.os.Build;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.AndroidInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
@@ -94,7 +95,7 @@ public class AndroidInfoCollector extends BaseInfoCollector {
         } else if (sdkInt == Build.VERSION_CODES.N_MR1) {
             return "Nougat";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getAndroidVersion() {

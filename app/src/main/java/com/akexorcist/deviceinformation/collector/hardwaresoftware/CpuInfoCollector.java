@@ -2,6 +2,7 @@ package com.akexorcist.deviceinformation.collector.hardwaresoftware;
 
 import android.content.Context;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.CpuInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 import com.akexorcist.deviceinformation.utility.AndroidUtility;
@@ -36,7 +37,7 @@ public class CpuInfoCollector extends BaseInfoCollector {
             return AndroidUtility.getInstance().getStringFromInputStream(is);
         } catch (Exception ignored) {
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private CpuInfo createCpuInfoFromRaw(String raw) {

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Display;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.screen.model.Resolution;
 import com.akexorcist.deviceinformation.collector.screen.model.ScreenInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
@@ -84,7 +85,7 @@ public class ScreenInfoCollector extends BaseInfoCollector {
         } else if (screenSize == Configuration.SCREENLAYOUT_SIZE_UNDEFINED) {
             return "Undefined";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getDensity(Activity activity) {
@@ -129,7 +130,7 @@ public class ScreenInfoCollector extends BaseInfoCollector {
                 && dm.densityDpi == DisplayMetrics.DENSITY_560) {
             return "Density 560";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getRatio(Context context) {
@@ -142,7 +143,7 @@ public class ScreenInfoCollector extends BaseInfoCollector {
         } else if (screenSize == Configuration.SCREENLAYOUT_LONG_UNDEFINED) {
             return "Undefined";
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     private String getMultitouch(Context context) {

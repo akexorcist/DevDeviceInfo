@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.v4.os.EnvironmentCompat;
 
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.StorageInfo;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
 
@@ -48,10 +49,10 @@ public class StorageInfoCollector extends BaseInfoCollector {
         if (context != null) {
             String[] storageDirectoryList = getExternalStorageDirectoryList(context);
             if (storageDirectoryList.length > 0) {
-                return "Yes";
+                return InfoResultType.YES;
             }
         }
-        return "Unknown";
+        return InfoResultType.UNKNOWN;
     }
 
     // Get external storage directory method from StackOverflow
