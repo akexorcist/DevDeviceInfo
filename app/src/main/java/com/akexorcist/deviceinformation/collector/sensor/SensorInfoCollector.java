@@ -175,7 +175,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
             case Sensor.TYPE_TEMPERATURE:
                 return "Temperature";
         }
-        return "Unknown (" + type + ")";
+        return InfoResultType.UNKNOWN + "(" + type + ")";
     }
 
     private String getWakeUpSensor(Sensor sensor) {
