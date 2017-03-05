@@ -43,13 +43,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </android.support.design.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/btn_click"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Click"
-        android:visibility="gone" />
-
     <com.akexorcist.deviceinformation.widget.SyncInfoView
         android:id="@+id/siv_content"
         android:layout_width="match_parent"
