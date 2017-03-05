@@ -23,7 +23,7 @@
     <string name="screen_open_screen_measurement">Open Screen Measurement</string>
 
     <string name="camera">Camera</string>
-    <string name="camera_does_not_available_description">This camera api version does not available in this device</string>
+    <string name="camera_does_not_available_description">This Camera API version does not available in this device</string>
     <string name="camera_permission_denied">Camera info is unavailable. Please allow application to access camera permission.</string>
 
     <string name="feature_description_app_widgets">The device supports app widgets.</string>
