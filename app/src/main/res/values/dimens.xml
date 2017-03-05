@@ -31,9 +31,11 @@
     <dimen name="content_width">320dp</dimen>
 
     <dimen name="hardware_and_software_surface_view_size">1dp</dimen>
+
+    <dimen name="upload_device_surface_view_size">1dp</dimen>
+
     <dimen name="widget_bottom_sheet_info_padding_bottom">80dp</dimen>
     <dimen name="widget_bottom_sheet_info_title_width">140dp</dimen>
-
     <dimen name="widget_info_card_title_width">120dp</dimen>
 
 </resources>
