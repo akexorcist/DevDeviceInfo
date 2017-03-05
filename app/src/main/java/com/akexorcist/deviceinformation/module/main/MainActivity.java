@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -81,23 +80,20 @@ public class MainActivity extends BaseDdiActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         if (menuId == R.id.menu_search) {
-            Log.e("Check", "Menu Search");
+            sivContent.show();
+            return true;
+        } else if (menuId == R.id.menu_upload) {
+            sivContent.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void toggle() {
-        if (sivContent.isShowing()) {
-            sivContent.hide();
-        } else {
-            sivContent.show();
-        }
-    }
-
     public SyncInfoView.SyncClickListener onSyncClick() {
         return () -> {
-            // Do something
+            if (sivContent.isShowing()) {
+                sivContent.hide();
+            }
         };
     }
 }

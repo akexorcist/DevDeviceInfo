@@ -46,6 +46,5 @@
     <com.akexorcist.deviceinformation.widget.SyncInfoView
         android:id="@+id/siv_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 </LinearLayout>
