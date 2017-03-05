@@ -9,6 +9,7 @@
     <string name="title_app_list">App List</string>
 
     <string name="sync_from_server">Sync your device info from server</string>
+    <string name="search">Search</string>
     <string name="try_again">Try again</string>
 
     <string name="hardware_and_software_android_info">Android Info</string>

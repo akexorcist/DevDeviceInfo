@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
@@ -66,6 +69,22 @@ public class MainActivity extends BaseDdiActivity {
     @Override
     public void saveInstanceState(Bundle outState) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        if (menuId == R.id.menu_search) {
+            Log.e("Check", "Menu Search");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void toggle() {
