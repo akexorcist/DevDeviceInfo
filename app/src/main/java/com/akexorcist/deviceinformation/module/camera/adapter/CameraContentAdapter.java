@@ -56,7 +56,7 @@ public class CameraContentAdapter<BI extends BaseInfo> extends RecyclerView.Adap
                 contentViewHolder.tvTitle.setText(dataInfo.getTitle());
                 contentViewHolder.tvValue.setText(dataInfo.getValue());
             } else {
-                throw new NullPointerException("WTF going on!");
+                throw new NullPointerException("Camera info doesn't found might be something wrong");
             }
         }
     }
