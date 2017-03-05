@@ -58,7 +58,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.screen.ScreenMeasurementActivity" />
-        <activity android:name=".module.upload.UploadDeviceActivity" />
+        <activity
+            android:name=".module.upload.UploadDeviceActivity"
+            android:theme="@style/UploadDeviceTheme" />
     </application>
 
 </manifest>

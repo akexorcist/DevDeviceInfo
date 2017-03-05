@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_alpha_20"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="com.akexorcist.deviceinformation.module.upload.UploadDeviceActivity">
 
     <com.hanks.htextview.HTextView
         android:id="@+id/tv_upload_device_status"
-        style="@style/TextView.Gray.ExtraExtraLarge"
+        style="@style/TextView.White.ExtraLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         app:animateType="evaporate" />
 
     <com.wang.avi.AVLoadingIndicatorView
-        style="@style/LoadingIndicatorView"
+        style="@style/LoadingIndicatorView.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

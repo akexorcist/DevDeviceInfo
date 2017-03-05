@@ -10,6 +10,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="UploadDeviceTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
     <!-- Text View -->
     <style name="TextView">
         <item name="android:textSize">@dimen/text_size</item>
@@ -337,6 +347,10 @@
         <item name="indicatorColor">@color/accent</item>
         <item name="indicatorName">BallPulseIndicator</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="LoadingIndicatorView.White">
+        <item name="indicatorColor">@color/white</item>
     </style>
 
     <!-- Card View -->
