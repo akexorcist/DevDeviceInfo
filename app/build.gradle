@@ -51,7 +51,7 @@ dependencies {
     compile "ca.barrenechea.header-decor:header-decor:0.2.8"
     compile "com.github.bumptech.glide:glide:3.7.0"
     compile "com.karumi:dexter:3.0.2"
-    compile "hanks.xyz:htextview-library:0.1.5"
+    compile 'com.antonionicolaspina:revealtextview:2.0'
     compile "com.android.support.constraint:constraint-layout:1.0.1"
     testCompile 'junit:junit:4.12'
 }

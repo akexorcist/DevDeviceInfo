@@ -8,19 +8,25 @@
     android:orientation="vertical"
     tools:context="com.akexorcist.deviceinformation.module.upload.UploadDeviceActivity">
 
-    <com.hanks.htextview.HTextView
+    <!--<com.hanks.htextview.HTextView-->
+    <!--android:id="@+id/tv_upload_device_status"-->
+    <!--style="@style/TextView.White.ExtraLarge"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:animateType="evaporate" />-->
+
+    <com.antonionicolaspina.revealtextview.RevealTextView
         android:id="@+id/tv_upload_device_status"
         style="@style/TextView.White.ExtraLarge"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/upload_device_status_text_width"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:animateType="evaporate" />
+        android:text="@string/blank" />
 
     <com.wang.avi.AVLoadingIndicatorView
         style="@style/LoadingIndicatorView.White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin_padding" />
 
     <android.opengl.GLSurfaceView

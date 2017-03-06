@@ -39,22 +39,25 @@ import com.akexorcist.deviceinformation.network.data.Info;
 import com.akexorcist.deviceinformation.network.data.Raw;
 import com.akexorcist.deviceinformation.utility.EventShortener;
 import com.akexorcist.deviceinformation.utility.RxGenerator;
+import com.antonionicolaspina.revealtextview.RevealTextView;
 import com.google.gson.Gson;
-import com.hanks.htextview.HTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class UploadDeviceActivity extends BaseDdiActivity {
     private GLSurfaceView svOpenGl;
-    private HTextView tvStatus;
+    private RevealTextView tvStatus;
 
     private Subscription uploadDeviceBodySubscription;
 
@@ -66,7 +69,7 @@ public class UploadDeviceActivity extends BaseDdiActivity {
     @Override
     protected void bindView() {
         svOpenGl = (GLSurfaceView) findViewById(R.id.sv_upload_device_open_gl);
-        tvStatus = (HTextView) findViewById(R.id.tv_upload_device_status);
+        tvStatus = (RevealTextView) findViewById(R.id.tv_upload_device_status);
     }
 
     @Override
@@ -74,7 +77,6 @@ public class UploadDeviceActivity extends BaseDdiActivity {
         svOpenGl.setBackgroundColor(ContextCompat.getColor(this, R.color.extra_extra_light_gray));
         svOpenGl.setEGLContextClientVersion(2);
         svOpenGl.setRenderer(onSetRenderer());
-        tvStatus.animateText("Collect Data...");
     }
 
     @Override
@@ -113,6 +115,18 @@ public class UploadDeviceActivity extends BaseDdiActivity {
         unsubscribeAllSubscription();
     }
 
+    private void showDataCollectingMessage() {
+        tvStatus.setAnimatedText(getString(R.string.upload_device_data_collecting));
+    }
+
+    private void showSendingMessage() {
+        tvStatus.setAnimatedText(getString(R.string.upload_device_sending));
+    }
+
+    private void showCompletedMessage() {
+        tvStatus.setAnimatedText(getString(R.string.upload_device_completed));
+    }
+
     private EventShortener.GlSurfaceRenderer onSetRenderer() {
         return new EventShortener.GlSurfaceRenderer() {
             @Override
@@ -129,8 +143,25 @@ public class UploadDeviceActivity extends BaseDdiActivity {
     }
 
     private void collectAllInfo(GL10 gl10) {
+        showDataCollectingMessage();
         uploadDeviceBodySubscription = getUploadDeviceBody(this, gl10)
+                .doOnCompleted(onDataCompleted())
                 .subscribe(onUploadDeviceBodyCollected());
+    }
+
+    private Action0 onDataCollecting() {
+        return () -> Observable.empty()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted(this::showDataCollectingMessage)
+                .subscribe();
+    }
+
+    private Action0 onDataCompleted() {
+        return () -> Observable.empty()
+                .delay(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnCompleted(this::showCompletedMessage)
+                .subscribe();
     }
 
     private Action1<UploadDeviceBody> onUploadDeviceBodyCollected() {

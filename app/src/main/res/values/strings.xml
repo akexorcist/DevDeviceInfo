@@ -12,6 +12,7 @@
     <string name="search">Search</string>
     <string name="sync_this_device">Sync this device</string>
     <string name="try_again">Try again</string>
+    <string name="blank" />
 
     <string name="hardware_and_software_android_info">Android Info</string>
     <string name="hardware_and_software_battery_info">Battery Info</string>
@@ -120,5 +121,9 @@
     <string name="application_system_app_header">System Application</string>
     <string name="application_empty_downloaded_app_available">This device have no downloaded app</string>
     <string name="application_empty_system_app_available">This device have no system app</string>
+
+    <string name="upload_device_data_collecting">Data collecting…</string>
+    <string name="upload_device_sending">Sending…</string>
+    <string name="upload_device_completed">Completed</string>
 
 </resources>
