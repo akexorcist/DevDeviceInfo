@@ -3,6 +3,7 @@ package com.akexorcist.deviceinformation.network.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.akexorcist.deviceinformation.collector.feature.model.FeatureItem;
 import com.akexorcist.deviceinformation.common.DataInfo;
 
 import java.util.List;
@@ -14,9 +15,9 @@ import java.util.List;
 public class Data implements Parcelable {
     private Hardware hardware;
     private List<DataInfo> screen;
-    private Sensor sensor;
-    private Camera camera;
-    private Camera camera2;
+    private List<Sensor> sensor;
+    private List<Camera> camera;
+    private List<Camera> camera2;
     private Feature feature;
 
     public Data() {
@@ -40,29 +41,29 @@ public class Data implements Parcelable {
         return this;
     }
 
-    public Sensor getSensor() {
+    public List<Sensor> getSensor() {
         return sensor;
     }
 
-    public Data setSensor(Sensor sensor) {
+    public Data setSensor(List<Sensor> sensor) {
         this.sensor = sensor;
         return this;
     }
 
-    public Camera getCamera() {
+    public List<Camera> getCamera() {
         return camera;
     }
 
-    public Data setCamera(Camera camera) {
+    public Data setCamera(List<Camera> camera) {
         this.camera = camera;
         return this;
     }
 
-    public Camera getCamera2() {
+    public List<Camera> getCamera2() {
         return camera2;
     }
 
-    public Data setCamera2(Camera camera2) {
+    public Data setCamera2(List<Camera> camera2) {
         this.camera2 = camera2;
         return this;
     }
@@ -85,18 +86,18 @@ public class Data implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(hardware, flags);
         dest.writeTypedList(screen);
-        dest.writeParcelable(sensor, flags);
-        dest.writeParcelable(camera, flags);
-        dest.writeParcelable(camera2, flags);
+        dest.writeTypedList(sensor);
+        dest.writeTypedList(camera);
+        dest.writeTypedList(camera2);
         dest.writeParcelable(feature, flags);
     }
 
     protected Data(Parcel in) {
         hardware = in.readParcelable(Hardware.class.getClassLoader());
         screen = in.createTypedArrayList(DataInfo.CREATOR);
-        sensor = in.readParcelable(Sensor.class.getClassLoader());
-        camera = in.readParcelable(Camera.class.getClassLoader());
-        camera2 = in.readParcelable(Camera.class.getClassLoader());
+        sensor = in.createTypedArrayList(Sensor.CREATOR);
+        camera = in.createTypedArrayList(Camera.CREATOR);
+        camera2 = in.createTypedArrayList(Camera.CREATOR);
         feature = in.readParcelable(Feature.class.getClassLoader());
     }
 
@@ -239,17 +240,17 @@ public class Data implements Parcelable {
     }
 
     public static class Sensor implements Parcelable {
-        private DataInfo name;
+        private String name;
         private List<DataInfo> data;
 
         public Sensor() {
         }
 
-        public DataInfo getName() {
+        public String getName() {
             return name;
         }
 
-        public Sensor setName(DataInfo name) {
+        public Sensor setName(String name) {
             this.name = name;
             return this;
         }
@@ -270,12 +271,12 @@ public class Data implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeParcelable(name, flags);
+            dest.writeString(name);
             dest.writeTypedList(data);
         }
 
         protected Sensor(Parcel in) {
-            name = in.readParcelable(DataInfo.class.getClassLoader());
+            name = in.readString();
             data = in.createTypedArrayList(DataInfo.CREATOR);
         }
 
@@ -293,17 +294,17 @@ public class Data implements Parcelable {
     }
 
     public static class Camera implements Parcelable {
-        private DataInfo id;
+        private String id;
         private List<DataInfo> data;
 
         public Camera() {
         }
 
-        public DataInfo getId() {
+        public String getId() {
             return id;
         }
 
-        public Camera setId(DataInfo id) {
+        public Camera setId(String id) {
             this.id = id;
             return this;
         }
@@ -317,6 +318,7 @@ public class Data implements Parcelable {
             return this;
         }
 
+
         @Override
         public int describeContents() {
             return 0;
@@ -324,12 +326,12 @@ public class Data implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeParcelable(id, flags);
+            dest.writeString(id);
             dest.writeTypedList(data);
         }
 
         protected Camera(Parcel in) {
-            id = in.readParcelable(DataInfo.class.getClassLoader());
+            id = in.readString();
             data = in.createTypedArrayList(DataInfo.CREATOR);
         }
 
@@ -347,26 +349,26 @@ public class Data implements Parcelable {
     }
 
     public static class Feature implements Parcelable {
-        private List<Item> supported;
-        private List<Item> unsupported;
+        private List<FeatureItem> supported;
+        private List<FeatureItem> unsupported;
 
         public Feature() {
         }
 
-        public List<Item> getSupported() {
+        public List<FeatureItem> getSupported() {
             return supported;
         }
 
-        public Feature setSupported(List<Item> supported) {
+        public Feature setSupported(List<FeatureItem> supported) {
             this.supported = supported;
             return this;
         }
 
-        public List<Item> getUnsupported() {
+        public List<FeatureItem> getUnsupported() {
             return unsupported;
         }
 
-        public Feature setUnsupported(List<Item> unsupported) {
+        public Feature setUnsupported(List<FeatureItem> unsupported) {
             this.unsupported = unsupported;
             return this;
         }
@@ -383,8 +385,8 @@ public class Data implements Parcelable {
         }
 
         protected Feature(Parcel in) {
-            supported = in.createTypedArrayList(Item.CREATOR);
-            unsupported = in.createTypedArrayList(Item.CREATOR);
+            supported = in.createTypedArrayList(FeatureItem.CREATOR);
+            unsupported = in.createTypedArrayList(FeatureItem.CREATOR);
         }
 
         public static final Creator<Feature> CREATOR = new Creator<Feature>() {
@@ -398,71 +400,5 @@ public class Data implements Parcelable {
                 return new Feature[size];
             }
         };
-
-        public static class Item implements Parcelable {
-            private String name;
-            private String packageName;
-            private String minimumSdk;
-
-            public Item() {
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public Item setName(String name) {
-                this.name = name;
-                return this;
-            }
-
-            public String getPackageName() {
-                return packageName;
-            }
-
-            public Item setPackageName(String packageName) {
-                this.packageName = packageName;
-                return this;
-            }
-
-            public String getMinimumSdk() {
-                return minimumSdk;
-            }
-
-            public Item setMinimumSdk(String minimumSdk) {
-                this.minimumSdk = minimumSdk;
-                return this;
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeString(name);
-                dest.writeString(packageName);
-                dest.writeString(minimumSdk);
-            }
-
-            protected Item(Parcel in) {
-                name = in.readString();
-                packageName = in.readString();
-                minimumSdk = in.readString();
-            }
-
-            public static final Creator<Item> CREATOR = new Creator<Item>() {
-                @Override
-                public Item createFromParcel(Parcel in) {
-                    return new Item(in);
-                }
-
-                @Override
-                public Item[] newArray(int size) {
-                    return new Item[size];
-                }
-            };
-        }
     }
 }

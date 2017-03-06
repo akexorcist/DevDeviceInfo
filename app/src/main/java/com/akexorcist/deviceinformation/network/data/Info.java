@@ -8,18 +8,18 @@ import android.os.Parcelable;
  */
 
 public class Info implements Parcelable {
-    private String version;
+    private String supportedVersion;
     private boolean verified;
 
     public Info() {
     }
 
-    public String getVersion() {
-        return version;
+    public String getSupportedVersion() {
+        return supportedVersion;
     }
 
-    public Info setVersion(String version) {
-        this.version = version;
+    public Info setSupportedVersion(String version) {
+        this.supportedVersion = version;
         return this;
     }
 
@@ -39,12 +39,12 @@ public class Info implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(version);
+        dest.writeString(supportedVersion);
         dest.writeByte((byte) (verified ? 1 : 0));
     }
 
     protected Info(Parcel in) {
-        version = in.readString();
+        supportedVersion = in.readString();
         verified = in.readByte() != 0;
     }
 
