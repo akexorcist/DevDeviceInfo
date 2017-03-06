@@ -50,7 +50,7 @@ public class SensorInfoCollector extends BaseInfoCollector {
                         .setWakeUpSensor(getWakeUpSensor(sensor))
                         .setDynamicSensor(getDynamicSensor(sensor));
                 SensorItem sensorItem = new SensorItem();
-                sensorItem.setSensorData(sensorData);
+                sensorItem.setData(sensorData);
                 sensorItem.setName(getName(sensor));
                 sensorItemList.add(sensorItem);
             }

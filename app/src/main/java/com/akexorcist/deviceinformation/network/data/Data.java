@@ -400,17 +400,37 @@ public class Data implements Parcelable {
         };
 
         public static class Item implements Parcelable {
-            private List<DataInfo> data;
+            private String name;
+            private String packageName;
+            private String minimumSdk;
 
             public Item() {
             }
 
-            public List<DataInfo> getData() {
-                return data;
+            public String getName() {
+                return name;
             }
 
-            public Item setData(List<DataInfo> data) {
-                this.data = data;
+            public Item setName(String name) {
+                this.name = name;
+                return this;
+            }
+
+            public String getPackageName() {
+                return packageName;
+            }
+
+            public Item setPackageName(String packageName) {
+                this.packageName = packageName;
+                return this;
+            }
+
+            public String getMinimumSdk() {
+                return minimumSdk;
+            }
+
+            public Item setMinimumSdk(String minimumSdk) {
+                this.minimumSdk = minimumSdk;
                 return this;
             }
 
@@ -421,11 +441,15 @@ public class Data implements Parcelable {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeTypedList(data);
+                dest.writeString(name);
+                dest.writeString(packageName);
+                dest.writeString(minimumSdk);
             }
 
             protected Item(Parcel in) {
-                data = in.createTypedArrayList(DataInfo.CREATOR);
+                name = in.readString();
+                packageName = in.readString();
+                minimumSdk = in.readString();
             }
 
             public static final Creator<Item> CREATOR = new Creator<Item>() {

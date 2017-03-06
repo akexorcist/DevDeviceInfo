@@ -1,5 +1,6 @@
 package com.akexorcist.deviceinformation.module.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
+import com.akexorcist.deviceinformation.module.upload.UploadDeviceActivity;
 import com.akexorcist.deviceinformation.widget.SyncInfoView;
 
 public class MainActivity extends BaseDdiActivity {
@@ -73,6 +75,8 @@ public class MainActivity extends BaseDdiActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+//        MenuItem uploadMenuItem = menu.findItem(R.id.menu_upload);
+//        uploadMenuItem.setVisible(isMenuShow);
         return true;
     }
 
@@ -80,20 +84,29 @@ public class MainActivity extends BaseDdiActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         if (menuId == R.id.menu_search) {
+            onSearchDevice();
             sivContent.show();
             return true;
         } else if (menuId == R.id.menu_upload) {
-            sivContent.show();
+            onUploadDevice();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public SyncInfoView.SyncClickListener onSyncClick() {
+    private SyncInfoView.SyncClickListener onSyncClick() {
         return () -> {
             if (sivContent.isShowing()) {
                 sivContent.hide();
             }
         };
+    }
+
+    private void onSearchDevice() {
+
+    }
+
+    private void onUploadDevice() {
+        startActivity(new Intent(this, UploadDeviceActivity.class));
     }
 }

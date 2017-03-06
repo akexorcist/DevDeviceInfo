@@ -26,7 +26,7 @@ public class SensorInfo {
         SensorItem oldSensorItem = getSensorInfoByName(newSensorItem.getName());
         if (oldSensorItem != null) {
             // SensorItem already exist then set new value to old SensorItem.
-            oldSensorItem.setSensorData(newSensorItem.getSensorData());
+            oldSensorItem.setData(newSensorItem.getData());
         } else {
             // SensorItem not exist then add new SensorItem to the list.
             this.sensorItemList.add(newSensorItem);
@@ -49,7 +49,7 @@ public class SensorInfo {
     public SensorItem.Data getSensorDataByName(String name) {
         for (SensorItem sensorItem : sensorItemList) {
             if (sensorItem.getName().equals(name)) {
-                return sensorItem.getSensorData();
+                return sensorItem.getData();
             }
         }
         return null;

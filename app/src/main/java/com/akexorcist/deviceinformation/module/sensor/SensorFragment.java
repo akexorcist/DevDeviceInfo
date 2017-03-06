@@ -162,8 +162,8 @@ public class SensorFragment extends DdiFragment {
         sensorBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         layoutSensorInfoContent.removeAllViews();
         tvBottomSheetTitle.setText(sensorItem.getName());
-        if (sensorItem.getSensorData() != null) {
-            for (DataInfo sensorData : sensorItem.getSensorData().getDataInfoList()) {
+        if (sensorItem.getData() != null) {
+            for (DataInfo sensorData : sensorItem.getData().getDataInfoList()) {
                 View view = LayoutInflater.from(getContext()).inflate(R.layout.view_sensor_info_item, layoutSensorContent, false);
                 TextView tvTitle = (TextView) view.findViewById(R.id.tv_sensor_info_title);
                 TextView tvValue = (TextView) view.findViewById(R.id.tv_sensor_info_value);

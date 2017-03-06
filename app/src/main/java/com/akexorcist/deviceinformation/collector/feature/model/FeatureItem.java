@@ -1,44 +1,53 @@
 package com.akexorcist.deviceinformation.collector.feature.model;
 
-import com.akexorcist.deviceinformation.common.BaseInfo;
+import com.akexorcist.deviceinformation.collector.InfoResultType;
 
 /**
  * Created by Akexorcist on 2/18/2017 AD.
  */
 
-public class FeatureItem extends BaseInfo {
-    private static final String NAME = "Name";
-    private static final String PACKAGE_NAME = "Package Name";
-    private static final String MINIMUM_SDK = "Minimum SDK";
+public class FeatureItem {
+    private String name;
+    private String packageName;
+    private String minimumSdk;
 
     public FeatureItem() {
         super();
     }
 
     public String getName() {
-        return getValueByTitle(NAME);
+        if (name != null && !name.isEmpty()) {
+            return name;
+        }
+        return InfoResultType.UNKNOWN;
     }
 
     public FeatureItem setName(String name) {
-        setDataInfo(NAME, name);
+        this.name = name;
         return this;
     }
 
     public String getPackageName() {
-        return getValueByTitle(PACKAGE_NAME);
+        if (packageName != null && !packageName.isEmpty()) {
+            return packageName;
+        }
+        return InfoResultType.UNKNOWN;
     }
 
     public FeatureItem setPackageName(String packageName) {
-        setDataInfo(PACKAGE_NAME, packageName);
+        this.packageName = packageName;
         return this;
     }
 
     public String getMinimumSdk() {
-        return getValueByTitle(MINIMUM_SDK);
+        if (minimumSdk != null && !minimumSdk.isEmpty()) {
+            return minimumSdk;
+        }
+        return InfoResultType.UNKNOWN;
     }
 
     public FeatureItem setMinimumSdk(String minimumSdk) {
-        setDataInfo(MINIMUM_SDK, minimumSdk);
+        this.minimumSdk = minimumSdk;
         return this;
     }
 }

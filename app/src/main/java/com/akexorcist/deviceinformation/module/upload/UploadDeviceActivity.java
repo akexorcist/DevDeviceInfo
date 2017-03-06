@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import com.akexorcist.deviceinformation.R;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.AndroidInfoCollector;
+import com.akexorcist.deviceinformation.collector.hardwaresoftware.model.AndroidInfo;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
 import com.akexorcist.deviceinformation.utility.EventShortener;
 import com.hanks.htextview.HTextView;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import rx.Observable;
 
 public class UploadDeviceActivity extends BaseDdiActivity {
     private GLSurfaceView svOpenGl;
@@ -75,6 +79,11 @@ public class UploadDeviceActivity extends BaseDdiActivity {
     }
 
     private void collectAllInfo(GL10 gl10) {
-        // TODO Collect all info
+//        getAndroidInfo()
+//                .compose()
+    }
+
+    private Observable<AndroidInfo> getAndroidInfo() {
+        return Observable.just(AndroidInfoCollector.getInstance().collect());
     }
 }

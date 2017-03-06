@@ -2,7 +2,6 @@ package com.akexorcist.deviceinformation.collector.sensor.model;
 
 import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.common.BaseInfo;
-import com.akexorcist.deviceinformation.common.DataInfo;
 
 /**
  * Created by Akexorcist on 11/27/2016 AD.
@@ -11,30 +10,30 @@ import com.akexorcist.deviceinformation.common.DataInfo;
 public class SensorItem {
     private static final String NAME = "Name";
 
-    private DataInfo nameInfo;
-    private SensorItem.Data sensorData;
+    private String name;
+    private SensorItem.Data data;
 
     public SensorItem() {
-        sensorData = new SensorItem.Data();
+        data = new SensorItem.Data();
     }
 
     public void setName(String name) {
-        nameInfo = new DataInfo(NAME, name);
+        this.name = name;
     }
 
     public String getName() {
-        if (nameInfo != null && nameInfo.getValue() != null && !nameInfo.getValue().isEmpty()) {
-            return nameInfo.getValue();
+        if (name != null && !name.isEmpty()) {
+            return name;
         }
         return InfoResultType.UNKNOWN;
     }
 
-    public SensorItem.Data getSensorData() {
-        return sensorData;
+    public SensorItem.Data getData() {
+        return data;
     }
 
-    public void setSensorData(SensorItem.Data sensorData) {
-        this.sensorData = sensorData;
+    public void setData(SensorItem.Data data) {
+        this.data = data;
     }
 
     public static class Data extends BaseInfo {
