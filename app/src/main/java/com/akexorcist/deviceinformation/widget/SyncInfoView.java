@@ -38,7 +38,7 @@ public class SyncInfoView extends BaseCustomView implements View.OnClickListener
 
     @Override
     public int getLayoutView() {
-        return R.layout.view_sync_info;
+        return R.layout.widget_sync_info;
     }
 
     @Override

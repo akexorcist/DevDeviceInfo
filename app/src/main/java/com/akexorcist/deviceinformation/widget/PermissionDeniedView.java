@@ -37,7 +37,7 @@ public class PermissionDeniedView extends BaseCustomView {
 
     @Override
     public int getLayoutView() {
-        return R.layout.view_permission_denied;
+        return R.layout.widget_permission_denied;
     }
 
     @Override
