@@ -13,6 +13,7 @@
     <string name="sync_this_device">Sync this device</string>
     <string name="try_again">Try again</string>
     <string name="blank" />
+    <string name="sample">Sample</string>
 
     <string name="hardware_and_software_android_info">Android Info</string>
     <string name="hardware_and_software_battery_info">Battery Info</string>
@@ -128,5 +129,10 @@
     <string name="upload_device_completed">Completed</string>
 
     <string name="search_device_keyword_hint">Device name, brand, model, etc…</string>
+
+    <string name="recent_update_title">Recent Update</string>
+    <string name="recent_update_empty_description">This information is currently unavailable</string>
+
+    <string name="device_chooser_title">Brand</string>
 
 </resources>

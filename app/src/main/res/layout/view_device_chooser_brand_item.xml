@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin_padding_extra_small"
+    android:paddingTop="@dimen/margin_padding_extra_small">
+
+    <android.support.v7.widget.CardView
+        style="@style/InfoCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:minWidth="@dimen/device_chooser_brand_list_min_width">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_padding">
+
+            <TextView
+                android:id="@+id/tv_device_chooser_brand"
+                style="@style/TextView.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_padding"
+                android:layout_marginLeft="@dimen/margin_padding"
+                android:layout_marginRight="@dimen/margin_padding"
+                android:layout_marginStart="@dimen/margin_padding"
+                android:layout_marginTop="@dimen/margin_padding_small"
+                android:text="@string/sample" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

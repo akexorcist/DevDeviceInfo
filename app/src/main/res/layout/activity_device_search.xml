@@ -9,10 +9,10 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        app:contentInsetEnd="0dp"
-        app:contentInsetStart="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/primary">
+        android:background="@color/primary"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp">
 
         <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/sb_device_keyword"
@@ -23,5 +23,16 @@
             app:navIconEnabled="false"
             app:speechMode="false" />
     </android.support.v7.widget.Toolbar>
+
+    <!--<com.akexorcist.deviceinformation.widget.RecentUpdateDeviceView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <fragment
+        android:id="@+id/fragment_device_chooser"
+        android:name="com.akexorcist.deviceinformation.module.chooser.DeviceChooserFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_device_chooser" />
 
 </LinearLayout>
