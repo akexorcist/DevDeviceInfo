@@ -34,7 +34,7 @@ import com.akexorcist.deviceinformation.collector.sensor.model.SensorInfo;
 import com.akexorcist.deviceinformation.collector.sensor.model.SensorItem;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
 import com.akexorcist.deviceinformation.common.DataInfo;
-import com.akexorcist.deviceinformation.network.UploadDeviceBody;
+import com.akexorcist.deviceinformation.network.request.UploadDeviceBody;
 import com.akexorcist.deviceinformation.network.data.Data;
 import com.akexorcist.deviceinformation.network.data.Info;
 import com.akexorcist.deviceinformation.network.data.Raw;
