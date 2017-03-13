@@ -122,6 +122,7 @@
     <string name="application_empty_downloaded_app_available">This device have no downloaded app</string>
     <string name="application_empty_system_app_available">This device have no system app</string>
 
+    <string name="upload_device_permission_checking">Permission checking…</string>
     <string name="upload_device_data_collecting">Data collecting…</string>
     <string name="upload_device_sending">Sending…</string>
     <string name="upload_device_completed">Completed</string>

@@ -1,5 +1,6 @@
 package com.akexorcist.deviceinformation.module.upload;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -59,6 +60,8 @@ public class UploadDeviceActivity extends BaseDdiActivity {
     private GLSurfaceView svOpenGl;
     private RevealTextView tvStatus;
 
+    private GL10 gl10;
+
     private Subscription uploadDeviceBodySubscription;
 
     @Override
@@ -91,7 +94,19 @@ public class UploadDeviceActivity extends BaseDdiActivity {
 
     @Override
     protected void initialize() {
+        requestCameraPermission();
+        showPermissionCheckingMessage();
+    }
 
+    private void requestCameraPermission() {
+        requestPermission(permissionResult -> {
+            if (permissionResult.areAllPermissionsGranted()) {
+                RxGenerator.getInstance()
+                        .createDelayObservable(300, TimeUnit.MILLISECONDS)
+                        .doOnCompleted(() -> collectAllInfo(gl10))
+                        .subscribe();
+            }
+        }, Manifest.permission.CAMERA);
     }
 
     @Override
@@ -115,6 +130,10 @@ public class UploadDeviceActivity extends BaseDdiActivity {
         unsubscribeAllSubscription();
     }
 
+    private void showPermissionCheckingMessage() {
+        tvStatus.setAnimatedText(getString(R.string.upload_device_permission_checking));
+    }
+
     private void showDataCollectingMessage() {
         tvStatus.setAnimatedText(getString(R.string.upload_device_data_collecting));
     }
@@ -131,7 +150,7 @@ public class UploadDeviceActivity extends BaseDdiActivity {
         return new EventShortener.GlSurfaceRenderer() {
             @Override
             public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-                collectAllInfo(gl);
+                UploadDeviceActivity.this.gl10 = gl;
             }
         };
     }
