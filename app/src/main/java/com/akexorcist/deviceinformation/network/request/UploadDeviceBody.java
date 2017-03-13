@@ -1,4 +1,4 @@
-package com.akexorcist.deviceinformation.network;
+package com.akexorcist.deviceinformation.network.request;
 
 import android.os.Parcel;
 import android.os.Parcelable;
