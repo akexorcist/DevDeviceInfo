@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseDdiActivity;
+import com.akexorcist.deviceinformation.module.search.DeviceSearchActivity;
 import com.akexorcist.deviceinformation.module.upload.UploadDeviceActivity;
 import com.akexorcist.deviceinformation.widget.SyncInfoView;
 
@@ -103,7 +104,7 @@ public class MainActivity extends BaseDdiActivity {
     }
 
     private void onSearchDevice() {
-
+        startActivity(new Intent(this, DeviceSearchActivity.class));
     }
 
     private void onUploadDevice() {

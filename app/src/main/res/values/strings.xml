@@ -127,4 +127,6 @@
     <string name="upload_device_sending">Sending…</string>
     <string name="upload_device_completed">Completed</string>
 
+    <string name="search_device_keyword_hint">Device name, brand, model, etc…</string>
+
 </resources>

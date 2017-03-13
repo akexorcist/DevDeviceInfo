@@ -60,6 +60,7 @@
         <activity
             android:name=".module.upload.UploadDeviceActivity"
             android:theme="@style/UploadDeviceTheme" />
+        <activity android:name=".module.search.DeviceSearchActivity"></activity>
     </application>
 
 </manifest>
