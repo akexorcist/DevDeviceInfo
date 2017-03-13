@@ -3,8 +3,8 @@ package com.akexorcist.deviceinformation.module.chooser;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.DdiFragment;
@@ -17,9 +17,8 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.List;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -46,6 +45,7 @@ public class DeviceChooserFragment extends DdiFragment {
     protected void setupView() {
         rvDeviceBrand.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         contentAdapter = new DeviceChooserContentAdapter();
+        contentAdapter.setOnItemClickListener(onItemClick());
         rvDeviceBrand.setAdapter(contentAdapter);
         forceHideLoading();
     }
@@ -57,45 +57,47 @@ public class DeviceChooserFragment extends DdiFragment {
 
     @Override
     protected void initialize() {
+        getAllBrand();
+    }
+
+    private void getAllBrand() {
         DeviceSyncManager.getInstance()
                 .getAllBrand()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        showLoading();
-//                        Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .doOnNext(new Action1<DeviceSyncResult<BrandList>>() {
-                    @Override
-                    public void call(DeviceSyncResult<BrandList> brandListDeviceSyncResult) {
-                        if (brandListDeviceSyncResult != null && brandListDeviceSyncResult.isDataAvailable()) {
-                            setBrandList(brandListDeviceSyncResult.getData().getBrandList());
-                        } else {
-                            setBrandList(null);
-                            hideLoading();
-                        }
-//                        Toast.makeText(getContext(), "Set Brand List : " + brandListDeviceSyncResult.getData().getSelfLink(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .doOnCompleted(new Action0() {
-                    @Override
-                    public void call() {
-                        hideLoading();
-//                        Toast.makeText(getContext(), "Finished", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        setBrandList(null);
-                        hideLoading();
-//                        Toast.makeText(getContext(), "Something wrong", Toast.LENGTH_SHORT).show();
-                    }
-                })
+                .onErrorResumeNext(Observable.empty())
+                .doOnSubscribe(this::showLoading)
+                .doOnNext(this::setBrandListResult)
+                .doOnError(throwable -> setBrandListFailure())
+                .doOnCompleted(this::hideLoading)
                 .subscribe();
+    }
+
+    private DeviceChooserContentAdapter.OnItemClickListener onItemClick() {
+        return new DeviceChooserContentAdapter.OnItemClickListener() {
+            @Override
+            public void onBrandClick(String brand) {
+                Toast.makeText(getContext(), brand + " click", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onReloadClick() {
+                getAllBrand();
+            }
+        };
+    }
+
+    private void setBrandListResult(DeviceSyncResult<BrandList> brandListResult) {
+        if (brandListResult != null && brandListResult.isDataAvailable()) {
+            setBrandList(brandListResult.getData().getBrandList());
+        } else {
+            setBrandListFailure();
+        }
+    }
+
+    private void setBrandListFailure() {
+        setBrandList(null);
+        hideLoading();
     }
 
     private void setBrandList(List<String> brandList) {

@@ -18,7 +18,7 @@ public class DeviceChooserContentAdapter extends RecyclerView.Adapter<RecyclerVi
     private static final int TYPE_BRAND_ITEM = 1;
 
     private List<String> brandList;
-    private OnBrandClickListener onBrandClickListener;
+    private OnItemClickListener onItemClickListener;
 
     public DeviceChooserContentAdapter() {
     }
@@ -27,8 +27,8 @@ public class DeviceChooserContentAdapter extends RecyclerView.Adapter<RecyclerVi
         this.brandList = brandList;
     }
 
-    public void setOnBrandClickListener(OnBrandClickListener onBrandClickListener) {
-        this.onBrandClickListener = onBrandClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -48,8 +48,15 @@ public class DeviceChooserContentAdapter extends RecyclerView.Adapter<RecyclerVi
             DeviceChooserContentViewHolder deviceChooserContentViewHolder = (DeviceChooserContentViewHolder) holder;
             deviceChooserContentViewHolder.tvDeviceBrand.setText(brand);
             deviceChooserContentViewHolder.itemView.setOnClickListener(v -> {
-                if (onBrandClickListener != null) {
-                    onBrandClickListener.onBrandClick(brand);
+                if (onItemClickListener != null) {
+                    onItemClickListener.onBrandClick(brand);
+                }
+            });
+        } else if (holder instanceof DeviceChooserEmptyViewHolder) {
+            DeviceChooserEmptyViewHolder deviceChooserEmptyViewHolder = (DeviceChooserEmptyViewHolder) holder;
+            deviceChooserEmptyViewHolder.itemView.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onReloadClick();
                 }
             });
         }
@@ -68,7 +75,9 @@ public class DeviceChooserContentAdapter extends RecyclerView.Adapter<RecyclerVi
         return TYPE_BRAND_ITEM;
     }
 
-    public interface OnBrandClickListener {
+    public interface OnItemClickListener {
         void onBrandClick(String brand);
+
+        void onReloadClick();
     }
 }
