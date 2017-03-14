@@ -2,6 +2,7 @@ package com.akexorcist.deviceinformation.network;
 
 import com.akexorcist.deviceinformation.network.response.BrandList;
 import com.akexorcist.deviceinformation.network.response.DeviceSyncResult;
+import com.akexorcist.deviceinformation.network.response.RecentDevice;
 
 import rx.Observable;
 
@@ -21,5 +22,9 @@ public class DeviceSyncManager {
 
     public Observable<DeviceSyncResult<BrandList>> getAllBrand() {
         return DeviceSyncApi.getInstance().getApi().getAllBrand();
+    }
+
+    public Observable<DeviceSyncResult<RecentDevice>> getRecentDevice() {
+        return DeviceSyncApi.getInstance().getApi().getRecentDevice();
     }
 }
