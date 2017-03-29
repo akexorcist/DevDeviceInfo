@@ -44,7 +44,7 @@ public class ScreenInfoCollector extends BaseInfoCollector {
 
     private String getResolutionPx(Activity activity) {
         Resolution screenResolution = getScreenResolutionPX(activity, null);
-        return (int) screenResolution.getY() + " x " + (int) screenResolution.getX() + " DP";
+        return (int) screenResolution.getY() + " x " + (int) screenResolution.getX() + " PX";
     }
 
     private String getResolutionDp(Activity activity) {
