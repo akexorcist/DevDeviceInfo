@@ -25,6 +25,10 @@ public class BatteryInfoCollector extends BaseInfoCollector {
     }
 
     public BatteryInfo collect(Context context) {
+        // Get info from json
+//        BatteryInfo batteryInfo = new BatteryInfo();
+//        batteryInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getBattery());
+//        return batteryInfo;
         return new BatteryInfo()
                 .setCapacity(getCapacity(context));
     }

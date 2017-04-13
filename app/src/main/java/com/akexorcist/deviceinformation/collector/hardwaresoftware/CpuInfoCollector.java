@@ -26,6 +26,10 @@ public class CpuInfoCollector extends BaseInfoCollector {
     }
 
     public CpuInfo collect(Context context) {
+        // Get info from json
+//        CpuInfo cpuInfo = new CpuInfo();
+//        cpuInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getCpu());
+//        return cpuInfo;
         String rawCpuInfo = getCpuInfo(context);
         return createCpuInfoFromRaw(rawCpuInfo);
     }

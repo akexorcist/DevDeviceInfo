@@ -40,6 +40,17 @@ public class Camera2InfoCollector extends BaseInfoCollector {
     }
 
     public Camera2Info collect(Context context) {
+        // Get info from json
+//        List<Camera2Item> camera2ItemList = new ArrayList<>();
+//        List<Data.Camera> cameraDataList = SamsungS8.getInfo().getData().getCamera2();
+//        for (Data.Camera cameraData : cameraDataList) {
+//            Camera2Item cameraItem = new Camera2Item();
+//            cameraItem.setDataInfoList(cameraData.getData());
+//            camera2ItemList.add(cameraItem);
+//        }
+//        Camera2Info camera2Info = new Camera2Info();
+//        camera2Info.setCameraItemList(camera2ItemList);
+//        return camera2Info;
         Camera2Info camera2Info = new Camera2Info();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);

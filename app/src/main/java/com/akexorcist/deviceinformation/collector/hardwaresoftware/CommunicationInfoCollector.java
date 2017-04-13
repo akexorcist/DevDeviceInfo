@@ -30,6 +30,10 @@ public class CommunicationInfoCollector extends BaseInfoCollector {
     }
 
     public CommunicationInfo collect(Context context) {
+        // Get info from json
+//        CommunicationInfo communicationInfo = new CommunicationInfo();
+//        communicationInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getCommunication());
+//        return communicationInfo;
         return new CommunicationInfo()
                 .setBluetooth(hasBluetooth(context))
                 .setBluetoothLowEnergy(hasBluetoothLowEnergy(context))

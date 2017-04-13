@@ -21,6 +21,10 @@ public class AndroidInfoCollector extends BaseInfoCollector {
     }
 
     public AndroidInfo collect() {
+        // Get info from json
+//        AndroidInfo androidInfo = new AndroidInfo();
+//        androidInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getAndroid());
+//        return androidInfo;
         return new AndroidInfo()
                 .setApiVersion(getApiVersion())
                 .setSystemType(getSystemType())
@@ -42,7 +46,7 @@ public class AndroidInfoCollector extends BaseInfoCollector {
         return "32-bit";
     }
 
-    public String getVersionCode() {
+    private String getVersionCode() {
         int sdkInt = Build.VERSION.SDK_INT;
         if (sdkInt == Build.VERSION_CODES.BASE) {
             return "Apple Pie";
@@ -98,7 +102,7 @@ public class AndroidInfoCollector extends BaseInfoCollector {
         return InfoResultType.UNKNOWN;
     }
 
-    private String getAndroidVersion() {
+    public String getAndroidVersion() {
         return Build.VERSION.RELEASE;
     }
 

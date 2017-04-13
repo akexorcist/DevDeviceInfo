@@ -29,6 +29,10 @@ public class BuildInfoCollector extends BaseInfoCollector {
     }
 
     public BuildInfo collect() {
+        // Get info from json
+//        BuildInfo buildInfo = new BuildInfo();
+//        buildInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getBattery());
+//        return buildInfo;
         return new BuildInfo()
                 .setBoard(getBoard())
                 .setBootloader(getBootloader())

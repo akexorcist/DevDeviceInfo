@@ -9,8 +9,10 @@ import com.akexorcist.deviceinformation.collector.InfoResultType;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraInfo;
 import com.akexorcist.deviceinformation.collector.camera.model.CameraItem;
 import com.akexorcist.deviceinformation.common.BaseInfoCollector;
+import com.akexorcist.deviceinformation.network.data.Data;
 import com.akexorcist.deviceinformation.utility.StringUtility;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +32,17 @@ public class CameraInfoCollector extends BaseInfoCollector {
     }
 
     public CameraInfo collect() {
+        // Get info from json
+//        List<Data.Camera> cameraDataList = SamsungS8.getInfo().getData().getCamera();
+//        List<CameraItem> cameraItemList = new ArrayList<>();
+//        for (Data.Camera cameraData : cameraDataList) {
+//            CameraItem cameraItem = new CameraItem();
+//            cameraItem.setDataInfoList(cameraData.getData());
+//            cameraItemList.add(cameraItem);
+//        }
+//        CameraInfo cameraInfo = new CameraInfo();
+//        cameraInfo.setCameraItemList(cameraItemList);
+//        return cameraInfo;
         CameraInfo cameraInfo = new CameraInfo();
         int cameraCount = Camera.getNumberOfCameras();
         for (int index = 0; index < cameraCount; index++) {

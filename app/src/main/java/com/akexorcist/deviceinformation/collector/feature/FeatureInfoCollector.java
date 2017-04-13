@@ -26,6 +26,11 @@ public class FeatureInfoCollector extends BaseInfoCollector {
     }
 
     public FeatureInfo collect(Context context) {
+        // Get info from json
+//        FeatureInfo featureInfo = new FeatureInfo();
+//        featureInfo.setSupportedFeatureItem(SamsungS8.getInfo().getData().getFeature().getSupported());
+//        featureInfo.setUnsupportedFeatureItem(SamsungS8.getInfo().getData().getFeature().getUnsupported());
+//        return featureInfo;
         return new FeatureInfo()
                 .setSupportedFeatureItem(getSupportedFeature(context))
                 .setUnsupportedFeatureItem(getUnsupportedFeature(context));
