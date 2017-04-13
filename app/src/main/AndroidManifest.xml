@@ -43,12 +43,14 @@
         android:required="false" />
 
     <application
+        android:name=".module.DdiApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".module.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,11 +58,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".module.screen.ScreenMeasurementActivity" />
+
         <activity
             android:name=".module.upload.UploadDeviceActivity"
             android:theme="@style/UploadDeviceTheme" />
-        <activity android:name=".module.search.DeviceSearchActivity"></activity>
+
+        <activity android:name=".module.search.DeviceSearchActivity" />
+
     </application>
 
 </manifest>
