@@ -13,6 +13,7 @@
     android:paddingTop="@dimen/margin_padding_small">
 
     <TextView
+        android:id="@+id/tv_sync_message"
         style="@style/TextView.White.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

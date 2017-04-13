@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.akexorcist.deviceinformation.R;
 import com.akexorcist.deviceinformation.common.BaseCustomView;
@@ -18,6 +19,7 @@ import com.akexorcist.deviceinformation.utility.AnimationUtility;
  */
 
 public class SyncInfoView extends BaseCustomView implements View.OnClickListener {
+    private TextView tvSyncMessage;
     private Button btnSync;
     private SyncClickListener syncClickListener;
 
@@ -43,11 +45,13 @@ public class SyncInfoView extends BaseCustomView implements View.OnClickListener
 
     @Override
     protected void bindView() {
+        tvSyncMessage = (TextView) findViewById(R.id.tv_sync_message);
         btnSync = (Button) findViewById(R.id.btn_sync);
     }
 
     @Override
     protected void setupView() {
+        btnSync.setVisibility(GONE);
         btnSync.setOnClickListener(this);
     }
 
@@ -73,6 +77,10 @@ public class SyncInfoView extends BaseCustomView implements View.OnClickListener
     @Override
     protected void restoreView() {
         updateViewShowing();
+    }
+
+    public void setMessage(String message) {
+        tvSyncMessage.setText(message);
     }
 
     public boolean isShowing() {
