@@ -30,6 +30,10 @@ public class ScreenInfoCollector extends BaseInfoCollector {
     }
 
     public ScreenInfo collect(Activity activity) {
+        // Get info from json
+//        ScreenInfo screenInfo = new ScreenInfo();
+//        screenInfo.setDataInfoList(SamsungS8.getInfo().getData().getScreen());
+//        return screenInfo;
         return new ScreenInfo()
                 .setResolutionPx(getResolutionPx(activity))
                 .setResolutionDp(getResolutionDp(activity))

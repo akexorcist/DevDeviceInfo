@@ -30,6 +30,20 @@ public class SensorInfoCollector extends BaseInfoCollector {
     }
 
     public SensorInfo collect(Context context) {
+        // Get info from json
+//        List<SensorItem> sensorItemList = new ArrayList<>();
+//        List<Data.Sensor> s8SensorDataList = SamsungS8.getInfo().getData().getSensor();
+//        for(Data.Sensor sensorData : s8SensorDataList) {
+//            SensorItem sensorItem = new SensorItem();
+//            sensorItem.setName(sensorData.getName());
+//            SensorItem.Data data = new SensorItem.Data();
+//            data.setDataInfoList(sensorData.getData());
+//            sensorItem.setData(data);
+//            sensorItemList.add(sensorItem);
+//        }
+//        SensorInfo sensorInfo = new SensorInfo();
+//        sensorInfo.setSensorItemList(sensorItemList);
+//        return sensorInfo;
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
         List<SensorItem> sensorItemList = new ArrayList<>();

@@ -27,6 +27,10 @@ public class GpuInfoCollector extends BaseInfoCollector {
     }
 
     public GpuInfo collect(Context context, GL10 gl10) {
+        // Get info from json
+//        GpuInfo gpuInfo = new GpuInfo();
+//        gpuInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getGpu());
+//        return gpuInfo;
         return new GpuInfo()
                 .setVendor(gl10.glGetString(GL10.GL_VENDOR))
                 .setRenderer(gl10.glGetString(GL10.GL_RENDERER))

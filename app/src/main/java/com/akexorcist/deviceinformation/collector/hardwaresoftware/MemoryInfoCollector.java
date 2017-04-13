@@ -29,6 +29,10 @@ public class MemoryInfoCollector extends BaseInfoCollector {
     }
 
     public MemoryInfo collect() {
+        // Get info from json
+//        MemoryInfo memoryInfo = new MemoryInfo();
+//        memoryInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getMemory());
+//        return memoryInfo;
         return new MemoryInfo()
                 .setTotalMemory(getTotalMemory())
                 .setHeapSize(getHeapSize())

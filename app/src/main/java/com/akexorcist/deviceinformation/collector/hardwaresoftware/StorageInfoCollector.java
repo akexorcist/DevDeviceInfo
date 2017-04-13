@@ -31,6 +31,10 @@ public class StorageInfoCollector extends BaseInfoCollector {
     }
 
     public StorageInfo collect(Context context) {
+        // Get info from json
+//        StorageInfo storageInfo = new StorageInfo();
+//        storageInfo.setDataInfoList(SamsungS8.getInfo().getData().getHardware().getStorage());
+//        return storageInfo;
         return new StorageInfo()
                 .setInternalStorage(getTotalInternalStorage())
                 .setSdCardSupported(getSdCardSupported(context));
