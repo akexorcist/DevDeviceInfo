@@ -208,10 +208,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<GpuInfo> createSetGpuInfoObservable(GpuInfo gpuInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = gpuInfo.getDataInfoList();
-            icvGpuInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvGpuInfo.setVisibility(View.VISIBLE);
+                icvGpuInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(gpuInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvGpuInfo.setVisibility(View.GONE);
                 subscriber.onNext(gpuInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -235,10 +242,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<AndroidInfo> createSetAndroidInfoObservable(AndroidInfo androidInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = androidInfo.getDataInfoList();
-            icvAndroidInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvAndroidInfo.setVisibility(View.VISIBLE);
+                icvAndroidInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(androidInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvAndroidInfo.setVisibility(View.GONE);
                 subscriber.onNext(androidInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -262,10 +276,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<BatteryInfo> createSetBatteryInfoObservable(BatteryInfo batteryInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = batteryInfo.getDataInfoList();
-            icvBatteryInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvBatteryInfo.setVisibility(View.VISIBLE);
+                icvBatteryInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(batteryInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvBatteryInfo.setVisibility(View.GONE);
                 subscriber.onNext(batteryInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -289,10 +310,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<BuildInfo> createSetBuildInfoObservable(BuildInfo buildInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = buildInfo.getDataInfoList();
-            icvBuildInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvBuildInfo.setVisibility(View.VISIBLE);
+                icvBuildInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(buildInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvBuildInfo.setVisibility(View.GONE);
                 subscriber.onNext(buildInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -316,10 +344,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<CommunicationInfo> createSetCommunicationInfoObservable(CommunicationInfo communicationInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = communicationInfo.getDataInfoList();
-            icvCommunicationInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvCommunicationInfo.setVisibility(View.VISIBLE);
+                icvCommunicationInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(communicationInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvCommunicationInfo.setVisibility(View.GONE);
                 subscriber.onNext(communicationInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -343,10 +378,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<CpuInfo> createSetCpuInfoObservable(CpuInfo cpuInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = cpuInfo.getDataInfoList();
-            icvCpuInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvCpuInfo.setVisibility(View.VISIBLE);
+                icvCpuInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(cpuInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvCpuInfo.setVisibility(View.GONE);
                 subscriber.onNext(cpuInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -370,10 +412,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<MemoryInfo> createSetMemoryInfoObservable(MemoryInfo memoryInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = memoryInfo.getDataInfoList();
-            icvMemoryInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvMemoryInfo.setVisibility(View.VISIBLE);
+                icvMemoryInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(memoryInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvMemoryInfo.setVisibility(View.GONE);
                 subscriber.onNext(memoryInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
@@ -397,10 +446,17 @@ public class HardwareSoftwareFragment extends DdiFragment {
     private Observable<StorageInfo> createSetStorageInfoObservable(StorageInfo storageInfo) {
         return Observable.create(subscriber -> {
             List<DataInfo> dataInfoList = storageInfo.getDataInfoList();
-            icvStorageInfo.setDataInfoList(dataInfoList, true, () -> {
+            if (dataInfoList != null && !dataInfoList.isEmpty()) {
+                icvStorageInfo.setVisibility(View.VISIBLE);
+                icvStorageInfo.setDataInfoList(dataInfoList, true, () -> {
+                    subscriber.onNext(storageInfo);
+                    subscriber.onCompleted();
+                });
+            } else {
+                icvStorageInfo.setVisibility(View.GONE);
                 subscriber.onNext(storageInfo);
                 subscriber.onCompleted();
-            });
+            }
         });
     }
 
